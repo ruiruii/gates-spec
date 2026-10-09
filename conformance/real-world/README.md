@@ -188,9 +188,12 @@ from a public Base RPC, the whole hash chain, both signatures, and `signedBy` fo
 indices — and **reports** the RED half (empty `dataHash` count, tx-binding count) as a
 known gap rather than asserting it pass. The GREEN half must stay clean; the RED half is
 expected to read "empty / unbound" until the origin binds a settlement to an entry.
-The CI workflow runs it weekly and on push; last run
-[`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031) (success,
-transcript in the run logs).
+The CI workflow runs it weekly and on push. The first independent re-run was
+[`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031); after the
+numeric-coercion fix in the harness,
+[`37954651313`](https://github.com/ruiruii/gates-spec/actions/runs/37954651313) reports
+**ALL CHECKS PASSED** — GREEN half clean, RED half reported as 21/33 empty / 0 tx-bound.
+Transcripts are in the run logs.
 
 ---
 
