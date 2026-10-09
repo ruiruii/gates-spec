@@ -1,0 +1,58 @@
+name: Real-world conformance (RW-001)
+
+# RW-001 is a vector built from a third party's live origin. Its whole value is
+# that anyone can re-run it, so the re-run has to happen on infrastructure that
+# is neither ours nor the contributor's. This job is that infrastructure.
+#
+# It is deliberately allowed to fail: the origin is a third-party service and a
+# red job here means "the vector drifted", which is information, not breakage.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly, Monday 06:17 UTC — cheap drift detection on the external vector.
+    - cron: '17 6 * * 1'
+  push:
+    paths:
+      - 'conformance/real-world/**'
+      - '.github/workflows/real-world-conformance.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  rw001:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify RW-001 against the live origin
+        id: verify
+        run: |
+          set -o pipefail
+          node conformance/real-world/verify-rw001.mjs 2>&1 | tee rw001.log
+          echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Summarize
+        run: |
+          {
+            echo "## RW-001 — x402-receipts live origin"
+            echo ""
+            echo "- exit code: \`${{ steps.verify.outputs.exit }}\`"
+            echo "- run: \`${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\`"
+            echo ""
+            echo '```'
+            cat rw001.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload transcript
+        uses: actions/upload-artifact@v4
+        with:
+          name: rw001-transcript-${{ github.run_number }}
+          path: rw001.log
