@@ -36,6 +36,7 @@ const EXPECTED = {
 };
 
 const { createHash, createPublicKey, verify } = await import('node:crypto');
+const { readFile } = await import('node:fs/promises');
 
 let failures = 0;
 const asNum = (v) => (typeof v === 'number' ? v : (typeof v === 'string' && v.trim() !== '' && !Number.isNaN(Number(v)) ? Number(v) : v));
@@ -156,18 +157,36 @@ const v20 = await getJSON(`${ORIGIN}/v2/verify?index=20`);
 check('index 20 signedBy', v20.signedBy, 'current');
 check('index 20 chainIntact', v20.chainIntact, true);
 
-console.log('\n=== 5. Negative case: retired-key entry (index 0) ===');
-const e0 = entries.find((e) => e.index === EXPECTED.retiredIndex);
-check('index 0 present', Boolean(e0), true);
-if (e0) {
-  check('index 0 hash', e0.hash, EXPECTED.retiredIndexHash);
-  check('index 0 timestamp', e0.timestamp, EXPECTED.retiredIndexTs);
-  check('index 0 keyId is the retired one', e0.keyId, EXPECTED.retiredKeyId);
-  check('index 0 signature verifies against RETIRED key', verifyEntry(e0, retired.publicKey), true);
-  check('index 0 signature does NOT verify against CURRENT key', verifyEntry(e0, pub.publicKey), false);
+console.log('\n=== VECTOR: invalid-verify-current-key-only (negative / verifier-behavior) ===');
+// Loaded from a vector descriptor so the expectations are data, not inline
+// literals. A verifier that resolves the signing key as "the current key only"
+// (ignoring published key history) is non-conformant per SPEC §7.4 and produces
+// a false negative the moment a signer rotates a key. RW-001 entry 0 — signed by
+// a retired key that is still published in /v2/pubkey `history` — is the concrete
+// instance of that failure mode.
+const VEC = JSON.parse(
+  await readFile(new URL('./vectors/invalid-verify-current-key-only.json', import.meta.url), 'utf8')
+);
+console.log(`  [INFO] ${VEC.summary}`);
+console.log(`  [INFO] guards: ${VEC.guards}`);
+const e0 = entries.find((e) => e.index === VEC.inputs.entryIndex);
+check('entry 0 present', Boolean(e0), true);
+check('entry 0 keyId is the retired key', e0?.keyId, VEC.inputs.expectedKeyId);
+check('precondition: retired key published in history', Boolean(retired), VEC.expected.retiredKeyPublishedInHistory);
+if (e0 && retired) {
+  // Conformant resolver: resolve by key_id against current + history.
+  check('history-aware resolver verifies entry 0 (conformant, §7.3/§7.4)',
+    verifyEntry(e0, retired.publicKey), VEC.expected.historyAwareResolverVerifies);
+  // Non-conformant resolver: current-key-only. It MUST reject a validly-signed
+  // historical entry — that rejection is the false negative the vector guards
+  // against. Reported as [DEMO] (expected behaviour), not as a [FAIL] gate.
+  const ckoRejects = verifyEntry(e0, pub.publicKey) === false;
+  console.log(`  [DEMO] current-key-only resolver rejects valid entry 0 = ${ckoRejects}` +
+    ` — this false negative is the exact failure mode "${VEC.id}" names; a conformant` +
+    ` verifier MUST resolve by key_id against current + history`);
 }
 const v0 = await getJSON(`${ORIGIN}/v2/verify?index=0`);
-check('index 0 signedBy', v0.signedBy, 'historical');
+check('entry 0 signedBy', v0.signedBy, VEC.expected.signedBy);
 
 console.log('\n=== 6. Their own payment-check endpoint ===');
 const vp = await getJSON(`${ORIGIN}/v1/verify-payment?txHash=${TX}`);

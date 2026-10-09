@@ -139,19 +139,35 @@ posted a full transcript (33/33 hash, 33/33 `prevHash` links, 33/33 signatures,
 GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031))
 and matched 33/33 on every count — the chain half is now independently reproduced.
 
-### 5. Negative case: retired signing key
+### 5. Negative vector: `invalid-verify-current-key-only`
 
 Entry `0` is signed by a **retired** key, `keyId 7e32754cf3911ccf`, published in the
-`history` array of `/v2/pubkey`. `GET /v2/verify?index=0` returns
-`signedBy: "historical"`.
+`history` array of `/v2/pubkey`. `GET /v2/verify?index=0` returns `signedBy: "historical"`.
+A verifier that reads only the current key reports a **false negative** on entry 0.
 
-A verifier that reads only the current key reports a **false negative** on entry 0 — and
-`verify-rw001.mjs` asserts explicitly that entry 0 must verify against the *retired* key
-and must **not** verify against the current one.
+This is a general failure mode, not a quirk of this ledger: **any** spec that does not pin
+how historical keys are resolved will rot the first time a signer rotates a key. gates-spec
+already forbids it — **§7.4** requires historical public keys to remain retrievable ≥ 90 days
+past rotation, and **§7.3** requires verification against `signer.public_key` (the key that
+actually signed the envelope, resolved by `key_id` — not the live one). A "current-key-only"
+resolver violates both, so it is a non-conformant verifier.
 
-> **TODO: encode as `invalid-verify-current-key-only`.** This is a general failure mode,
-> not a quirk of this ledger: **any** spec that does not pin how historical keys are
-> resolved will rot the first time a signer rotates a key.
+**Encoded as a conformance vector.** `invalid-verify-current-key-only` is now a named,
+data-driven vector. Its descriptor,
+[`conformance/real-world/vectors/invalid-verify-current-key-only.json`](./vectors/invalid-verify-current-key-only.json),
+declares the inputs (entry 0, the retired key, the live key), the expected outcome for each
+verifier mode (`history_aware` → valid; `current_key_only` → rejects a valid entry), and the
+SPEC clauses it guards. `verify-rw001.mjs` loads that descriptor and runs the vector on every
+CI pass, so the failure mode is *exercised*, not just described:
+
+- **precondition** — the retired key is published in `/v2/pubkey` `history` (a conformant
+  resolver must be able to find it);
+- **history-aware resolver** verifies entry 0 → valid, `signedBy: "historical"`;
+- **current-key-only resolver** rejects entry 0 → this is the false negative the vector is
+  named for, reported as `[DEMO]` (expected behaviour) rather than a `[FAIL]` gate.
+
+The vector pins the rule for gates-spec's own verifier: resolve by `key_id` against the full
+key set, never pin the live key.
 
 ### 6. Wire mapping (`X-Payment-Settled` → `payment.settlement_status`)
 
