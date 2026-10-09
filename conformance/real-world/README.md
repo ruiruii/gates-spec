@@ -209,6 +209,10 @@ The CI workflow runs it weekly and on push. The first independent re-run was
 numeric-coercion fix in the harness,
 [`37954651313`](https://github.com/ruiruii/gates-spec/actions/runs/37954651313) reports
 **ALL CHECKS PASSED** — GREEN half clean, RED half reported as 21/33 empty / 0 tx-bound.
+The run that first exercised the encoded `invalid-verify-current-key-only` vector is
+[`37956749616`](https://github.com/ruiruii/gates-spec/actions/runs/37956749616) — its
+transcript shows the vector block passing (history-aware resolver verifies entry 0,
+current-key-only resolver demonstrated as the false negative).
 Transcripts are in the run logs.
 
 ---
