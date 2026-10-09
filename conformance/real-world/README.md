@@ -23,17 +23,24 @@ Reference their **v0.5.0** (npm `latest`), as the contributor asked.
 
 | assertion | status |
 |---|---|
-| payment exists on Base mainnet | ✅ **independently verified** (2026-10-09, public RPC) |
-| ledger hash chain, signatures, `signedBy` | ⏳ **not yet independently verified** — see note |
+| payment exists on Base mainnet | ✅ **independently verified by gates-spec** (2026-10-09, public RPC) |
+| ledger hash chain, links, signatures, `signedBy` | ✅ **verified by contributor** — 33/33 transcript posted in-thread; gates-spec CI re-run pending (see note) |
+| **settlement linkage (an entry binds this tx)** | ❌ **KNOWN GAP (RED half)** — 21/33 entries have `dataHash = sha256("{}")`; no entry binds the tx in any form tested |
+| **redeem trace (`tx_already_used` written to ledger)** | ❌ **KNOWN GAP (RED half)** — per contributor, the guard enforces and then forgets; nothing is written on the payment path |
 
-> **Note on the pending half.** The ledger half is verified by
-> [`verify-rw001.mjs`](./verify-rw001.mjs). It has not been run successfully from the
-> gates-spec build environment: DNS there answers `api.automaton-sovereign.workers.dev`
-> with placeholder addresses (A `162.125.32.2`, AAAA `2a03:2880:…:face:b00c`) and every
-> connection times out, while control hosts resolve normally. That is an environment
-> restriction, not a finding about their service. **Do not record RW-001 as fully
-> reproduced until that script has been run somewhere with unrestricted egress and its
-> transcript pasted here.**
+> **Note on the pending half.** gates-spec's own independent re-run of the ledger
+> half has **not yet happened from an unrestricted network**: the build environment
+> answers `api.automaton-sovereign.workers.dev` with placeholder DNS addresses and
+> every connection times out, while control hosts resolve normally. That is an
+> environment restriction, not a finding about their service.
+>
+> The contributor, however, ran `verify-rw001.mjs`'s assertion set from his own side
+> and posted the transcript: 33/33 hash, 33/33 `prevHash` links, 33/33 signatures
+> (29 `current` + 4 `historical`), both directions on index 0/20, 21/33 empty
+> `dataHash`, and **no entry binds the tx**.
+>
+> RW-001 is therefore a **known-gap vector**: the chain reproduces, the settlement
+> link does not yet. Do not paraphrase the RED half as verified.
 
 ### 1. The payment
 
@@ -82,16 +89,29 @@ Base origin: `https://api.automaton-sovereign.workers.dev`
 
 All free, no key, no payment, rate-friendly for automated runners.
 
-### 3. Which entry attests this payment
+### 3. Index mapping — the signed timestamp nearest the payment, *not* a settlement link
+
+> **Corrected by the contributor (2026-10-09).** The earlier claim that index 20
+> *attests* this payment is wrong. `/v2/ledger` publishes only `dataHash`; the
+> preimage is never stored. Entry 20's `dataHash` is `sha256("{}")` (empty object),
+> and **21 of the 33 entries (indices 12–32) carry that same empty-object hash**.
+> No entry in the published ledger binds the txHash in any form (raw, `0x`-stripped,
+> or as a JSON field). The payment and the attestation are two unconnected facts —
+> the accurate sentence is the contributor's own: *"the payment and the attestation
+> are two unconnected facts."*
+
+So index 20 is recorded here only as the **signed timestamp nearest the payment**,
+useful for the chain/key negative cases below — not as proof of settlement.
 
 | | index | timestamp (per contributor) | hash | key |
 |---|---|---|---|---|
-| **this payment** | **20** | `2026-09-30T12:21:40.058Z` | `c71f0e2f…5a30b7` | current `6db8674197d1601f` |
-| retired-key negative case | **0** | `2026-09-25T14:34:35.659Z` | `78941ded…15be87` | retired `7e32754cf3911ccf` |
+| signed timestamp nearest payment | 20 | `2026-09-30T12:21:40.058Z` | `c71f0e2f…5a30b7` | current `6db8674197d1601f` |
+| retired-key negative case | 0 | `2026-09-25T14:34:35.659Z` | `78941ded…15be87` | retired `7e32754cf3911ccf` |
 
 Contributor reports `GET /v2/verify?index=20` →
 `{ verified: true, signatureValid: true, chainIntact: true, signedBy: "current" }` and
-`?index=0` → the same with `signedBy: "historical"`. **Not yet re-run by gates-spec.**
+`?index=0` → the same with `signedBy: "historical"`. **Chain verified by contributor;
+gates-spec independent re-run pending (see status note).**
 
 ### 4. Attestation envelope (their evidence layer)
 
@@ -113,8 +133,11 @@ Two sharp edges worth encoding as vectors of their own:
 - The signature is over the **hex string** of `hash` — not the raw 32-byte digest and not
   the preimage. Signing the raw digest is the obvious implementation and it fails.
 
-The contributor reports recomputing `hash` for **33 of 33** published entries and matching.
-gates-spec has not yet reproduced this independently (see the status note above).
+The contributor recomputed `hash` for **33 of 33** published entries and matched, and
+posted a full transcript (33/33 hash, 33/33 `prevHash` links, 33/33 signatures,
+29 `current` + 4 `historical`). gates-spec has not yet reproduced this from its own
+runner (environment restriction + CI workflow not yet deployed — see status note),
+but the chain half is no longer unverified.
 
 ### 5. Negative case: retired signing key
 
@@ -137,12 +160,13 @@ and must **not** verify against the current one.
 | `true` | 200 served against a verified payment (EIP-3009 and legacy transfer-then-hash paths) | `settled` |
 | `queued` | EIP-3009 path, settlement in flight; arrives with `X-Payment-Scheme: eip3009` | `in_flight` |
 | absent | unpaid — the response **is** the 402 challenge | `absent` |
-| `402 payment_invalid / reason: tx_already_used` | resend carrying an already-settled proof | redemption attempt #2 → `redeem_count += 1` |
+| `402 payment_invalid / reason: tx_already_used` | resend carrying an already-settled proof | **should** trigger `redeem_count += 1` (the origin currently forgets it — see §3 / RED half) |
 
 **The fourth row is the point.** `tx_already_used` is the refusal a conforming seller emits
 when a settled proof is presented again. It is exactly the event `redeem_count` exists to
 record: the guard prevents the replay, the field is what makes it leave a signed trace.
-Prevention is a tourniquet; the count is the medical record.
+Prevention is a tourniquet; the count is the medical record. *(quote: contributor,
+x402-receipts#6 — cited as their words, used by permission.)*
 
 **Consequence for §6.1.1.** Because `absent` only ever arrives as a 402 challenge, this
 origin never emits `delivered + absent`. That contradiction is therefore not a state a
@@ -161,7 +185,10 @@ node conformance/real-world/verify-rw001.mjs
 
 Zero dependencies, Node >= 18. It re-runs every assertion above — on-chain payment fields
 from a public Base RPC, the whole hash chain, both signatures, and `signedBy` for both
-indices — and exits non-zero on any failure. Paste its transcript here when it runs clean.
+indices — and **reports** the RED half (empty `dataHash` count, tx-binding count) as a
+known gap rather than asserting it pass. The GREEN half must stay clean; the RED half is
+expected to read "empty / unbound" until the origin binds a settlement to an entry.
+Paste its transcript here when it runs clean.
 
 ---
 

@@ -81,10 +81,24 @@ const retired = (pub.history ?? []).find((h) => h.keyId === EXPECTED.retiredKeyI
 console.log(`  [${retired ? 'PASS' : 'FAIL'}] retired key ${EXPECTED.retiredKeyId} published in history`);
 if (!retired) failures++;
 
-console.log('\n=== 3. Ledger: recompute every chain hash + check the links ===');
-const led = await getJSON(`${ORIGIN}/v2/ledger?limit=50`);
-const entries = (led.entries ?? []).slice().sort((a, b) => a.index - b.index);
-console.log(`  [INFO] entries fetched: ${entries.length} (reported total: ${led.total})`);
+console.log('\n=== 3. Ledger: page through every entry, recompute each hash + link ===');
+// Page from 0 with increasing `from`; do not assume the window starts at 0 once
+// `total` exceeds the per-page limit (tip from the contributor: the old
+// contiguity assert would rot the moment the ledger outgrew one window).
+const PAGE = 50;
+const entries = [];
+let from = 0;
+let total = null;
+while (true) {
+  const led = await getJSON(`${ORIGIN}/v2/ledger?from=${from}&limit=${PAGE}`);
+  if (total === null) total = led.total;
+  const batch = led.entries ?? [];
+  entries.push(...batch);
+  if (batch.length < PAGE) break;
+  from += batch.length;
+}
+entries.sort((a, b) => a.index - b.index);
+console.log(`  [INFO] entries fetched: ${entries.length} (reported total: ${total})`);
 let matched = 0;
 const mismatched = [];
 const brokenLinks = [];
@@ -102,6 +116,22 @@ if (mismatched.length) console.log(`  [INFO] mismatched indices: ${mismatched.jo
 check('contiguous 0..N with no gaps', entries.every((e, i) => e.index === i), true);
 check('prevHash links every entry to its predecessor', brokenLinks.length === 0, true);
 if (brokenLinks.length) console.log(`  [INFO] broken links at indices: ${brokenLinks.join(', ')}`);
+
+// --- RED HALF: the gap between evidence of signing and evidence of spend ---
+// This is the half the contributor himself showed is currently unfilled. It is
+// reported, not asserted as pass/fail: today it SHOULD read "empty / unbound"
+// until his origin binds a settlement to an entry. That is the point of RW-001
+// as a known-gap vector: the chain reproduces, the settlement link does not yet.
+console.log('\n=== 3b. Known gap (RED half) — reported, expected to fail today ===');
+const EMPTY = createHash('sha256').update('{}').digest('hex');
+const emptyEntries = entries.filter((e) => e.dataHash === EMPTY);
+console.log(`  [GAP] entries whose dataHash is sha256("{}") (no payload): ${emptyEntries.length}/${entries.length}` +
+  (emptyEntries.length ? ` (indices ${emptyEntries[0].index}..${emptyEntries[emptyEntries.length - 1].index})` : ''));
+const forms = [TX, TX.replace(/^0x/, ''), JSON.stringify({ tx: TX })];
+const bindCount = entries.filter((e) =>
+  forms.some((f) => e.dataHash === createHash('sha256').update(f).digest('hex'))).length;
+console.log(`  [GAP] entries whose dataHash binds this tx (raw / 0x-stripped / {tx}): ${bindCount}`);
+console.log('  [INFO] RW-001 is a KNOWN-GAP vector: chain reproduces; settlement link does not yet.');
 
 /** signature is ECDSA-P256-SHA256 (DER) over the ASCII hex string of `hash` */
 const verifyEntry = (e, pem) =>
