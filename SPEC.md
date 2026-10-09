@@ -392,6 +392,16 @@ A conforming implementation MUST:
 5. map `agent.spend.protocol` to a registered value;
 6. confine vendor extensions to a `_vendor.*` namespace, never redefining core fields.
 
+### 10.1 Real-world vectors
+
+Synthetic vectors prove an implementation is self-consistent. They cannot prove the
+semantics describe anything real. [`conformance/real-world/`](./conformance/real-world)
+holds vectors built from actual settled payments, each with its provenance stated —
+including when the payment was **not** a customer payment.
+
+A real-world vector is accepted only after gates-spec re-verifies the payment
+independently, against a public network, without trusting the submitter.
+
 ---
 
 ## 11. Relationship to adjacent specifications
