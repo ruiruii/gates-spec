@@ -113,6 +113,25 @@ Contributor reports `GET /v2/verify?index=20` →
 `?index=0` → the same with `signedBy: "historical"`. **Chain independently re-verified by
 gates-spec CI (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031)).**
 
+### 3.1 Redeem-trace reference fingerprint composition (contributor, C8 — recorded as his)
+
+The RED half of RW-001 (§"Verification status", rows 3–4) is the `redeem_count`-derivable /
+settlement_status side. It is red in gates-spec's tree today only because no upstream
+implementation has shipped it. The contributor supplied the **reference fingerprint composition**
+that makes that half derivable — anchored here **ahead of any code**, in the order he asked for
+("objections before the code"). It is recorded as his; gates-spec only pins it.
+
+> Fingerprint over the request the **client** made, never over what the **seller** wrote. In x402
+> v2 the challenge carries server-chosen fields (`accepts[].resource.url` is absolute and written
+> by the seller); if any enter the fingerprint the seller can make one request hash two ways or two
+> requests hash the same, and the count stops measuring attempts.
+
+**Canonical bytes:** `sha256( v1 ‖ method ‖ origin ‖ path ‖ queryCanonical ‖ payTo ‖ asset ‖ network ‖ amount ‖ scheme )` — all decoded, none of it wire bytes. `origin` = the origin the client actually contacted (not `accepts[].resource.url`); the terms belong in it; per-attempt fields (`txHash`, `nonce`, timestamps, deadlines) are out. Normalization: lowercase host, strip default port, no trailing slash, query sorted by key, percent-encode once, reject non-canonical. **Both settle and refusal compute from the request as received**, or they diverge exactly when the seller rotates/reorders an `accepts` entry — the case you want counted together.
+
+Source: x402-receipts#6 comment `6087037511` (C8). Full wording and the three failure modes it
+avoids (seller-forged collisions, wire-vs-canonical split, settle/refusal divergence) are in the
+threat-model note, **revision 3**, §4 G1.
+
 ### 4. Attestation envelope (their evidence layer)
 
 This is **not** a gates-spec VSR. It is the contributor's own ECDSA-P256 hash-chained
