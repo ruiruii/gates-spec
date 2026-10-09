@@ -201,16 +201,14 @@ export function createGates(config) {
           ? 'delivered'
           : 'delivered';
 
-      // The buyer's runtime may report consumption back on the same call
-      // (header `x-gates-consumed: yes|no|unknown`, `x-gates-consumed-by: <id>`).
-      const hint = (req.headers ?? {})['x-gates-consumed'];
-      const consumed = ['yes', 'no', 'unknown'].includes(String(hint)) ? String(hint) : 'unknown';
-      const consumedByRaw = (req.headers ?? {})['x-gates-consumed-by'];
-      const consumedBy = consumedByRaw
-        ? String(consumedByRaw).split(',').map((s) => s.trim()).filter(Boolean)
-        : undefined;
+      // Consumption is observable only by the buyer runtime, not by the seller.
+      // Per SPEC §5.3, a merchant-signed VSR MUST set result.consumed = 'unknown'.
+      // The buyer attests consumption with its own signature via @gates-spec/agent-sdk
+      // (role 'agent'); linkReceipts() binds the two sides into bilateral evidence.
+      const consumed = 'unknown';
+      const consumedBy = undefined;
 
-      const completeness = consumed !== 'unknown' && consumedBy?.length ? 'bilateral' : 'unilateral_merchant';
+      const completeness = 'unilateral_merchant';
 
       const vsr = buildVSR({
         protocol,

@@ -52,5 +52,5 @@ server.listen(PORT, () => {
   process.stdout.write(`\nTry:\n`);
   process.stdout.write(`  curl -i http://localhost:${PORT}/paid\n`);
   process.stdout.write(`  curl -i -H 'payment-signature: demo-proof-1234' http://localhost:${PORT}/paid\n`);
-  process.stdout.write(`  curl -i -H 'payment-signature: demo-proof-1234' -H 'x-gates-consumed: yes' -H 'x-gates-consumed-by: task_demo' http://localhost:${PORT}/paid\n`);
+  process.stdout.write(`  curl -i -H 'payment-signature: demo-proof-1234' http://localhost:${PORT}/paid\n`);
 });

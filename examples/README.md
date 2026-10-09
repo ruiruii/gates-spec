@@ -16,8 +16,11 @@ It listens on `http://localhost:4000` and exposes:
 - `GET /paid` with `payment-signature: <anything>` — returns the response plus an
   `x-gates-receipt` header and an `x-gates-redeem-count` header.
 
-If you also send `x-gates-consumed: yes` and `x-gates-consumed-by: <task_id>`, the
-merchant receipt is upgraded to `completeness = bilateral`.
+The merchant receipt always carries `result.consumed = "unknown"` — the seller has no
+observation of the buyer's runtime, and per SPEC §5.3 a merchant-signed VSR MUST NOT
+assert consumption. The buyer attests it separately (see `minimal-client.mjs`, which
+calls `gates.consumedBy(task_id)` and signs an agent-side VSR); `linkReceipts()` binds
+the two sides into `completeness = bilateral`.
 
 ## `minimal-client.mjs`
 
