@@ -38,8 +38,12 @@ const EXPECTED = {
 const { createHash, createPublicKey, verify } = await import('node:crypto');
 
 let failures = 0;
+const asNum = (v) => (typeof v === 'number' ? v : (typeof v === 'string' && v.trim() !== '' && !Number.isNaN(Number(v)) ? Number(v) : v));
 function check(label, actual, expected) {
-  const ok = actual === expected;
+  // Coerce numeric-looking values (e.g. an API returning "20000" vs our 20000)
+  // so a string/number mismatch does not masquerade as a real payment discrepancy.
+  const a = asNum(actual), e = asNum(expected);
+  const ok = a === e;
   if (!ok) failures++;
   console.log(`  [${ok ? 'PASS' : 'FAIL'}] ${label}: ${actual}${ok ? '' : ` (expected ${expected})`}`);
 }

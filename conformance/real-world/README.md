@@ -23,24 +23,24 @@ Reference their **v0.5.0** (npm `latest`), as the contributor asked.
 
 | assertion | status |
 |---|---|
-| payment exists on Base mainnet | ✅ **independently verified by gates-spec** (2026-10-09, public RPC) |
-| ledger hash chain, links, signatures, `signedBy` | ✅ **verified by contributor** — 33/33 transcript posted in-thread; gates-spec CI re-run pending (see note) |
-| **settlement linkage (an entry binds this tx)** | ❌ **KNOWN GAP (RED half)** — 21/33 entries have `dataHash = sha256("{}")`; no entry binds the tx in any form tested |
+| payment exists on Base mainnet | ✅ **independently verified by gates-spec** (2026-10-09, public Base RPC) |
+| ledger hash chain, `prevHash` links, signatures, `signedBy` | ✅ **independently re-verified by gates-spec CI** on a GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031), 2026-10-09): 33/33 hash, 33/33 links, 33/33 signatures |
+| **settlement linkage (an entry binds this tx)** | ❌ **KNOWN GAP (RED half)** — 21/33 entries have `dataHash = sha256("{}")`; 0 entries bind the tx in any form tested (confirmed by the same CI run) |
 | **redeem trace (`tx_already_used` written to ledger)** | ❌ **KNOWN GAP (RED half)** — per contributor, the guard enforces and then forgets; nothing is written on the payment path |
 
-> **Note on the pending half.** gates-spec's own independent re-run of the ledger
-> half has **not yet happened from an unrestricted network**: the build environment
-> answers `api.automaton-sovereign.workers.dev` with placeholder DNS addresses and
-> every connection times out, while control hosts resolve normally. That is an
-> environment restriction, not a finding about their service.
+> **Independent re-run provenance.** gates-spec's own build sandbox cannot reach
+> `api.automaton-sovereign.workers.dev` (its DNS answers placeholder addresses and every
+> connection times out), so the first independent re-run was executed on a
+> **GitHub-hosted runner** — infrastructure that is neither ours nor the contributor's —
+> via `.github/workflows/real-world-conformance.yml`. Run
+> [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031)
+> returned `success` and reported: 33/33 hash recomputation, 33/33 `prevHash` links,
+> 33/33 signatures, index 0/20 both directions, `/v1/verify-payment` ok (block 51984731),
+> **21/33** empty `dataHash`, and **0** entries binding the tx. The contributor ran the
+> same assertion set from his own side and posted a matching transcript in-thread.
 >
-> The contributor, however, ran `verify-rw001.mjs`'s assertion set from his own side
-> and posted the transcript: 33/33 hash, 33/33 `prevHash` links, 33/33 signatures
-> (29 `current` + 4 `historical`), both directions on index 0/20, 21/33 empty
-> `dataHash`, and **no entry binds the tx**.
->
-> RW-001 is therefore a **known-gap vector**: the chain reproduces, the settlement
-> link does not yet. Do not paraphrase the RED half as verified.
+> RW-001 is therefore a **known-gap vector**: the chain reproduces independently, the
+> settlement link does not yet. Do not paraphrase the RED half as verified.
 
 ### 1. The payment
 
@@ -110,8 +110,8 @@ useful for the chain/key negative cases below — not as proof of settlement.
 
 Contributor reports `GET /v2/verify?index=20` →
 `{ verified: true, signatureValid: true, chainIntact: true, signedBy: "current" }` and
-`?index=0` → the same with `signedBy: "historical"`. **Chain verified by contributor;
-gates-spec independent re-run pending (see status note).**
+`?index=0` → the same with `signedBy: "historical"`. **Chain independently re-verified by
+gates-spec CI (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031)).**
 
 ### 4. Attestation envelope (their evidence layer)
 
@@ -135,9 +135,9 @@ Two sharp edges worth encoding as vectors of their own:
 
 The contributor recomputed `hash` for **33 of 33** published entries and matched, and
 posted a full transcript (33/33 hash, 33/33 `prevHash` links, 33/33 signatures,
-29 `current` + 4 `historical`). gates-spec has not yet reproduced this from its own
-runner (environment restriction + CI workflow not yet deployed — see status note),
-but the chain half is no longer unverified.
+29 `current` + 4 `historical`). gates-spec re-ran the same assertion set on a
+GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031))
+and matched 33/33 on every count — the chain half is now independently reproduced.
 
 ### 5. Negative case: retired signing key
 
@@ -188,7 +188,9 @@ from a public Base RPC, the whole hash chain, both signatures, and `signedBy` fo
 indices — and **reports** the RED half (empty `dataHash` count, tx-binding count) as a
 known gap rather than asserting it pass. The GREEN half must stay clean; the RED half is
 expected to read "empty / unbound" until the origin binds a settlement to an entry.
-Paste its transcript here when it runs clean.
+The CI workflow runs it weekly and on push; last run
+[`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031) (success,
+transcript in the run logs).
 
 ---
 
