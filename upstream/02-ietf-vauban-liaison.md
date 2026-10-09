@@ -65,9 +65,9 @@ generic receipt extensions rather than x402-only fields.
 
 ## Reference materials
 
-- Specification: `https://github.com/sycee/gates-spec/blob/main/SPEC.md`
-- JSON Schema: `https://github.com/sycee/gates-spec/blob/main/schema/vsr-v0.1.schema.json`
-- Conformance vectors: `https://github.com/sycee/gates-spec/tree/main/conformance/vectors`
+- Specification: `https://github.com/ruiruii/gates-spec/blob/main/SPEC.md`
+- JSON Schema: `https://github.com/ruiruii/gates-spec/blob/main/schema/vsr-v0.1.schema.json`
+- Conformance vectors: `https://github.com/ruiruii/gates-spec/tree/main/conformance/vectors`
 - Reference implementation: Ed25519 offline verification in TypeScript/Node.
 
 ## Requested next step

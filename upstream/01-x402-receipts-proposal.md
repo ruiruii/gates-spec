@@ -64,7 +64,7 @@ model and should live in the same signed receipt.
 ## Offer
 
 We have a reference implementation and conformance vectors at
-`https://github.com/sycee/gates-spec`. We are happy to submit a PR that:
+`https://github.com/ruiruii/gates-spec`. We are happy to submit a PR that:
 
 1. Adds `consumed` / `consumed_by` / `consumed_at` / `freshness_s` to the `delivery` block.
 2. Adds `redeem_count` / `redeem_resources` to the `payment` block.

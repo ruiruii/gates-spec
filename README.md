@@ -69,7 +69,7 @@ All packages are **zero-dependency** and use Node native Ed25519 (`crypto`).
 ## Quick start
 
 ```bash
-git clone https://github.com/sycee/gates-spec.git
+git clone https://github.com/ruiruii/gates-spec.git
 cd gates-spec
 npm install          # links local workspaces
 npm test             # runs conformance + e2e tests
