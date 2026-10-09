@@ -4,7 +4,7 @@
       "payment_proof": "PAYMENT-SIGNATURE:deadbeef"
     },
     "delivery": {
-      "delivered_at": "2026-10-09T08:39:10.539Z",
+      "delivered_at": "2026-10-09T09:19:10.257Z",
       "status": "delivered"
     },
     "payment": {
@@ -18,9 +18,9 @@
     },
     "schema_version": "gates-spec/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   },
-  "signature": "vqUifdlUVe-Ri2-EZwq2ajaP-DupINlNhojA40C5Bh6eOvMTkRt87cTAza47vCMEi9OT3g-dp32BBh3ego0DAA"
+  "signature": "HUrcRx2T3BQZEq2FR21xuBLtNVWD8Q0i4LoTbIf5ZYxUk_WW0PitjoKJuMcwCrr5oNu7ZyiUcleYSowOQwZmDw"
 }

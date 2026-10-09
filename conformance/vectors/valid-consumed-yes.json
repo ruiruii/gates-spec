@@ -34,9 +34,9 @@
     "signer": {
       "agent_id": "erc8004:8453:0x9a1f",
       "key_id": "2026Q4-01",
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   },
-  "signature": "hg0rskbzXD_QND35DYbRIIOZBqzOKfdRIDUHyUavJJbK9EjtO8wDRqb7ECTWuJ4LI2Rw0W05R8ejgKqHbY4hAg"
+  "signature": "UgSlMZ9nAXE2AA00hHNICuwwzaRix_W1WsnRuVi0ABectwxSNDbHTupN_C9kUi9WfmVFd2ZZWXwLLxWCSUsSDQ"
 }

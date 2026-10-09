@@ -16,9 +16,9 @@
     },
     "schema_version": "gates-spec/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   },
-  "signature": "yljWBo3_M1n9qKBL47AOUlz92FXDNpU7NAhM_5WBoSa8EA3MEuHT7xzpVyfzG2n3tgiPGmgV_IYy_jbW8JNuCQ"
+  "signature": "f3M5VttDGFVy2OKHuzTsBMQ80jxZK44qiK-O0Dkz3bSsP-2r-cH3kcBGP7hQK68j2Qmc5-sLSZZ5eWBDd2GBBw"
 }

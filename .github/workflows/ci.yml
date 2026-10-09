@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install
+        run: npm install
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Verify conformance vectors
+        run: npm run verify
+
+      - name: Regenerate vectors and assert no drift
+        run: |
+          npm run vectors
+          git diff --exit-code conformance/vectors/ || {
+            echo "::error::conformance vectors changed; run 'npm run vectors' and commit"
+            exit 1
+          }

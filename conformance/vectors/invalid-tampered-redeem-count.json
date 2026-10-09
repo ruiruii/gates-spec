@@ -1,7 +1,7 @@
 {
   "vsr": {
     "delivery": {
-      "delivered_at": "2026-10-09T08:39:10.538Z",
+      "delivered_at": "2026-10-09T09:19:10.256Z",
       "status": "delivered"
     },
     "payment": {
@@ -15,9 +15,9 @@
     },
     "schema_version": "gates-spec/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   },
-  "signature": "QkZaAUy9lD1O3thl75v_tIuH5z7M-rY2fOnw9AznxsP-PMF3xCYAjknU_HCu3SPe8MxHPviEALdd38vQoPszDQ"
+  "signature": "GGFTTXFURHb0C9b_aG7BKEv91z9gM6iqjAHYmrj7NrEYLpSdVJ-rk_RdNkjtbv_PFIkXEP2rf7aNGdqd9XIbBw"
 }

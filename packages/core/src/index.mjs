@@ -115,6 +115,28 @@ export function generateKeyPair() {
   };
 }
 
+/**
+ * Deterministic Ed25519 keypair from a 32-byte seed (64 hex chars).
+ * Used to generate reproducible conformance vectors.
+ * @param {string} seedHex 64 hex characters
+ */
+export function generateKeyPairFromSeed(seedHex) {
+  const seed = Buffer.from(String(seedHex), 'hex');
+  if (seed.length !== 32) {
+    throw new TypeError('generateKeyPairFromSeed: seed must be 32 bytes (64 hex chars)');
+  }
+  // PKCS#8 wrapper for an Ed25519 private key: prefix + raw 32-byte seed
+  const der = Buffer.concat([PKCS8_ED25519_PREFIX, seed]);
+  const priv = createPrivateKey({ key: der, format: 'der', type: 'pkcs8' });
+  const pub = createPublicKey(priv);
+  return {
+    publicKey: `ed25519:${b64u(pub.export({ type: 'spki', format: 'der' }))}`,
+    privateKey: `ed25519-priv:${b64u(priv.export({ type: 'pkcs8', format: 'der' }))}`,
+  };
+}
+
+const PKCS8_ED25519_PREFIX = Buffer.from('302e020100300506032b657004220420', 'hex');
+
 /** Load a private key reference into a node KeyObject. */
 export function loadPrivateKey(ref) {
   const raw = String(ref).replace(/^ed25519-priv:/, '');

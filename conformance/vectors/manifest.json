@@ -1,6 +1,9 @@
 {
   "version": "gates-spec/v0.1",
-  "generatedAt": "2026-10-09T08:39:10.532Z",
+  "signer": {
+    "algorithm": "Ed25519",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec"
+  },
   "cases": [
     {
       "file": "valid-consumed-yes.json",

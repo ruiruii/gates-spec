@@ -11,7 +11,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkEnvelope } from './index.mjs';
-import { buildVSR, generateKeyPair, nowISO, sha256, signVSR } from '@gates-spec/core';
+import { buildVSR, generateKeyPairFromSeed, sha256, signVSR } from '@gates-spec/core';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '../../..');
@@ -95,7 +95,9 @@ function runSpan(files) {
 
 function genVectors() {
   mkdirSync(VECTORS, { recursive: true });
-  const keys = generateKeyPair();
+  const keys = generateKeyPairFromSeed(
+    sha256('gates-spec/v0.1 conformance vectors').slice(7), // deterministic: reproducible vectors
+  );
   const proof = 'PAYMENT-SIGNATURE:deadbeef'; // illustrative only; never stored
   const proofHash = sha256(proof);
 
@@ -263,7 +265,12 @@ function genVectors() {
     return signVSR(vsr, keys.privateKey);
   }
 
-  const manifest = { version: 'gates-spec/v0.1', generatedAt: nowISO(), cases: [] };
+  // No timestamp: vectors must be byte-reproducible so CI can detect drift.
+  const manifest = {
+    version: 'gates-spec/v0.1',
+    signer: { algorithm: 'Ed25519', public_key: keys.publicKey },
+    cases: [],
+  };
   for (const c of cases) {
     const doc = c.build();
     writeFileSync(resolve(VECTORS, `${c.name}.json`), JSON.stringify(doc, null, 2) + '\n');

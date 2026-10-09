@@ -22,9 +22,9 @@
     "schema_version": "gates-spec/v0.1",
     "signer": {
       "agent_id": "erc8004:8453:0x9a1f",
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "agent"
     }
   },
-  "signature": "ILXHt5wzO0RVLzfJcCM8hT_sgDUbvrfGVQF0eRVTwJgUkbk_Br5_lqF8goCgzrxaQbbL8fC23sdjlej9q5PXBA"
+  "signature": "lKboJ6vQ9wxh1hIJYC575x6WWFFlKt6hTgCN4T2zOYMIwm5YPnArgGAYJUJo0K2TW4e8at5SYtyDqZcN3d_YCg"
 }

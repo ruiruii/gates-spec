@@ -1,7 +1,7 @@
 {
   "vsr": {
     "delivery": {
-      "delivered_at": "2026-10-09T08:39:10.539Z",
+      "delivered_at": "2026-10-09T09:19:10.258Z",
       "status": "delivered"
     },
     "payment": {
@@ -15,7 +15,7 @@
     },
     "schema_version": "gates-spec/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   }
