@@ -9,7 +9,8 @@
     },
     "payment": {
       "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
-      "redeem_count": 1
+      "redeem_count": 1,
+      "settlement_status": "in_flight"
     },
     "protocol": "x402",
     "resource_id": "search.v1",
@@ -22,5 +23,5 @@
       "role": "merchant"
     }
   },
-  "signature": "JEc6aa5w-6YdJdQd5KY48j3oxfCP9gdNsJXoyxRNmNpUA_QknBuPiJRWUEy0ZeIRfMCws9qZxdl4KF5bwb2cCA"
+  "signature": "9CRZCvII_h7AK0vvsYga5DfoU4Czja1HICHnuFw-q3MqDPcAIVANhkyxBbFpoyWnh4lwKW0E9gEmFeDa_u_wDA"
 }

@@ -129,8 +129,27 @@ Attributes are emitted as OpenTelemetry span attributes on a span named
 | `agent.spend.payment.proof_seen_at` | timestamp | pay | Seller first observed the proof |
 | `agent.spend.payment.complete_seen_at` | timestamp | complete | Seller accepted the proof |
 | `agent.spend.payment.trade_no` | string | — | Rail-traceable transaction identifier |
+| `agent.spend.payment.settlement_status` | enum | — | `settled` \| `in_flight` \| `absent` |
 | `agent.spend.amount.value` | string | — | Decimal string (avoid float drift) |
 | `agent.spend.amount.currency` | string | — | ISO 4217 (`CNY`, `USD`) or token symbol (`USDC`) |
+
+> **Settlement predicate.** A payment's settlement state has one of three values; there is no
+> fourth. `settled` means the transaction is confirmed enough for the rail. `in_flight`
+> means the proof is known to have been broadcast or the transaction exists, but the seller
+> cannot yet confirm finality (e.g., confirmations are below the threshold, the receipt is
+> not readable yet, or `getBlockNumber` threw). `absent` means no transaction was found for
+> the claimed proof.\n>
+> The default for an unobserved state is `in_flight`, not `absent` — **\"not yet observable\"
+> is not \"not settled\"**. This also keeps the predicate fail-closed: `in_flight` does not
+> make the receipt valid, but a verifier can report \"unproven yet\" rather than \"refuted\".\n>
+> `delivery.status` is orthogonal to `settlement_status`. `delivered` + `settled` is complete.
+> `delivered` + `in_flight` is **incomplete**, not inconsistent — the bytes were produced
+> before finality was known. `delivered` + `absent` is a **contradiction** a verifier MUST flag,
+> because the seller claims to have produced bytes for a payment that never existed.
+>
+> A transport may use its own wire value (e.g., `X-Payment-Settled: true` / `queued` / absent)
+> as long as it documents the mapping to the spec enum (`true → settled`, `queued → in_flight`,
+> absent → `absent`).
 
 ### 5.2 Delivery attributes
 
@@ -241,8 +260,29 @@ payment proof body.
 - `payment.proof_hash` MUST be present. The raw proof MUST NOT appear anywhere in the envelope.
 - `result.consumed` MUST be present and MUST be one of `yes` \| `no` \| `unknown`.
 - `payment.redeem_count` MUST be present and MUST be an integer ≥ 1.
+- `payment.settlement_status` SHOULD be present and MUST be one of `settled` \| `in_flight` \| `absent`.
+  When the seller cannot determine the state, the value MUST be `in_flight` — **never** `absent`.
 - `signer.role` MUST be `merchant` \| `agent` \| `observer`.
 - `signature` MUST be a base64url-encoded Ed25519 signature over the canonical form of `vsr`.
+
+### 6.1.1 Settlement / delivery cross-checks
+
+`payment.settlement_status` and `delivery.status` are orthogonal. A verifier MUST evaluate
+the pair, not either field alone:
+
+| pair | verdict | meaning |
+|------|---------|---------|
+| `settled` + `delivered` / `partial` | `ok` | complete |
+| `in_flight` + any | `incomplete` | bytes produced before finality was known |
+| `absent` + `failed` / `timeout` / `partial` | `ok` | nothing settled, nothing (fully) served |
+| `absent` + `delivered` | `contradiction` | **MUST be flagged**: bytes claimed for a payment with no transaction |
+| `settled` + `failed` / `timeout` | warning only | paid without fulfilment — dispute material |
+
+Fail-closed is preserved. `in_flight` does not make a receipt valid; it makes it
+*unproven*. A verifier that requires settlement passes `requireSettled` and gets
+`valid = false` with a reason distinguishable from `refuted`. A seller that knowingly
+fulfils without payment sets `allowUnpaidDelivery` and downgrades the contradiction to a
+warning — that is an explicit, auditable choice, not the default.
 
 ### 6.2 Signature scope
 

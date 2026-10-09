@@ -113,6 +113,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 1,
+        settlementStatus: 'settled',
         redeemResources: ['search.v1'],
         deliveryStatus: 'delivered',
         deliveredAt: '2026-10-09T12:00:01.800Z',
@@ -139,6 +140,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 1,
+        settlementStatus: 'settled',
         deliveryStatus: 'delivered',
         deliveredAt: '2026-10-09T12:00:01.800Z',
         consumed: 'unknown',
@@ -155,6 +157,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 1,
+        settlementStatus: 'settled',
         deliveryStatus: 'delivered',
         deliveredAt: '2026-10-09T12:00:01.800Z',
         consumed: 'no',
@@ -171,6 +174,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 3,
+        settlementStatus: 'settled',
         redeemResources: ['search.v1', 'fetch.v1', 'summarize.v1'],
         deliveryStatus: 'delivered',
         deliveredAt: '2026-10-09T12:00:09.800Z',
@@ -192,6 +196,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 1,
+        settlementStatus: 'settled',
         deliveryStatus: 'delivered',
         deliveredAt: '2026-10-09T12:00:01.800Z',
         consumed: 'yes',
@@ -201,6 +206,65 @@ function genVectors() {
         agentId: 'erc8004:8453:0x9a1f',
         role: 'agent',
         completeness: 'bilateral',
+      })),
+    },
+    {
+      // "Not yet observable" is not "not settled" (SPEC §5.1). The proof was
+      // broadcast, confirmations are below the threshold, and the seller still
+      // produced bytes. This is incomplete evidence, not a contradiction.
+      name: 'valid-settlement-in-flight',
+      expect: { schemaValid: true, signatureValid: true, level: 'L1', note: 'delivered before finality — incomplete, fail-closed' },
+      build: () => envelope(buildVSR({
+        protocol: 'x402',
+        resourceId: 'search.v1',
+        proofHash,
+        redeemCount: 1,
+        settlementStatus: 'in_flight',
+        deliveryStatus: 'delivered',
+        deliveredAt: '2026-10-09T12:00:01.800Z',
+        consumed: 'unknown',
+        publicKey: keys.publicKey,
+        role: 'merchant',
+        completeness: 'unilateral_merchant',
+      })),
+    },
+    {
+      // Settled but never fulfilled: money moved, bytes did not. A real
+      // dispute case, and a warning rather than an error — the receipt is
+      // coherent, the outcome is just bad.
+      name: 'valid-settlement-settled-undelivered',
+      expect: { schemaValid: true, signatureValid: true, level: 'L1', note: 'paid without fulfilment — dispute material' },
+      build: () => envelope(buildVSR({
+        protocol: 'x402',
+        resourceId: 'search.v1',
+        proofHash,
+        redeemCount: 1,
+        settlementStatus: 'settled',
+        deliveryStatus: 'failed',
+        deliveredAt: '2026-10-09T12:00:01.800Z',
+        consumed: 'unknown',
+        publicKey: keys.publicKey,
+        role: 'merchant',
+        completeness: 'unilateral_merchant',
+      })),
+    },
+    {
+      // The contradiction: the seller claims it produced bytes for a payment
+      // that has no transaction at all. A verifier MUST flag this (SPEC §5.1).
+      name: 'invalid-settlement-absent-delivered',
+      expect: { schemaValid: true, signatureValid: true, level: 'invalid', note: 'absent settlement + delivered bytes = contradiction' },
+      build: () => envelope(buildVSR({
+        protocol: 'x402',
+        resourceId: 'search.v1',
+        proofHash,
+        redeemCount: 1,
+        settlementStatus: 'absent',
+        deliveryStatus: 'delivered',
+        deliveredAt: '2026-10-09T12:00:01.800Z',
+        consumed: 'unknown',
+        publicKey: keys.publicKey,
+        role: 'merchant',
+        completeness: 'unilateral_merchant',
       })),
     },
     {

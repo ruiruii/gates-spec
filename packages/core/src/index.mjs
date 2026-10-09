@@ -164,6 +164,7 @@ export function loadPublicKey(ref) {
  *   resourceId: string,
  *   proofHash: string,
  *   redeemCount: number,
+ *   settlementStatus?: 'settled'|'in_flight'|'absent',
  *   deliveryStatus?: 'delivered'|'partial'|'failed'|'timeout',
  *   deliveredAt?: string,
  *   consumed?: 'yes'|'no'|'unknown',
@@ -188,6 +189,7 @@ export function buildVSR(input) {
     payment: {
       proof_hash: input.proofHash,
       redeem_count: Number(input.redeemCount ?? 1),
+      settlement_status: input.settlementStatus ?? 'in_flight',
     },
     delivery: {
       status: input.deliveryStatus ?? 'delivered',
@@ -249,12 +251,61 @@ const PROTOCOLS = new Set([
 ]);
 const ROLES = new Set(['merchant', 'agent', 'observer']);
 
+/** The settlement predicate has exactly three values (SPEC §5.1). */
+export const SETTLEMENT_STATUS = new Set(['settled', 'in_flight', 'absent']);
+
+/**
+ * Map a transport's own wire value onto the spec enum.
+ *
+ * Documented mappings (SPEC §5.1):
+ *   true | 'true' | 'settled' | 'ok' | 'confirmed'   -> 'settled'
+ *   'queued' | 'pending' | 'in_flight' | unknown      -> 'in_flight'
+ *   false | 'false' | 'absent' | 'none' | 'not_found' -> 'absent'
+ *
+ * A signal the seller never received (`null` / `undefined` / unknown) falls back to
+ * `in_flight`: "not yet observable" is not "not settled".
+ *
+ * @param {unknown} wire
+ * @returns {'settled'|'in_flight'|'absent'}
+ */
+export function normalizeSettlement(wire) {
+  if (SETTLEMENT_STATUS.has(/** @type {string} */ (wire))) {
+    return /** @type {'settled'|'in_flight'|'absent'} */ (wire);
+  }
+  if (wire === undefined || wire === null) return 'in_flight';
+  if (wire === true) return 'settled';
+  if (wire === false) return 'absent';
+  const v = String(wire).trim().toLowerCase();
+  if (v === 'true' || v === 'ok' || v === 'confirmed' || v === 'complete') return 'settled';
+  if (v === 'false' || v === 'absent' || v === 'none' || v === 'not_found') return 'absent';
+  return 'in_flight';
+}
+
+/**
+ * Cross-check the settlement predicate against the delivery claim (SPEC §5.1).
+ *
+ * The two are orthogonal — this only reports whether the *pair* is coherent.
+ *
+ * @param {{ deliveryStatus?: string, settlementStatus?: string }} input
+ * @returns {'ok'|'incomplete'|'contradiction'}
+ */
+export function settlementConsistency({ deliveryStatus = 'delivered', settlementStatus = 'in_flight' }) {
+  if (settlementStatus === 'absent' && deliveryStatus === 'delivered') return 'contradiction';
+  if (settlementStatus !== 'settled') return 'incomplete';
+  return 'ok';
+}
+
 /**
  * Verify a VSR envelope offline. No network, no rail, no issuer contact.
  *
+ * By default this answers "is this receipt internally coherent and correctly signed?".
+ * Pass `requireSettled: true` to also demand a settled payment — that is the fail-closed
+ * mode: `in_flight` and `absent` then make `valid` false, with a distinguishable reason.
+ *
  * @param {unknown} envelope
- * @param {{ now?: number, maxSkewMs?: number }} [opts]
- * @returns {{ valid: boolean, errors: string[], warnings: string[], level: 'L0'|'L1'|'L2'|'invalid' }}
+ * @param {{ now?: number, maxSkewMs?: number, requireSettled?: boolean, allowUnpaidDelivery?: boolean }} [opts]
+ * @returns {{ valid: boolean, errors: string[], warnings: string[], level: 'L0'|'L1'|'L2'|'invalid',
+ *            settlement: { status: string, finalized: boolean, consistency: string } }}
  */
 export function verifyVSR(envelope, opts = {}) {
   const errors = [];
@@ -293,9 +344,47 @@ export function verifyVSR(envelope, opts = {}) {
     );
   }
 
+  // --- settlement predicate (SPEC §5.1) ---------------------------------
   const delivery = vsr.delivery ?? {};
   if (!DELIVERY_STATUS.has(delivery.status)) {
     errors.push('delivery.status: must be delivered | partial | failed | timeout');
+  }
+
+  // A missing field means "the seller could not determine it". Per §5.1 the
+  // default is in_flight, not absent: "not yet observable" is not "not settled".
+  const settlementStatus = payment.settlement_status === undefined
+    ? 'in_flight'
+    : payment.settlement_status;
+  if (!SETTLEMENT_STATUS.has(settlementStatus)) {
+    errors.push(
+      `payment.settlement_status: must be settled | in_flight | absent, got ${String(payment.settlement_status)}`,
+    );
+  }
+  const consistency = settlementConsistency({ deliveryStatus: delivery.status, settlementStatus });
+  if (settlementStatus === 'in_flight') {
+    warnings.push(
+      'payment.settlement_status = in_flight: payment observed but not confirmed; treat as unproven, not refuted',
+    );
+  }
+  if (settlementStatus === 'absent') {
+    warnings.push('payment.settlement_status = absent: no transaction found for the claimed proof');
+  }
+  if (settlementStatus === 'settled' && (delivery.status === 'failed' || delivery.status === 'timeout')) {
+    warnings.push(
+      `settled but delivery.status = ${delivery.status}: paid without fulfilment — dispute material`,
+    );
+  }
+  if (consistency === 'contradiction') {
+    const msg =
+      'payment.settlement_status = absent with delivery.status = delivered: contradiction — ' +
+      'bytes claimed for a payment that has no transaction';
+    if (opts.allowUnpaidDelivery) warnings.push(msg);
+    else errors.push(msg);
+  }
+  if (opts.requireSettled && settlementStatus !== 'settled') {
+    errors.push(
+      `payment.settlement_status = ${settlementStatus}: requireSettled is set and the payment is not confirmed`,
+    );
   }
 
   const result = vsr.result ?? {};
@@ -350,7 +439,17 @@ export function verifyVSR(envelope, opts = {}) {
   }
 
   const level = errors.length ? 'invalid' : !signed ? 'L0' : vsr.completeness === 'bilateral' ? 'L2' : 'L1';
-  return { valid: errors.length === 0, errors, warnings, level };
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings,
+    level,
+    settlement: {
+      status: settlementStatus,
+      finalized: settlementStatus === 'settled',
+      consistency,
+    },
+  };
 }
 
 /* ------------------------------------------------------------------ *
@@ -367,15 +466,21 @@ export function toSpanAttributes(vsr) {
   const d = vsr.delivery ?? {};
   const r = vsr.result ?? {};
   const s = vsr.signer ?? {};
+  const settlementStatus = normalizeSettlement(p.settlement_status);
   /** @type {Record<string, string|number|string[]>} */
   const attrs = {
     'agent.spend.protocol': vsr.protocol,
     'agent.spend.resource.id': vsr.resource_id,
     'agent.spend.payment.proof_hash': p.proof_hash,
     'agent.spend.payment.redeem_count': p.redeem_count,
+    'agent.spend.payment.settlement_status': settlementStatus,
     'agent.spend.delivery.status': d.status,
     'agent.spend.result.consumed': r.consumed,
   };
+  attrs['agent.spend.settlement.consistency'] = settlementConsistency({
+    deliveryStatus: d.status ?? 'delivered',
+    settlementStatus,
+  });
   if (vsr.request_fingerprint) attrs['agent.spend.request.fingerprint'] = vsr.request_fingerprint;
   if (p.proof_seen_at) attrs['agent.spend.payment.proof_seen_at'] = p.proof_seen_at;
   if (p.complete_seen_at) attrs['agent.spend.payment.complete_seen_at'] = p.complete_seen_at;

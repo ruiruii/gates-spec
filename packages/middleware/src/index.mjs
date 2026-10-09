@@ -3,12 +3,14 @@
  *
  * What this adds to an existing 402 handler:
  *   - counts how many times the SAME payment proof gets completed  -> redeem_count
+ *   - records the settlement predicate -> settlement_status (§5.1)
  *   - records delivery status and timestamp
  *   - issues a signed VSR on every completed call
  *   - exports OTel `agent.spend.*` span attributes
  *
  * What it deliberately does NOT do:
  *   - move funds, verify the rail signature, or decide whether to accept payment
+ *   - decide whether a settlement is final (the caller reports it; default in_flight)
  *   - score anyone
  *   - store the payment proof (only its hash)
  */
@@ -16,8 +18,10 @@
 import {
   buildVSR,
   canonicalJSON,
+  normalizeSettlement,
   nowISO,
   requestFingerprint,
+  settlementConsistency,
   sha256,
   signVSR,
   toSpanAttributes,
@@ -96,6 +100,34 @@ export function redisStore(client, { prefix = 'gates:proof:', ttlDays = 90 } = {
 const PAYMENT_HEADERS = ['payment-signature', 'x-payment', 'x-payment-signature', 'payment-proof'];
 
 /**
+ * Transport headers that may carry the settlement predicate on the wire (SPEC §5.1).
+ * A transport may keep its own value; the mapping is `true -> settled`,
+ * `queued -> in_flight`, absent -> `absent`.
+ */
+const SETTLEMENT_HEADERS = ['x-payment-settled', 'payment-settled', 'x-settlement-status'];
+
+/**
+ * Read a settlement signal from the request headers, if the transport emits one.
+ * Returns `undefined` when nothing was signalled — never `absent`, because
+ * "not yet observable" is not "not settled" (SPEC §5.1).
+ *
+ * @param {Record<string, any>} headers
+ * @returns {'settled'|'in_flight'|'absent'|undefined}
+ */
+export function settlementFromHeaders(headers = {}) {
+  for (const h of SETTLEMENT_HEADERS) {
+    const raw = headers[h] ?? headers[h.toUpperCase()];
+    if (raw === undefined || raw === null) continue;
+    const v = Array.isArray(raw) ? raw[0] : raw;
+    const value = String(v).trim().toLowerCase();
+    if (value === 'true' || value === 'settled' || value === 'confirmed') return 'settled';
+    if (value === 'queued' || value === 'pending' || value === 'in_flight') return 'in_flight';
+    if (value === 'false' || value === 'absent' || value === 'none') return 'absent';
+  }
+  return undefined;
+}
+
+/**
  * @param {{
  *   resourceId: string,
  *   protocol?: string,
@@ -107,8 +139,9 @@ const PAYMENT_HEADERS = ['payment-signature', 'x-payment', 'x-payment-signature'
  *   store?: ReturnType<typeof memoryStore>,
  *   onSpan?: (attrs: Record<string, unknown>) => void,
  *   attachReceipt?: boolean,
- *   verifyPayment?: (proofHeaderValue: string, req: any) => Promise<{ok: boolean, tradeNo?: string, reason?: string}>,
+ *   verifyPayment?: (proofHeaderValue: string, req: any) => Promise<{ok: boolean, tradeNo?: string, reason?: string, settlement?: 'settled'|'in_flight'|'absent'|boolean}>,
  *   resourceFor?: (req: any) => string,
+ *   settlementFor?: (proofHeaderValue: string, req: any) => Promise<'settled'|'in_flight'|'absent'|undefined>,
  * }} config
  */
 export function createGates(config) {
@@ -159,6 +192,13 @@ export function createGates(config) {
       // --- redemption counting happens BEFORE we decide anything else ---
       const { count, resources, firstSeen } = await store.incr(proofHash, resourceId);
 
+      // --- settlement predicate (SPEC §5.1) ------------------------------
+      // Order of trust: a dedicated `settlementFor` hook, then the payment
+      // verifier's own report, then the transport's wire header. If nothing can
+      // be determined the value stays `in_flight`: "not yet observable" is not
+      // "not settled", and the predicate stays fail-closed.
+      let settlementStatus = 'in_flight';
+
       if (config.verifyPayment) {
         const verdict = await config.verifyPayment(proof, req);
         if (!verdict.ok) {
@@ -168,6 +208,18 @@ export function createGates(config) {
           res.end(JSON.stringify({ error: 'payment_rejected', reason: verdict.reason }));
           return;
         }
+        if (verdict.settlement !== undefined) {
+          settlementStatus = normalizeSettlement(verdict.settlement);
+        }
+      }
+
+      if (settlementStatus === 'in_flight' && config.settlementFor) {
+        const reported = await config.settlementFor(proof, req);
+        if (reported !== undefined) settlementStatus = normalizeSettlement(reported);
+      }
+      if (settlementStatus === 'in_flight') {
+        const onWire = settlementFromHeaders(req.headers ?? {});
+        if (onWire) settlementStatus = onWire;
       }
 
       const completeSeenAt = nowISO();
@@ -210,12 +262,18 @@ export function createGates(config) {
 
       const completeness = 'unilateral_merchant';
 
+      // Fail-closed is preserved: settlement is not gating, but the pair
+      // (settlement, delivery) is surfaced so a verifier can tell "incomplete"
+      // from "contradiction" (SPEC §5.1).
+      const consistency = settlementConsistency({ deliveryStatus, settlementStatus });
+
       const vsr = buildVSR({
         protocol,
         resourceId,
         proofHash,
         redeemCount: count,
         redeemResources: resources,
+        settlementStatus,
         deliveryStatus,
         deliveredAt,
         consumed,
@@ -237,6 +295,8 @@ export function createGates(config) {
 
       res.setHeader('x-gates-receipt', encoded);
       res.setHeader('x-gates-receipt-url', `https://gates-spec.dev/v1/receipt/${proofHash.slice(7, 23)}`);
+      res.setHeader('x-gates-settlement-status', settlementStatus);
+      if (consistency !== 'ok') res.setHeader('x-gates-settlement-consistency', consistency);
       for (const [k, v] of Object.entries(outHeaders)) res.setHeader(k, v);
 
       config.onSpan?.(toSpanAttributes(vsr));

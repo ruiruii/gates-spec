@@ -12,7 +12,8 @@
         "search.v1",
         "fetch.v1",
         "summarize.v1"
-      ]
+      ],
+      "settlement_status": "settled"
     },
     "protocol": "x402",
     "resource_id": "search.v1",
@@ -31,5 +32,5 @@
       "role": "merchant"
     }
   },
-  "signature": "jtY2w-Tpaf9hf4Jt0zfx3vfN9R_TbQhNcKflOZZkJ-dWLIGhMUMeOA_GhXhAV8mhxlxjcgDZSos_vPiSPvtjDA"
+  "signature": "Y8EdnMV-yCryieTlBF83ro-OtiBvHf-laJ5gZ7CiAWNELN7TIsyZqCycPQPpr3Y1fpZZ-9AmZN6y8F4LQs4bAQ"
 }

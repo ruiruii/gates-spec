@@ -41,6 +41,27 @@
       "note": "agent attests consumption"
     },
     {
+      "file": "valid-settlement-in-flight.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L1",
+      "note": "delivered before finality — incomplete, fail-closed"
+    },
+    {
+      "file": "valid-settlement-settled-undelivered.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L1",
+      "note": "paid without fulfilment — dispute material"
+    },
+    {
+      "file": "invalid-settlement-absent-delivered.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "invalid",
+      "note": "absent settlement + delivered bytes = contradiction"
+    },
+    {
       "file": "invalid-missing-consumed.json",
       "schemaValid": false,
       "signatureValid": true,

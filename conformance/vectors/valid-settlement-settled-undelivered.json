@@ -1,22 +1,25 @@
 {
   "vsr": {
+    "completeness": "unilateral_merchant",
     "delivery": {
       "delivered_at": "2026-10-09T12:00:01.800Z",
-      "status": "delivered"
+      "status": "failed"
     },
     "payment": {
       "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
       "redeem_count": 1,
-      "settlement_status": "in_flight"
+      "settlement_status": "settled"
     },
     "protocol": "x402",
     "resource_id": "search.v1",
-    "result": {},
+    "result": {
+      "consumed": "unknown"
+    },
     "schema_version": "gates-spec/v0.1",
     "signer": {
       "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
       "role": "merchant"
     }
   },
-  "signature": "ziiltXIvrrcY9gzkIiLZOvYC4RIxPXrfZkTnDn_FkJVFlmogXjEZ99S-1BbgjHq4y2Zx6wk80U6BlJCL2imfCQ"
+  "signature": "pBc3zjMbju_dmupWcj9OnVTGYFgG9dzgtXn7oA_Gq6DAGHdYU7QF08bI9fXdRmQQ4LKIbDn2Vz13qvuyMyT3BA"
 }

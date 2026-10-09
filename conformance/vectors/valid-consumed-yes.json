@@ -17,7 +17,8 @@
       "redeem_count": 1,
       "redeem_resources": [
         "search.v1"
-      ]
+      ],
+      "settlement_status": "settled"
     },
     "protocol": "x402",
     "request_fingerprint": "sha256:d63ad8db9c2ac0a522631d25fb67b641f0b7cfa8a331243d6f8edb57972c71d8",
@@ -38,5 +39,5 @@
       "role": "merchant"
     }
   },
-  "signature": "UgSlMZ9nAXE2AA00hHNICuwwzaRix_W1WsnRuVi0ABectwxSNDbHTupN_C9kUi9WfmVFd2ZZWXwLLxWCSUsSDQ"
+  "signature": "Zwe6dd7ZXUouEGVDqldGq13h3oa0-VlpxLEFzJk6lj04rGyRbQ3D08nbW62xifwOu6i1s48f81v5PyCLt15UCQ"
 }

@@ -57,6 +57,11 @@
               "type": "array",
               "items": { "type": "string", "minLength": 1 }
             },
+            "settlement_status": {
+              "type": "string",
+              "enum": ["settled", "in_flight", "absent"],
+              "description": "Settlement predicate: settled = confirmed, in_flight = observed but not yet confirmed, absent = no transaction for the claimed proof. Default in_flight."
+            },
             "proof_seen_at": { "$ref": "#/$defs/timestamp" },
             "complete_seen_at": { "$ref": "#/$defs/timestamp" },
             "trade_no": { "type": "string" }

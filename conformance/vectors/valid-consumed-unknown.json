@@ -7,7 +7,8 @@
     },
     "payment": {
       "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
-      "redeem_count": 1
+      "redeem_count": 1,
+      "settlement_status": "settled"
     },
     "protocol": "x402",
     "resource_id": "search.v1",
@@ -20,5 +21,5 @@
       "role": "merchant"
     }
   },
-  "signature": "f3M5VttDGFVy2OKHuzTsBMQ80jxZK44qiK-O0Dkz3bSsP-2r-cH3kcBGP7hQK68j2Qmc5-sLSZZ5eWBDd2GBBw"
+  "signature": "zcDQJ95NC4HjVcgdCXq8SP0oZT70DxBftG757zIpn2HQ116MjAaQGBi6QPXeMleuPI5hoiGpizRGW6yO3UH9Ag"
 }

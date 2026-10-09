@@ -6,7 +6,8 @@
     },
     "payment": {
       "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
-      "redeem_count": 1
+      "redeem_count": 1,
+      "settlement_status": "in_flight"
     },
     "protocol": "x402",
     "resource_id": "search.v1",

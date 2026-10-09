@@ -7,7 +7,8 @@
     },
     "payment": {
       "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
-      "redeem_count": 1
+      "redeem_count": 1,
+      "settlement_status": "settled"
     },
     "protocol": "x402",
     "resource_id": "search.v1",
@@ -26,5 +27,5 @@
       "role": "agent"
     }
   },
-  "signature": "lKboJ6vQ9wxh1hIJYC575x6WWFFlKt6hTgCN4T2zOYMIwm5YPnArgGAYJUJo0K2TW4e8at5SYtyDqZcN3d_YCg"
+  "signature": "9fvkphvSRH7GKnIVF_Pj2OpJXybxJ2tHb6k9xxMwNkvqinz_lUd4zoro6LqWohu1jgXQxwid3-Dp_gJHaJwzAA"
 }

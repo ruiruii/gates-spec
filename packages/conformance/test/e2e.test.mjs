@@ -155,6 +155,60 @@ test('no payment header -> 402 challenge, no receipt issued', async () => {
   assert.equal(body.gates_spec, 'v0.1');
 });
 
+test('settlement status flows from verifyPayment into the signed receipt', async () => {
+  const store = memoryStore();
+  const gates = createGates({
+    resourceId: 'search.v1',
+    protocol: 'x402',
+    publicKey: merchantKeys.publicKey,
+    privateKey: merchantKeys.privateKey,
+    store,
+    verifyPayment: async () => ({ ok: true, settlement: 'settled' }),
+  });
+  const transport = fakeTransport(gates, async () => ({ status: 200, body: { ok: true } }));
+  const spend = makeAgent(transport);
+
+  const res = await spend.fetch('https://api.example/search?q=settled');
+  const env = JSON.parse(Buffer.from(res.headers.get('x-gates-receipt'), 'base64url').toString('utf8'));
+  assert.equal(env.vsr.payment.settlement_status, 'settled');
+  assert.equal(res.headers.get('x-gates-settlement-status'), 'settled');
+  assert.equal(verifyVSR(env).settlement.consistency, 'ok');
+});
+
+test('a transport wire header is mapped onto the spec enum (queued -> in_flight)', async () => {
+  const store = memoryStore();
+  const gates = createGates({
+    resourceId: 'search.v1',
+    protocol: 'x402',
+    publicKey: merchantKeys.publicKey,
+    privateKey: merchantKeys.privateKey,
+    store,
+  });
+  const transport = fakeTransport(gates, async () => ({ status: 200, body: { ok: true } }));
+  const res = await transport('https://api.example/search?q=queued', {
+    headers: { 'x-payment': 'PROOF-1', 'x-payment-settled': 'queued' },
+  });
+  const env = JSON.parse(Buffer.from(res.headers.get('x-gates-receipt'), 'base64url').toString('utf8'));
+  assert.equal(env.vsr.payment.settlement_status, 'in_flight');
+  assert.equal(res.headers.get('x-gates-settlement-consistency'), 'incomplete');
+});
+
+test('no settlement signal at all stays in_flight — never absent', async () => {
+  const store = memoryStore();
+  const gates = createGates({
+    resourceId: 'search.v1',
+    protocol: 'x402',
+    publicKey: merchantKeys.publicKey,
+    privateKey: merchantKeys.privateKey,
+    store,
+  });
+  const transport = fakeTransport(gates, async () => ({ status: 200, body: { ok: true } }));
+  const res = await transport('https://api.example/search?q=nosignal', { headers: { 'x-payment': 'PROOF-2' } });
+  const env = JSON.parse(Buffer.from(res.headers.get('x-gates-receipt'), 'base64url').toString('utf8'));
+  assert.equal(env.vsr.payment.settlement_status, 'in_flight');
+  assert.equal(verifyVSR(env).settlement.status, 'in_flight');
+});
+
 test('receipt never embeds the payment proof, only its hash', async () => {
   const { transport } = makeMerchant();
   const spend = makeAgent(transport, { pay: async () => 'PROOF-super-secret-credential' });
