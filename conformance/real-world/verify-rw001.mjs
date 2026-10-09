@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+/**
+ * RW-001 independent verification — x402-receipts origin (Base mainnet USDC).
+ *
+ * Zero dependencies. Node >= 18 (uses global fetch).
+ *
+ *   node conformance/real-world/verify-rw001.mjs
+ *
+ * The point of this script is that RW-001 must be reproducible WITHOUT trusting
+ * the contributor. Every assertion below is re-run from public endpoints and
+ * from a public Base RPC. It prints a transcript; it does not assert quietly.
+ *
+ * Note: needs unrestricted outbound network. Some sandboxed networks answer DNS
+ * for unknown hosts with placeholder addresses, in which case every fetch times
+ * out — that is an environment problem, not a result.
+ */
+
+const ORIGIN = 'https://api.automaton-sovereign.workers.dev';
+const RPC = 'https://mainnet.base.org';
+
+const TX = '0x3bf944626e3429c7acf1bbc135d82cd73d8e74fec2de4dd03e93a269993d62d8';
+const EXPECTED = {
+  block: 51984731,
+  payer: '0x20e0f41f8b2cea0b2ec015b97dfd11b3c743b8d9',
+  payee: '0x71deac098914a009e3720524642a6be6f65ee528',
+  asset: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+  valueBaseUnits: 20000,
+  index: 20,
+  indexHash: 'c71f0e2fd7d26c43a681b844af9634d5244019ff3320a71c587be9f0af5a30b7',
+  indexTs: '2026-09-30T12:21:40.058Z',
+  currentKeyId: '6db8674197d1601f',
+  retiredKeyId: '7e32754cf3911ccf',
+  retiredIndex: 0,
+  retiredIndexHash: '78941ded6efa4fa1442a5b5f05e98da1142e4ee418bd49dbb318998b3415be87',
+  retiredIndexTs: '2026-09-25T14:34:35.659Z',
+};
+
+const { createHash, createPublicKey, verify } = await import('node:crypto');
+
+let failures = 0;
+function check(label, actual, expected) {
+  const ok = actual === expected;
+  if (!ok) failures++;
+  console.log(`  [${ok ? 'PASS' : 'FAIL'}] ${label}: ${actual}${ok ? '' : ` (expected ${expected})`}`);
+}
+
+const getJSON = async (url) => {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${r.status} ${url}`);
+  return r.json();
+};
+
+console.log('\n=== 1. On-chain payment (public Base RPC — no trust in the contributor) ===');
+{
+  const rpc = async (method, params) => {
+    const r = await fetch(RPC, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
+    });
+    return (await r.json()).result;
+  };
+  const tx = await rpc('eth_getTransactionByHash', [TX]);
+  const body = tx.input.slice(10);
+  const word = (i) => body.slice(i * 64, (i + 1) * 64);
+  check('block', parseInt(tx.blockNumber, 16), EXPECTED.block);
+  check('asset (tx to)', tx.to.toLowerCase(), EXPECTED.asset);
+  check('payer (calldata word 0)', '0x' + word(0).slice(-40), EXPECTED.payer);
+  check('payee (calldata word 1)', '0x' + word(1).slice(-40), EXPECTED.payee);
+  check('value (calldata word 2, base units)', parseInt(word(2), 16), EXPECTED.valueBaseUnits);
+  check('scheme (selector)', tx.input.slice(0, 10), '0xe3ee160e'); // EIP-3009 transferWithAuthorization
+  const head = parseInt(await rpc('eth_blockNumber', []), 16);
+  console.log(`  [INFO] confirmations: ${head - EXPECTED.block}`);
+}
+
+console.log('\n=== 2. Keyring ===');
+const pub = await getJSON(`${ORIGIN}/v2/pubkey`);
+check('current keyId', pub.keyId, EXPECTED.currentKeyId);
+check('algorithm', pub.algorithm, 'ECDSA-P256-SHA256');
+const retired = (pub.history ?? []).find((h) => h.keyId === EXPECTED.retiredKeyId);
+console.log(`  [${retired ? 'PASS' : 'FAIL'}] retired key ${EXPECTED.retiredKeyId} published in history`);
+if (!retired) failures++;
+
+console.log('\n=== 3. Ledger: recompute every chain hash + check the links ===');
+const led = await getJSON(`${ORIGIN}/v2/ledger?limit=50`);
+const entries = (led.entries ?? []).slice().sort((a, b) => a.index - b.index);
+console.log(`  [INFO] entries fetched: ${entries.length} (reported total: ${led.total})`);
+let matched = 0;
+const mismatched = [];
+const brokenLinks = [];
+for (let i = 0; i < entries.length; i++) {
+  const e = entries[i];
+  const h = createHash('sha256').update(`${e.prevHash}|${e.timestamp}|${e.dataHash}`).digest('hex');
+  if (h === e.hash) matched++;
+  else mismatched.push(e.index);
+  // Independent link check: entry N's prevHash must equal entry N-1's hash.
+  // The contributor asserted the hash formula; they did not assert the links.
+  if (i > 0 && e.prevHash !== entries[i - 1].hash) brokenLinks.push(e.index);
+}
+check('hash recomputation matches', `${matched}/${entries.length}`, `${entries.length}/${entries.length}`);
+if (mismatched.length) console.log(`  [INFO] mismatched indices: ${mismatched.join(', ')}`);
+check('contiguous 0..N with no gaps', entries.every((e, i) => e.index === i), true);
+check('prevHash links every entry to its predecessor', brokenLinks.length === 0, true);
+if (brokenLinks.length) console.log(`  [INFO] broken links at indices: ${brokenLinks.join(', ')}`);
+
+/** signature is ECDSA-P256-SHA256 (DER) over the ASCII hex string of `hash` */
+const verifyEntry = (e, pem) =>
+  verify('sha256', Buffer.from(e.hash, 'ascii'),
+    { key: createPublicKey(pem), dsaEncoding: 'der' },
+    Buffer.from(e.signature, 'base64'));
+
+console.log('\n=== 4. Attestation for the payment (index 20, current key) ===');
+const e20 = entries.find((e) => e.index === EXPECTED.index);
+check('index 20 present', Boolean(e20), true);
+if (e20) {
+  check('index 20 hash', e20.hash, EXPECTED.indexHash);
+  check('index 20 timestamp', e20.timestamp, EXPECTED.indexTs);
+  check('index 20 keyId', e20.keyId, EXPECTED.currentKeyId);
+  check('index 20 signature verifies (current key)', verifyEntry(e20, pub.publicKey), true);
+}
+const v20 = await getJSON(`${ORIGIN}/v2/verify?index=20`);
+check('index 20 signedBy', v20.signedBy, 'current');
+check('index 20 chainIntact', v20.chainIntact, true);
+
+console.log('\n=== 5. Negative case: retired-key entry (index 0) ===');
+const e0 = entries.find((e) => e.index === EXPECTED.retiredIndex);
+check('index 0 present', Boolean(e0), true);
+if (e0) {
+  check('index 0 hash', e0.hash, EXPECTED.retiredIndexHash);
+  check('index 0 timestamp', e0.timestamp, EXPECTED.retiredIndexTs);
+  check('index 0 keyId is the retired one', e0.keyId, EXPECTED.retiredKeyId);
+  check('index 0 signature verifies against RETIRED key', verifyEntry(e0, retired.publicKey), true);
+  check('index 0 signature does NOT verify against CURRENT key', verifyEntry(e0, pub.publicKey), false);
+}
+const v0 = await getJSON(`${ORIGIN}/v2/verify?index=0`);
+check('index 0 signedBy', v0.signedBy, 'historical');
+
+console.log('\n=== 6. Their own payment-check endpoint ===');
+const vp = await getJSON(`${ORIGIN}/v1/verify-payment?txHash=${TX}`);
+check('/v1/verify-payment ok', vp.ok, true);
+check('/v1/verify-payment blockNumber', vp.blockNumber, EXPECTED.block);
+check('/v1/verify-payment valueBaseUnits', vp.valueBaseUnits, EXPECTED.valueBaseUnits);
+
+console.log(`\n${failures === 0 ? 'ALL CHECKS PASSED' : `${failures} CHECK(S) FAILED`}\n`);
+process.exit(failures === 0 ? 0 : 1);

@@ -17,6 +17,23 @@ payment.
 
 Contributed by the `x402-receipts` origin (thread: StelarDigital/x402-receipts#6).
 Credit: their origin. Provenance as stated by the contributor.
+Reference their **v0.5.0** (npm `latest`), as the contributor asked.
+
+### Verification status
+
+| assertion | status |
+|---|---|
+| payment exists on Base mainnet | ✅ **independently verified** (2026-10-09, public RPC) |
+| ledger hash chain, signatures, `signedBy` | ⏳ **not yet independently verified** — see note |
+
+> **Note on the pending half.** The ledger half is verified by
+> [`verify-rw001.mjs`](./verify-rw001.mjs). It has not been run successfully from the
+> gates-spec build environment: DNS there answers `api.automaton-sovereign.workers.dev`
+> with placeholder addresses (A `162.125.32.2`, AAAA `2a03:2880:…:face:b00c`) and every
+> connection times out, while control hosts resolve normally. That is an environment
+> restriction, not a finding about their service. **Do not record RW-001 as fully
+> reproduced until that script has been run somewhere with unrestricted egress and its
+> transcript pasted here.**
 
 ### 1. The payment
 
@@ -31,9 +48,10 @@ Credit: their origin. Provenance as stated by the contributor.
 | amount | `20000` base units = `0.02` USDC |
 | scheme | EIP-3009 `transferWithAuthorization` (selector `0xe3ee160e`) |
 | tx submitter | `0x68efafe862d89ce66dd3d7b07d5a3747a0871164` (facilitator; not the payer) |
+| verified on-chain at | `2026-09-30T11:38:11.311Z` (per contributor) |
 | provenance | **contributor's own paid self-test**, not a customer payment |
 
-### 2. Independent verification performed by gates-spec
+#### Independent verification performed by gates-spec
 
 Checked against a public Base mainnet RPC on 2026-10-09:
 
@@ -51,23 +69,29 @@ path, i.e. a single-use nonce. A *completed* second redemption is therefore stru
 impossible on this payment. This is the on-chain ground for defining
 `payment.redeem_count` as **attempts, not completions** (§5.4).
 
-### 3. Contributor's verify endpoints
+### 2. Origin and public endpoints
 
-All free, no key, no payment. Paths as published by the contributor:
+Base origin: `https://api.automaton-sovereign.workers.dev`
 
-```
-GET /v2/pubkey    → { keyId, algorithm: "ECDSA-P256-SHA256", encoding: "spki-pem",
-                      publicKey: <PEM>, history: [ { keyId, publicKey } ], statePersistent }
-GET /v2/verify?index=N → { verified, signatureValid, chainIntact, reason, keyId,
-                           signedBy: "current" | "historical", entry: <envelope> }
-GET /v2/ledger    → { total, from, count, entries: [ <envelope> ] }
-GET /v1/verify-payment?txHash=0x… → { txHash, ok, reason, from, to, asset,
-                      valueBaseUnits, confirmations, blockNumber, txHashValid, checkedAt }
-```
+| purpose | endpoint |
+|---|---|
+| keyring (current + `history`) | `GET /v2/pubkey` |
+| public ledger (33 entries at time of writing) | `GET /v2/ledger?limit=50` |
+| offline verification | `GET /v2/verify?index=N` |
+| live on-chain payment check | `GET /v1/verify-payment?txHash=0x…` |
 
-> **TODO-1 (blocking): origin / base URL.** The contributor gave paths only; no hostname was
-> found in their README or in the npm metadata for `x402-receipts`. Without it the ledger
-> cannot be fetched and RW-001 cannot be reproduced end to end.
+All free, no key, no payment, rate-friendly for automated runners.
+
+### 3. Which entry attests this payment
+
+| | index | timestamp (per contributor) | hash | key |
+|---|---|---|---|---|
+| **this payment** | **20** | `2026-09-30T12:21:40.058Z` | `c71f0e2f…5a30b7` | current `6db8674197d1601f` |
+| retired-key negative case | **0** | `2026-09-25T14:34:35.659Z` | `78941ded…15be87` | retired `7e32754cf3911ccf` |
+
+Contributor reports `GET /v2/verify?index=20` →
+`{ verified: true, signatureValid: true, chainIntact: true, signedBy: "current" }` and
+`?index=0` → the same with `signedBy: "historical"`. **Not yet re-run by gates-spec.**
 
 ### 4. Attestation envelope (their evidence layer)
 
@@ -90,7 +114,7 @@ Two sharp edges worth encoding as vectors of their own:
   the preimage. Signing the raw digest is the obvious implementation and it fails.
 
 The contributor reports recomputing `hash` for **33 of 33** published entries and matching.
-gates-spec has not yet reproduced this independently (see TODO-1).
+gates-spec has not yet reproduced this independently (see the status note above).
 
 ### 5. Negative case: retired signing key
 
@@ -98,13 +122,13 @@ Entry `0` is signed by a **retired** key, `keyId 7e32754cf3911ccf`, published in
 `history` array of `/v2/pubkey`. `GET /v2/verify?index=0` returns
 `signedBy: "historical"`.
 
-A verifier that reads only the current key reports a **false negative** on entry 0. This is
-a general failure mode, not a quirk of this ledger: **any** spec that does not pin how
-historical keys are resolved will rot the first time a signer rotates a key.
+A verifier that reads only the current key reports a **false negative** on entry 0 — and
+`verify-rw001.mjs` asserts explicitly that entry 0 must verify against the *retired* key
+and must **not** verify against the current one.
 
-> **TODO-2: encode as `invalid-verify-current-key-only`** — a vector asserting that a
-> verifier resolving only the current key MUST NOT report a valid historical entry as
-> unverifiable.
+> **TODO: encode as `invalid-verify-current-key-only`.** This is a general failure mode,
+> not a quirk of this ledger: **any** spec that does not pin how historical keys are
+> resolved will rot the first time a signer rotates a key.
 
 ### 6. Wire mapping (`X-Payment-Settled` → `payment.settlement_status`)
 
@@ -125,26 +149,19 @@ origin never emits `delivered + absent`. That contradiction is therefore not a s
 conforming seller produces — it is a **detector for falsified receipts**, reachable only by
 lying. That is what it is for.
 
-> **TODO-3:** the contributor's published OpenAPI documents `X-Payment-Settled` as
-> `enum: ["true"]`, which omits `queued`, and omits `/v1/verify-payment` from `paths`.
-> Both are queued on their side. **Cite the table above, not their OpenAPI, until that
-> ships.**
+> **Cite the table above, not their OpenAPI**, until their two known defects ship:
+> `X-Payment-Settled` documented as `enum: ["true"]` (omits `queued`), and
+> `/v1/verify-payment` absent from `paths`.
 
-### 7. Reproduction procedure
+### 7. Reproduction
 
-1. Resolve the origin (TODO-1).
-2. `GET /v1/verify-payment?txHash=0x3bf9…` → expect `ok`, `blockNumber = 51984731`,
-   `valueBaseUnits = 20000`, `to = 0x71DE…528`.
-3. `GET /v2/pubkey` → keep `publicKey` **and** the full `history` array.
-4. `GET /v2/ledger` → for every entry recompute
-   `sha256(prevHash + "|" + timestamp + "|" + dataHash)` and compare to `hash`.
-5. Verify entry 0's signature against the **retired** key from `history`, not the current
-   one. Expect `signedBy: "historical"`.
-6. Verify the newest entry's signature against the current key.
+```
+node conformance/real-world/verify-rw001.mjs
+```
 
-> **TODO-4 (blocking): which ledger `index` attests this tx.** Entry 0 was given as the
-> retired-key example, not as the entry for `0x3bf9…`. Without the index the payment and
-> the attestation are two unconnected facts.
+Zero dependencies, Node >= 18. It re-runs every assertion above — on-chain payment fields
+from a public Base RPC, the whole hash chain, both signatures, and `signedBy` for both
+indices — and exits non-zero on any failure. Paste its transcript here when it runs clean.
 
 ---
 
@@ -158,5 +175,5 @@ A submission is accepted only if it carries:
 3. any wire mapping the submitter's transport uses, with the mapping written down;
 4. at least one assertion a third party can re-run.
 
-gates-spec re-verifies every submission independently before it is merged. Vector
-generosity is not vector acceptance.
+gates-spec re-verifies every submission independently before it is merged, and records
+which assertions have and have not been re-run. Vector generosity is not vector acceptance.
