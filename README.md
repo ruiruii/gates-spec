@@ -187,6 +187,21 @@ field names, gates-spec adopts theirs.
 | x402-receipts (StelarDigital) | GitHub issue | [StelarDigital/x402-receipts#6](https://github.com/StelarDigital/x402-receipts/issues/6) — open |
 | ERC-8004 v2 | GitHub issue | [erc-8004/erc-8004-contracts#102](https://github.com/erc-8004/erc-8004-contracts/issues/102) — open |
 | Vauban Research (IETF) | email | `research@vauban.tech` — draft in [`upstream/email-vauban-liaison.md`](./upstream/email-vauban-liaison.md) |
+| Predge (`erc8004-outcome-validator`) | GitHub issue | [predgeAI/erc8004-outcome-validator#13](https://github.com/predgeAI/erc8004-outcome-validator/issues/13) — open |
+| Brave `bx402` | GitHub issue | [brave/bx402#141](https://github.com/brave/bx402/issues/141) — open (follow-up to #102) |
+
+### Field-notes from outreach (useful if you're doing this too)
+
+- **x402-receipts v0.5.1** already splits *settlement truth* and *delivery truth* (§5).
+  `consumed` is best pitched as a **third predicate**, not as a missing feature.
+- **ERC-8004 #99** (Predge) proposes grounding feedback in x402 payment proofs.
+  `consumed` is the layer below it: proof of payment ≠ proof the result was used.
+- **brave/bx402#102** ("one payment buys N upstream searches") is **closed** — Brave fixed
+  it in-rail with an in-flight claim store. That fix *prevents* concurrent replay but
+  produces no auditable record, and is per-instance. `redeem_count` is the audit layer
+  next to it, not a replacement. See [#141](https://github.com/brave/bx402/issues/141).
+- **Vauban** has no public GitHub repo; contact is via IETF Datatracker
+  (`research@vauban.tech`, affiliation "Vauban Research").
 
 Hard external deadline: **Vauban `draft-vauban-x402-stark-receipts` expires 2026-11-29**.
 The `consumed` semantic must be published and have at least one adopter before that date,
