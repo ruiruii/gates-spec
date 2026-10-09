@@ -171,11 +171,22 @@ These rules are structural, not policy.
 
 | Phase | Goal | Owner | Deadline |
 |-------|------|-------|----------|
-| 1 | Publish `gates-spec v0.1` repo + SPEC.md | Sycee | **D+7** |
-| 2 | First independent implementation adopts `consumed` / `redeem_count` names | x402-receipts or minia2a | **D+30** |
-| 3 | Propose field alignment to x402-receipts, Vauban, ERC-8004 v2 | Sycee | **D+14** |
+| 1 | Publish `gates-spec v0.1` repo + SPEC.md | Sycee | **DONE** |
+| 2 | Propose field alignment to x402-receipts, Vauban, ERC-8004 v2 | Sycee | **DONE** (see below) |
+| 3 | First independent implementation adopts `consumed` / `redeem_count` names | x402-receipts / minia2a | **D+30** |
 | 4 | Run merchant + agent SDK against Brave / bx402#102 test case | Sycee | **D+30** |
 | 5 | Cross-rail support: APOP, alipay-a2m, a2p2 | Sycee / partners | **D+90** |
+
+## Upstream outreach
+
+The objective is **one vocabulary, not a new project**. If another standard adopts these
+field names, gates-spec adopts theirs.
+
+| Target | Channel | Status |
+|--------|---------|--------|
+| x402-receipts (StelarDigital) | GitHub issue | [StelarDigital/x402-receipts#6](https://github.com/StelarDigital/x402-receipts/issues/6) — open |
+| ERC-8004 v2 | GitHub issue | [erc-8004/erc-8004-contracts#102](https://github.com/erc-8004/erc-8004-contracts/issues/102) — open |
+| Vauban Research (IETF) | email | `research@vauban.tech` — draft in [`upstream/email-vauban-liaison.md`](./upstream/email-vauban-liaison.md) |
 
 Hard external deadline: **Vauban `draft-vauban-x402-stark-receipts` expires 2026-11-29**.
 The `consumed` semantic must be published and have at least one adopter before that date,
