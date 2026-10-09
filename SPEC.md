@@ -163,15 +163,22 @@ downstream consumer of the data.
 > **Normative note.** An HTTP `200` response is `delivery.status = delivered`. It is never,
 > by itself, `consumed = yes`.
 
+> **Role constraint.** A VSR whose `signer.role = merchant` MUST set `result.consumed` to
+> `unknown`. `consumed = yes | no` MUST be signed only by the `agent` role (the buyer runtime)
+> or by an independent `observer` role that can demonstrate downstream reference. This prevents
+> `consumed` from becoming a seller self-report.
+
 ### 5.4 Redemption attributes — **the missing semantics**
 
 | Attribute | Type | Definition | Requirement |
 |-----------|------|------------|-------------|
-| `agent.spend.payment.redeem_count` | int | Count of distinct `complete` events accepted for this `proof_hash` within the seller namespace | **MUST** |
-| `agent.spend.payment.redeem_resources` | string[] | `resource_id`s against which the same `proof_hash` was redeemed | SHOULD |
+| `agent.spend.payment.redeem_count` | int | Count of `complete` events observed by the seller for this `proof_hash`, including replays, retries, and refusals | **MUST** |
+| `agent.spend.payment.redeem_resources` | string[] | `resource_id`s against which the same `proof_hash` was presented | SHOULD |
 
-`redeem_count = 1` is the ordinary case. `redeem_count > 1` means one payment proof was
-accepted more than once. Conforming implementations MUST record this and MUST NOT silently
+`redeem_count = 1` is the ordinary case. `redeem_count > 1` means the seller saw the same
+proof again — it may be a retry, a replay, or an attempted second redemption. The counter is
+incremented **before** the seller decides whether to accept the payment, so a refused replay
+is still recorded. Conforming implementations MUST record this and MUST NOT silently
 normalize it to `1`.
 
 ### 5.5 Completeness (informative)
