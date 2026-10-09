@@ -95,6 +95,8 @@ function runSpan(files) {
 
 function genVectors() {
   mkdirSync(VECTORS, { recursive: true });
+  // Fixed timestamp: vectors must be byte-reproducible so CI can detect drift.
+  const VECTOR_TS = '2026-10-09T12:00:01.800Z';
   const keys = generateKeyPairFromSeed(
     sha256('gates-spec/v0.1 conformance vectors').slice(7), // deterministic: reproducible vectors
   );
@@ -210,6 +212,7 @@ function genVectors() {
           resourceId: 'search.v1',
           proofHash,
           redeemCount: 1,
+          deliveredAt: VECTOR_TS,
           publicKey: keys.publicKey,
           role: 'merchant',
         });
@@ -226,6 +229,7 @@ function genVectors() {
           resourceId: 'search.v1',
           proofHash,
           redeemCount: 3,
+          deliveredAt: VECTOR_TS,
           publicKey: keys.publicKey,
           role: 'merchant',
         }));
@@ -241,6 +245,7 @@ function genVectors() {
         resourceId: 'search.v1',
         proofHash,
         redeemCount: 1,
+        deliveredAt: VECTOR_TS,
         publicKey: keys.publicKey,
         role: 'merchant',
         extra: { _vendor: { payment_proof: proof } },
@@ -255,6 +260,7 @@ function genVectors() {
         proofHash,
         redeemCount: 1,
         consumed: 'unknown',
+        deliveredAt: VECTOR_TS,
         publicKey: keys.publicKey,
         role: 'merchant',
       }) }),

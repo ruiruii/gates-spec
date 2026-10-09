@@ -4,7 +4,7 @@
       "payment_proof": "PAYMENT-SIGNATURE:deadbeef"
     },
     "delivery": {
-      "delivered_at": "2026-10-09T09:19:10.257Z",
+      "delivered_at": "2026-10-09T12:00:01.800Z",
       "status": "delivered"
     },
     "payment": {
@@ -22,5 +22,5 @@
       "role": "merchant"
     }
   },
-  "signature": "HUrcRx2T3BQZEq2FR21xuBLtNVWD8Q0i4LoTbIf5ZYxUk_WW0PitjoKJuMcwCrr5oNu7ZyiUcleYSowOQwZmDw"
+  "signature": "JEc6aa5w-6YdJdQd5KY48j3oxfCP9gdNsJXoyxRNmNpUA_QknBuPiJRWUEy0ZeIRfMCws9qZxdl4KF5bwb2cCA"
 }
