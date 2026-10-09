@@ -1,0 +1,24 @@
+{
+  "vsr": {
+    "completeness": "unilateral_merchant",
+    "delivery": {
+      "delivered_at": "2026-10-09T12:00:01.800Z",
+      "status": "delivered"
+    },
+    "payment": {
+      "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
+      "redeem_count": 1
+    },
+    "protocol": "x402",
+    "resource_id": "search.v1",
+    "result": {
+      "consumed": "unknown"
+    },
+    "schema_version": "gates-spec/v0.1",
+    "signer": {
+      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "role": "merchant"
+    }
+  },
+  "signature": "yljWBo3_M1n9qKBL47AOUlz92FXDNpU7NAhM_5WBoSa8EA3MEuHT7xzpVyfzG2n3tgiPGmgV_IYy_jbW8JNuCQ"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@gates-spec/agent-sdk",
+  "version": "0.1.0",
+  "description": "Buyer-side (agent runtime) instrumentation for consumption evidence and freshness, with co-signed receipts.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "exports": { ".": "./src/index.mjs" },
+  "dependencies": { "@gates-spec/core": "*" },
+  "files": ["src"],
+  "engines": { "node": ">=18" }
+}

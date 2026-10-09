@@ -1,0 +1,69 @@
+{
+  "version": "gates-spec/v0.1",
+  "generatedAt": "2026-10-09T08:39:10.532Z",
+  "cases": [
+    {
+      "file": "valid-consumed-yes.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L2",
+      "note": "bilateral hint present"
+    },
+    {
+      "file": "valid-consumed-unknown.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L1",
+      "note": "no downstream instrumentation"
+    },
+    {
+      "file": "valid-consumed-no-idle-spend.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L2",
+      "note": "delivered, never referenced"
+    },
+    {
+      "file": "valid-redeem-count-3.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L2",
+      "note": "one proof, three completions"
+    },
+    {
+      "file": "valid-agent-side-bilateral.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "L2",
+      "note": "agent attests consumption"
+    },
+    {
+      "file": "invalid-missing-consumed.json",
+      "schemaValid": false,
+      "signatureValid": true,
+      "level": "invalid",
+      "note": "result.consumed is MUST; signature itself is valid"
+    },
+    {
+      "file": "invalid-tampered-redeem-count.json",
+      "schemaValid": true,
+      "signatureValid": false,
+      "level": "invalid",
+      "note": "redeem_count 3 -> 1 after signing"
+    },
+    {
+      "file": "invalid-embedded-proof.json",
+      "schemaValid": true,
+      "signatureValid": true,
+      "level": "invalid",
+      "note": "raw credential hidden in _vendor — red line caught by semantic check"
+    },
+    {
+      "file": "invalid-unsigned-l0.json",
+      "schemaValid": false,
+      "signatureValid": false,
+      "level": "L0",
+      "note": "signature is required by the schema; without it, only L0 telemetry"
+    }
+  ]
+}

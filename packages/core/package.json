@@ -1,0 +1,15 @@
+{
+  "name": "@gates-spec/core",
+  "version": "0.1.0",
+  "description": "Canonical JSON, hashing, Ed25519 signing and offline verification for Verifiable Spend Receipts (gates-spec v0.1).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./schema": "../schema/vsr-v0.1.schema.json"
+  },
+  "files": ["src"],
+  "engines": { "node": ">=18" },
+  "keywords": ["gates-spec", "vsr", "agent-payments", "x402", "ed25519", "otel"]
+}

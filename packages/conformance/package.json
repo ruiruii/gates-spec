@@ -1,0 +1,14 @@
+{
+  "name": "@gates-spec/conformance",
+  "version": "0.1.0",
+  "description": "JSON Schema validator, conformance vectors and test suite for gates-spec v0.1.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "exports": { ".": "./src/index.mjs" },
+  "bin": { "gates-conformance": "./src/cli.mjs" },
+  "dependencies": { "@gates-spec/core": "*" },
+  "files": ["src"],
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test test/" }
+}

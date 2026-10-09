@@ -1,0 +1,35 @@
+{
+  "vsr": {
+    "completeness": "bilateral",
+    "delivery": {
+      "delivered_at": "2026-10-09T12:00:09.800Z",
+      "status": "delivered"
+    },
+    "payment": {
+      "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
+      "redeem_count": 3,
+      "redeem_resources": [
+        "search.v1",
+        "fetch.v1",
+        "summarize.v1"
+      ]
+    },
+    "protocol": "x402",
+    "resource_id": "search.v1",
+    "result": {
+      "consumed": "yes",
+      "consumed_at": "2026-10-09T12:00:12.100Z",
+      "consumed_by": [
+        "task_4829",
+        "task_4830"
+      ],
+      "freshness_s": 2
+    },
+    "schema_version": "gates-spec/v0.1",
+    "signer": {
+      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "role": "merchant"
+    }
+  },
+  "signature": "2Wm22FOnT6SdXkCdVmqQLur4XgxZ0yuqdZvirV0VJuuZ1mvgso0yP93zLxpPJyZGLiAOl4hHPkOdwninxxeGAw"
+}

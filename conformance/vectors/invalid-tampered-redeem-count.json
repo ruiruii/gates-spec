@@ -1,0 +1,23 @@
+{
+  "vsr": {
+    "delivery": {
+      "delivered_at": "2026-10-09T08:39:10.538Z",
+      "status": "delivered"
+    },
+    "payment": {
+      "proof_hash": "sha256:f77c685047e05fedb052347114eaa9f69a5504817df43c154547a1b13ff88097",
+      "redeem_count": 1
+    },
+    "protocol": "x402",
+    "resource_id": "search.v1",
+    "result": {
+      "consumed": "unknown"
+    },
+    "schema_version": "gates-spec/v0.1",
+    "signer": {
+      "public_key": "ed25519:MCowBQYDK2VwAyEA3_T9RZsxFPvXo5sBDcOauD06bIslhdk2wucVoPwmhpk",
+      "role": "merchant"
+    }
+  },
+  "signature": "QkZaAUy9lD1O3thl75v_tIuH5z7M-rY2fOnw9AznxsP-PMF3xCYAjknU_HCu3SPe8MxHPviEALdd38vQoPszDQ"
+}

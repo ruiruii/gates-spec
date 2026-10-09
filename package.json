@@ -1,0 +1,14 @@
+{
+  "name": "gates-spec",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent spend semantics: consumption and redemption counting for machine payments.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "test": "node --test packages/conformance/test/*.test.mjs",
+    "vectors": "node packages/conformance/src/cli.mjs gen-vectors",
+    "verify": "node packages/conformance/src/cli.mjs verify --manifest conformance/vectors/valid-*.json conformance/vectors/invalid-*.json"
+  }
+}
