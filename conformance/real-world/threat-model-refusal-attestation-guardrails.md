@@ -1,6 +1,6 @@
 # Threat model — guardrails for `tx_already_used` refusal writing an attestation
 
-> **Status:** draft, revision 2. Authored by gates-spec, offered to `x402-receipts` (thread
+> **Status:** draft, revision 3. Authored by gates-spec, offered to `x402-receipts` (thread
 > StelarDigital/x402-receipts#6) for adoption or ignore. Not merged, not a commitment,
 > not gated on anything. Written to take the cost off the contributor's plate after C6
 > ("that half carries a cost worth seeing before calling it the same change twice").
@@ -9,6 +9,14 @@
 > *not the same for both halves*, and that the per-payer per-window cap is the **backstop, not a
 > nicety**. Both corrections are his and are recorded as his (§0.1, §4 G3, §9). Revision 1 had the
 > cap the wrong way round; it is corrected here.
+>
+> **Revision 3 incorporates C8** — the contributor filled the open "fingerprint composition"
+> cell (§8, formerly "theirs to define") with a complete, failure-mode-aware definition: hash
+> the request the **client** made (never seller-written fields), the explicit canonical-byte
+> formula, normalization, and the settle/refusal agreement. The open cell is now his definition,
+> recorded as his (§4 G1, §9). gates-spec also anchors this composition as the **RW-001 reference
+> composition** ahead of any code, in the order the contributor asked for ("objections before the
+> code").
 
 ---
 
@@ -100,6 +108,46 @@ different jobs; the note is better for saying which is which."*).
 | `(txHash \| nonce)` | **one attempt** | makes the record once-per-attempt; kills replay of the same attempt |
 | request fingerprint | **one logical request** | groups attempts, which is what makes `redeem_count` derivable (§0.1) |
 
+#### Fingerprint composition (contributor, C8 — recorded as his)
+
+> The fingerprint must be over the request the **client** made, never over fields the **seller**
+> wrote. In x402 v2 the challenge carries server-chosen fields — `accepts[].resource.url` is
+> absolute and written by the seller (on our host, the edge writes it). If any of those enter the
+> fingerprint, the seller can make one client request hash two ways, or two different requests hash
+> the same, and the count stops measuring attempts.
+
+**Canonical bytes to hash** (all decoded, none of it wire bytes):
+
+```
+sha256( v1 \0 method \0 origin \0 path \0 queryCanonical \0 payTo \0 asset \0 network \0 amount \0 scheme )
+```
+
+- `origin` = the origin the client actually contacted, carried by the request — **not**
+  `accepts[].resource.url`, for the same reason `payTo` pins to the contacted origin: the seller
+  writes that field.
+- **The terms belong in it:** a "same logical request" that agreed different terms is a different
+  request; a refused attempt that agreed different terms should not group with the one that settled.
+- **Everything per-attempt is out:** `txHash`, `nonce`, timestamps, and deadlines derived from
+  `maxTimeoutSeconds`.
+- **Normalization** (so two implementations do not differ): lowercase host, strip the default port,
+  no trailing slash, query sorted by key with percent-encoding applied once, and non-canonical
+  encodings rejected instead of silently re-encoded.
+
+**Failure modes this composition avoids** (the contributor named them; recorded as his):
+
+1. **Seller-forged hash collisions** — if a seller-controlled field enters the fingerprint, one
+   request hashes two ways or two requests hash the same; `redeem_count` stops measuring attempts.
+2. **Wire-vs-canonical split ("hash the challenge" lifts the txHash problem one level up)** — one
+   challenge is carried in three wire representations (`PAYMENT-REQUIRED`, `X-PAYMENT-REQUIRED`,
+   the body); hashed as wire bytes they are three fingerprints, decoded-and-canonicalized they are
+   one (sha256 `c016f1f3…`). Hashing the challenge as received reproduces the txHash problem at the
+   next layer up.
+3. **Settle/refusal divergence** — attempt 1's settle carries the terms it actually signed; the
+   refusal carries the terms it *would have* signed. If the seller computes from the challenge it
+   advertised and the buyer from the challenge it received, they diverge exactly when the seller
+   rotates or reorders an `accepts` entry — the very case where you want the two counted together.
+   **Both sides must compute from the request as received.**
+
 - **Mechanism:** idempotency key `= sha256(txHash ‖ nonce)` for the attempt bound, and
   `sha256(fingerprint)` for the logical-request bound; append only if absent.
 - **Residual risk:** neither key bounds the adversary. A stranger can mint a fresh logical request
@@ -173,7 +221,7 @@ objections arrive before the code rather than after — "which is the better ord
 
 | param | question | gates-spec can supply a default from RW-001 vectors |
 |---|---|---|
-| **fingerprint composition** | what makes two attempts the *same logical request* | theirs to define; must be stable across attempts 1..n and identical across a settle + its refusals |
+| **fingerprint composition** | what makes two attempts the *same logical request* | **defined by the contributor, C8 (§4 G1)** — his composition is anchored as the RW-001 reference composition ahead of any code |
 | `window` length + cap `N` (G3) | how much growth per payer is acceptable | from observed 33-entry ledger / 21 empty `dataHash` baseline |
 | `nonce` source (G1) | which field is the stable per-attempt id | EIP-3009 `nonce` (already single-use) |
 | RPC + confirmation depth (G2) | how settled is "settled" | Base mainnet, 395k+ confirmations observed in RW-001 §1 |
@@ -193,6 +241,10 @@ Recorded as the contributor's, used by permission, cited in-thread:
 - **C7** — `subject` is not the same for both halves; fingerprint vs `txHash`; the two dedup jobs
   (one attempt vs one logical request); the *mint* capability; and the correction that the per-payer
   per-window cap is the **backstop, not a nicety**.
+- **C8** — the fingerprint composition definition: hash the client-made request (not seller-written
+  fields), the canonical-byte formula, normalization rules, and the settle/refusal agreement; plus
+  the three failure modes it avoids (seller-forged hash collisions, wire-vs-canonical split,
+  settle/refusal divergence). He closed the open cell we had left as "theirs to define."
 
 gates-spec's own contributions here are the asset/adversary framing and the mapping of each guardrail
 to a capability — the corrections above are his.
