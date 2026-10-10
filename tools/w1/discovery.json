@@ -12,32 +12,368 @@
     }
   ],
   "total_listed": 150,
-  "distinct_origins": 51,
-  "sampled_origins": [
-    "https://www.ax1.vc",
-    "https://stableenrich.dev",
-    "https://crypto.apitoll.cloud",
-    "https://api.exa.ai",
-    "https://stableupload.dev",
-    "https://api.onesource.io",
-    "https://twitter.use.x402atlas.com",
-    "https://agi.apify.com",
-    "https://laso.finance",
-    "https://api.bitrefill.com",
-    "https://cheaptokens.ai",
-    "https://websearch.use.x402atlas.com",
-    "https://glim.sh",
-    "https://edgar.apitoll.cloud",
-    "https://ausca.com",
-    "https://x402.ottoai.services",
-    "https://x402.botsmith.dev",
-    "https://api.402rates.com",
-    "https://keyring-agent.blockchhub.link",
-    "https://hypernatt.com",
-    "https://randomfactsx402.vercel.app",
-    "https://api.hyperextend.xyz",
-    "https://rubric-protocol.com",
-    "https://api.oblique.markets",
-    "https://hyperliquid-predict.use.x402atlas.com"
-  ]
+  "distinct_origins": 60,
+  "sellers": [
+    {
+      "origin": "https://api.onesource.io",
+      "resourceCount": 30,
+      "sampleResource": "https://api.onesource.io/api/chain/erc20-balance",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agentres.dev",
+      "resourceCount": 19,
+      "sampleResource": "https://agentres.dev/api/account",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agents.allium.so",
+      "resourceCount": 12,
+      "sampleResource": "https://agents.allium.so/api/v1/developer/prices",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.aisa.one",
+      "resourceCount": 10,
+      "sampleResource": "https://api.aisa.one/apis/v2/agentmail/api-keys",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402.ottoai.services",
+      "resourceCount": 7,
+      "sampleResource": "https://x402.ottoai.services/crypto-news",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agent.atinamos.co.uk",
+      "resourceCount": 4,
+      "sampleResource": "https://agent.atinamos.co.uk/agent/buyer-check",
+      "facilitators": []
+    },
+    {
+      "origin": "https://ausca.com",
+      "resourceCount": 4,
+      "sampleResource": "https://ausca.com/v1/open-inbox",
+      "facilitators": []
+    },
+    {
+      "origin": "https://blockrun.ai",
+      "resourceCount": 3,
+      "sampleResource": "https://blockrun.ai/api/v1/pm/polymarket/markets",
+      "facilitators": []
+    },
+    {
+      "origin": "https://google-trends.use.x402atlas.com",
+      "resourceCount": 3,
+      "sampleResource": "https://google-trends.use.x402atlas.com/related-queries",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.exa.ai",
+      "resourceCount": 2,
+      "sampleResource": "https://api.exa.ai/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.oblique.markets",
+      "resourceCount": 2,
+      "sampleResource": "https://api.oblique.markets/api/v1/paid/time",
+      "facilitators": []
+    },
+    {
+      "origin": "https://laso.finance",
+      "resourceCount": 2,
+      "sampleResource": "https://laso.finance/get-card",
+      "facilitators": []
+    },
+    {
+      "origin": "https://rubric-protocol.com",
+      "resourceCount": 2,
+      "sampleResource": "https://rubric-protocol.com/v1/x402/hedera-facts/exchange-rate",
+      "facilitators": []
+    },
+    {
+      "origin": "https://stableenrich.dev",
+      "resourceCount": 2,
+      "sampleResource": "https://stableenrich.dev/api/fullenrich/people-search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://stableupload.dev",
+      "resourceCount": 2,
+      "sampleResource": "https://stableupload.dev/api/upload",
+      "facilitators": []
+    },
+    {
+      "origin": "https://vibesprings.net",
+      "resourceCount": 2,
+      "sampleResource": "https://vibesprings.net/api/price/btc-usd",
+      "facilitators": []
+    },
+    {
+      "origin": "https://2captcha.x402.paysponge.com",
+      "resourceCount": 1,
+      "sampleResource": "https://2captcha.x402.paysponge.com/createTask",
+      "facilitators": []
+    },
+    {
+      "origin": "https://aero.lonestaroracle.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://aero.lonestaroracle.xyz/pool",
+      "facilitators": []
+    },
+    {
+      "origin": "https://africa.lonestaroracle.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://africa.lonestaroracle.xyz/pulse",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agentpay.tools",
+      "resourceCount": 1,
+      "sampleResource": "https://agentpay.tools/tools/pre_trade_check/call",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agi.apify.com",
+      "resourceCount": 1,
+      "sampleResource": "https://agi.apify.com/protocols/x402/prepaid-tokens",
+      "facilitators": []
+    },
+    {
+      "origin": "https://agri.lonestaroracle.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://agri.lonestaroracle.xyz/report",
+      "facilitators": []
+    },
+    {
+      "origin": "https://analyst.lonestaroracle.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://analyst.lonestaroracle.xyz/ratings",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.402rates.com",
+      "resourceCount": 1,
+      "sampleResource": "https://api.402rates.com/v1/ping",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.aidress.ai",
+      "resourceCount": 1,
+      "sampleResource": "https://api.aidress.ai/pay/agent_ottoai_crypto_news",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.bitrefill.com",
+      "resourceCount": 1,
+      "sampleResource": "https://api.bitrefill.com/x402/gift-cards/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.hyperextend.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://api.hyperextend.xyz/v1/candles/BTC/1m/latest",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.kadec0.xyz",
+      "resourceCount": 1,
+      "sampleResource": "https://api.kadec0.xyz/v1/serp",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.loyalspark.online",
+      "resourceCount": 1,
+      "sampleResource": "https://api.loyalspark.online/x402-gateway/recipient-api/offers",
+      "facilitators": []
+    },
+    {
+      "origin": "https://api.solenrich.com",
+      "resourceCount": 1,
+      "sampleResource": "https://api.solenrich.com/entrypoints/stonk-yield/invoke",
+      "facilitators": []
+    },
+    {
+      "origin": "https://cars2026.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://cars2026.vercel.app/api/cars",
+      "facilitators": []
+    },
+    {
+      "origin": "https://cheaptokens.ai",
+      "resourceCount": 1,
+      "sampleResource": "https://cheaptokens.ai/api/buy",
+      "facilitators": []
+    },
+    {
+      "origin": "https://coinflip402.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://coinflip402.vercel.app/api/coinflip",
+      "facilitators": []
+    },
+    {
+      "origin": "https://crypto.apitoll.cloud",
+      "resourceCount": 1,
+      "sampleResource": "https://crypto.apitoll.cloud/v1/crypto/price",
+      "facilitators": []
+    },
+    {
+      "origin": "https://dicex402.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://dicex402.vercel.app/api/dice",
+      "facilitators": []
+    },
+    {
+      "origin": "https://edgar.apitoll.cloud",
+      "resourceCount": 1,
+      "sampleResource": "https://edgar.apitoll.cloud/v1/edgar/filings",
+      "facilitators": []
+    },
+    {
+      "origin": "https://glim.sh",
+      "resourceCount": 1,
+      "sampleResource": "https://glim.sh/api/v1/twitter/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://horrorstoryapi.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://horrorstoryapi.vercel.app/api/horror-story",
+      "facilitators": []
+    },
+    {
+      "origin": "https://hyperliquid-predict.use.x402atlas.com",
+      "resourceCount": 1,
+      "sampleResource": "https://hyperliquid-predict.use.x402atlas.com/outcomes",
+      "facilitators": []
+    },
+    {
+      "origin": "https://hypernatt.com",
+      "resourceCount": 1,
+      "sampleResource": "https://hypernatt.com/api/m2m/liq-radar",
+      "facilitators": []
+    },
+    {
+      "origin": "https://keyring-agent.blockchhub.link",
+      "resourceCount": 1,
+      "sampleResource": "https://keyring-agent.blockchhub.link/api/send-native",
+      "facilitators": []
+    },
+    {
+      "origin": "https://ladyfortunalx402.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://ladyfortunalx402.vercel.app/api/fortune",
+      "facilitators": []
+    },
+    {
+      "origin": "https://memegeneratorx402.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://memegeneratorx402.vercel.app/api/generate-meme",
+      "facilitators": []
+    },
+    {
+      "origin": "https://omniterminal.app",
+      "resourceCount": 1,
+      "sampleResource": "https://omniterminal.app/api/x402/v1/news",
+      "facilitators": []
+    },
+    {
+      "origin": "https://pro-api.coingecko.com",
+      "resourceCount": 1,
+      "sampleResource": "https://pro-api.coingecko.com/api/v3/x402/onchain/search/pools",
+      "facilitators": []
+    },
+    {
+      "origin": "https://quartermaster.surewhynot.app",
+      "resourceCount": 1,
+      "sampleResource": "https://quartermaster.surewhynot.app/v1/gas",
+      "facilitators": []
+    },
+    {
+      "origin": "https://randomfactsx402.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://randomfactsx402.vercel.app/api/random-fact",
+      "facilitators": []
+    },
+    {
+      "origin": "https://roastx402endpoint.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://roastx402endpoint.vercel.app/api/roast",
+      "facilitators": []
+    },
+    {
+      "origin": "https://sat.ipintel.ai",
+      "resourceCount": 1,
+      "sampleResource": "https://sat.ipintel.ai/satellite-observe",
+      "facilitators": []
+    },
+    {
+      "origin": "https://stablestudio.dev",
+      "resourceCount": 1,
+      "sampleResource": "https://stablestudio.dev/api/upload",
+      "facilitators": []
+    },
+    {
+      "origin": "https://twitter.use.x402atlas.com",
+      "resourceCount": 1,
+      "sampleResource": "https://twitter.use.x402atlas.com/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://wallets-demo-seller-server.calebgcarithers.workers.dev",
+      "resourceCount": 1,
+      "sampleResource": "https://wallets-demo-seller-server.calebgcarithers.workers.dev/weather",
+      "facilitators": []
+    },
+    {
+      "origin": "https://websearch.use.x402atlas.com",
+      "resourceCount": 1,
+      "sampleResource": "https://websearch.use.x402atlas.com/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://www.ax1.vc",
+      "resourceCount": 1,
+      "sampleResource": "https://www.ax1.vc/api/dashboard/q-verdict/resource",
+      "facilitators": []
+    },
+    {
+      "origin": "https://www.getbags.app",
+      "resourceCount": 1,
+      "sampleResource": "https://www.getbags.app/api/v1",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402.botsmith.dev",
+      "resourceCount": 1,
+      "sampleResource": "https://x402.botsmith.dev/x/search",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402lifeadvice.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://x402lifeadvice.vercel.app/api/life-advice",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402tap.com",
+      "resourceCount": 1,
+      "sampleResource": "https://x402tap.com/api/weather",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402uselessfacts.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://x402uselessfacts.vercel.app/api/useless-fact",
+      "facilitators": []
+    },
+    {
+      "origin": "https://x402wordoftheday.vercel.app",
+      "resourceCount": 1,
+      "sampleResource": "https://x402wordoftheday.vercel.app/api/word-of-the-day",
+      "facilitators": []
+    }
+  ],
+  "sampled_origins": []
 }

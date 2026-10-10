@@ -1,8 +1,6 @@
 {
-  "generated_at": "2026-10-10T18:11:58.623Z",
+  "generated_at": "2026-10-10T18:26:01.486Z",
   "tool": "gates-probe",
-  "origins_scanned": 17,
-  "reachable": 14,
   "discovery": {
     "sources": [
       {
@@ -17,749 +15,2757 @@
       }
     ],
     "total_listed": 150,
-    "distinct_origins": 51,
-    "sampled_origins": [
-      "https://www.ax1.vc",
-      "https://stableenrich.dev",
-      "https://crypto.apitoll.cloud",
-      "https://api.exa.ai",
-      "https://stableupload.dev",
-      "https://api.onesource.io",
-      "https://twitter.use.x402atlas.com",
-      "https://agi.apify.com",
-      "https://laso.finance",
-      "https://api.bitrefill.com",
-      "https://cheaptokens.ai",
-      "https://websearch.use.x402atlas.com",
-      "https://glim.sh",
-      "https://edgar.apitoll.cloud",
-      "https://ausca.com",
-      "https://x402.ottoai.services",
-      "https://x402.botsmith.dev",
-      "https://api.402rates.com",
-      "https://keyring-agent.blockchhub.link",
-      "https://hypernatt.com",
-      "https://randomfactsx402.vercel.app",
-      "https://api.hyperextend.xyz",
-      "https://rubric-protocol.com",
-      "https://api.oblique.markets",
-      "https://hyperliquid-predict.use.x402atlas.com"
+    "distinct_origins": 60,
+    "sellers": [
+      {
+        "origin": "https://api.onesource.io",
+        "resourceCount": 30,
+        "sampleResource": "https://api.onesource.io/api/chain/erc20-balance",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agentres.dev",
+        "resourceCount": 19,
+        "sampleResource": "https://agentres.dev/api/account",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agents.allium.so",
+        "resourceCount": 12,
+        "sampleResource": "https://agents.allium.so/api/v1/developer/prices",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.aisa.one",
+        "resourceCount": 10,
+        "sampleResource": "https://api.aisa.one/apis/v2/agentmail/api-keys",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402.ottoai.services",
+        "resourceCount": 7,
+        "sampleResource": "https://x402.ottoai.services/crypto-news",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agent.atinamos.co.uk",
+        "resourceCount": 4,
+        "sampleResource": "https://agent.atinamos.co.uk/agent/buyer-check",
+        "facilitators": []
+      },
+      {
+        "origin": "https://ausca.com",
+        "resourceCount": 4,
+        "sampleResource": "https://ausca.com/v1/open-inbox",
+        "facilitators": []
+      },
+      {
+        "origin": "https://blockrun.ai",
+        "resourceCount": 3,
+        "sampleResource": "https://blockrun.ai/api/v1/pm/polymarket/markets",
+        "facilitators": []
+      },
+      {
+        "origin": "https://google-trends.use.x402atlas.com",
+        "resourceCount": 3,
+        "sampleResource": "https://google-trends.use.x402atlas.com/related-queries",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.exa.ai",
+        "resourceCount": 2,
+        "sampleResource": "https://api.exa.ai/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.oblique.markets",
+        "resourceCount": 2,
+        "sampleResource": "https://api.oblique.markets/api/v1/paid/time",
+        "facilitators": []
+      },
+      {
+        "origin": "https://laso.finance",
+        "resourceCount": 2,
+        "sampleResource": "https://laso.finance/get-card",
+        "facilitators": []
+      },
+      {
+        "origin": "https://rubric-protocol.com",
+        "resourceCount": 2,
+        "sampleResource": "https://rubric-protocol.com/v1/x402/hedera-facts/exchange-rate",
+        "facilitators": []
+      },
+      {
+        "origin": "https://stableenrich.dev",
+        "resourceCount": 2,
+        "sampleResource": "https://stableenrich.dev/api/fullenrich/people-search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://stableupload.dev",
+        "resourceCount": 2,
+        "sampleResource": "https://stableupload.dev/api/upload",
+        "facilitators": []
+      },
+      {
+        "origin": "https://vibesprings.net",
+        "resourceCount": 2,
+        "sampleResource": "https://vibesprings.net/api/price/btc-usd",
+        "facilitators": []
+      },
+      {
+        "origin": "https://2captcha.x402.paysponge.com",
+        "resourceCount": 1,
+        "sampleResource": "https://2captcha.x402.paysponge.com/createTask",
+        "facilitators": []
+      },
+      {
+        "origin": "https://aero.lonestaroracle.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://aero.lonestaroracle.xyz/pool",
+        "facilitators": []
+      },
+      {
+        "origin": "https://africa.lonestaroracle.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://africa.lonestaroracle.xyz/pulse",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agentpay.tools",
+        "resourceCount": 1,
+        "sampleResource": "https://agentpay.tools/tools/pre_trade_check/call",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agi.apify.com",
+        "resourceCount": 1,
+        "sampleResource": "https://agi.apify.com/protocols/x402/prepaid-tokens",
+        "facilitators": []
+      },
+      {
+        "origin": "https://agri.lonestaroracle.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://agri.lonestaroracle.xyz/report",
+        "facilitators": []
+      },
+      {
+        "origin": "https://analyst.lonestaroracle.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://analyst.lonestaroracle.xyz/ratings",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.402rates.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.402rates.com/v1/ping",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.aidress.ai",
+        "resourceCount": 1,
+        "sampleResource": "https://api.aidress.ai/pay/agent_ottoai_crypto_news",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.bitrefill.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.bitrefill.com/x402/gift-cards/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.hyperextend.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://api.hyperextend.xyz/v1/candles/BTC/1m/latest",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.kadec0.xyz",
+        "resourceCount": 1,
+        "sampleResource": "https://api.kadec0.xyz/v1/serp",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.loyalspark.online",
+        "resourceCount": 1,
+        "sampleResource": "https://api.loyalspark.online/x402-gateway/recipient-api/offers",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.solenrich.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.solenrich.com/entrypoints/stonk-yield/invoke",
+        "facilitators": []
+      },
+      {
+        "origin": "https://cars2026.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://cars2026.vercel.app/api/cars",
+        "facilitators": []
+      },
+      {
+        "origin": "https://cheaptokens.ai",
+        "resourceCount": 1,
+        "sampleResource": "https://cheaptokens.ai/api/buy",
+        "facilitators": []
+      },
+      {
+        "origin": "https://coinflip402.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://coinflip402.vercel.app/api/coinflip",
+        "facilitators": []
+      },
+      {
+        "origin": "https://crypto.apitoll.cloud",
+        "resourceCount": 1,
+        "sampleResource": "https://crypto.apitoll.cloud/v1/crypto/price",
+        "facilitators": []
+      },
+      {
+        "origin": "https://dicex402.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://dicex402.vercel.app/api/dice",
+        "facilitators": []
+      },
+      {
+        "origin": "https://edgar.apitoll.cloud",
+        "resourceCount": 1,
+        "sampleResource": "https://edgar.apitoll.cloud/v1/edgar/filings",
+        "facilitators": []
+      },
+      {
+        "origin": "https://glim.sh",
+        "resourceCount": 1,
+        "sampleResource": "https://glim.sh/api/v1/twitter/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://horrorstoryapi.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://horrorstoryapi.vercel.app/api/horror-story",
+        "facilitators": []
+      },
+      {
+        "origin": "https://hyperliquid-predict.use.x402atlas.com",
+        "resourceCount": 1,
+        "sampleResource": "https://hyperliquid-predict.use.x402atlas.com/outcomes",
+        "facilitators": []
+      },
+      {
+        "origin": "https://hypernatt.com",
+        "resourceCount": 1,
+        "sampleResource": "https://hypernatt.com/api/m2m/liq-radar",
+        "facilitators": []
+      },
+      {
+        "origin": "https://keyring-agent.blockchhub.link",
+        "resourceCount": 1,
+        "sampleResource": "https://keyring-agent.blockchhub.link/api/send-native",
+        "facilitators": []
+      },
+      {
+        "origin": "https://ladyfortunalx402.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://ladyfortunalx402.vercel.app/api/fortune",
+        "facilitators": []
+      },
+      {
+        "origin": "https://memegeneratorx402.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://memegeneratorx402.vercel.app/api/generate-meme",
+        "facilitators": []
+      },
+      {
+        "origin": "https://omniterminal.app",
+        "resourceCount": 1,
+        "sampleResource": "https://omniterminal.app/api/x402/v1/news",
+        "facilitators": []
+      },
+      {
+        "origin": "https://pro-api.coingecko.com",
+        "resourceCount": 1,
+        "sampleResource": "https://pro-api.coingecko.com/api/v3/x402/onchain/search/pools",
+        "facilitators": []
+      },
+      {
+        "origin": "https://quartermaster.surewhynot.app",
+        "resourceCount": 1,
+        "sampleResource": "https://quartermaster.surewhynot.app/v1/gas",
+        "facilitators": []
+      },
+      {
+        "origin": "https://randomfactsx402.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://randomfactsx402.vercel.app/api/random-fact",
+        "facilitators": []
+      },
+      {
+        "origin": "https://roastx402endpoint.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://roastx402endpoint.vercel.app/api/roast",
+        "facilitators": []
+      },
+      {
+        "origin": "https://sat.ipintel.ai",
+        "resourceCount": 1,
+        "sampleResource": "https://sat.ipintel.ai/satellite-observe",
+        "facilitators": []
+      },
+      {
+        "origin": "https://stablestudio.dev",
+        "resourceCount": 1,
+        "sampleResource": "https://stablestudio.dev/api/upload",
+        "facilitators": []
+      },
+      {
+        "origin": "https://twitter.use.x402atlas.com",
+        "resourceCount": 1,
+        "sampleResource": "https://twitter.use.x402atlas.com/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://wallets-demo-seller-server.calebgcarithers.workers.dev",
+        "resourceCount": 1,
+        "sampleResource": "https://wallets-demo-seller-server.calebgcarithers.workers.dev/weather",
+        "facilitators": []
+      },
+      {
+        "origin": "https://websearch.use.x402atlas.com",
+        "resourceCount": 1,
+        "sampleResource": "https://websearch.use.x402atlas.com/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://www.ax1.vc",
+        "resourceCount": 1,
+        "sampleResource": "https://www.ax1.vc/api/dashboard/q-verdict/resource",
+        "facilitators": []
+      },
+      {
+        "origin": "https://www.getbags.app",
+        "resourceCount": 1,
+        "sampleResource": "https://www.getbags.app/api/v1",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402.botsmith.dev",
+        "resourceCount": 1,
+        "sampleResource": "https://x402.botsmith.dev/x/search",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402lifeadvice.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://x402lifeadvice.vercel.app/api/life-advice",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402tap.com",
+        "resourceCount": 1,
+        "sampleResource": "https://x402tap.com/api/weather",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402uselessfacts.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://x402uselessfacts.vercel.app/api/useless-fact",
+        "facilitators": []
+      },
+      {
+        "origin": "https://x402wordoftheday.vercel.app",
+        "resourceCount": 1,
+        "sampleResource": "https://x402wordoftheday.vercel.app/api/word-of-the-day",
+        "facilitators": []
+      }
+    ],
+    "sampled_origins": []
+  },
+  "authority": {
+    "origins_scanned": 17,
+    "reachable": 16,
+    "results": [
+      {
+        "origin": "https://api.automaton-sovereign.workers.dev",
+        "posture": "attestation-ledger",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": true,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": true,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": [
+          {
+            "id": "ledger.hashIntegrity",
+            "title": "Hash integrity — every entry recomputes from its inputs",
+            "status": "pass",
+            "level": "L0",
+            "message": "All 34 entries recompute.",
+            "evidence": {
+              "matched": 34,
+              "total": 34,
+              "badIndices": []
+            }
+          },
+          {
+            "id": "ledger.chainContinuity",
+            "title": "Chain continuity — prevHash links to predecessor; indices contiguous",
+            "status": "pass",
+            "level": "L0",
+            "message": "Indices 0..33 contiguous; all prevHash links hold.",
+            "evidence": {
+              "contiguous": true,
+              "brokenIndices": [],
+              "span": [
+                0,
+                33
+              ]
+            }
+          },
+          {
+            "id": "keyring.historyAware",
+            "title": "Key history published — verifier can resolve retired keys by id",
+            "status": "pass",
+            "level": "L0",
+            "message": "1 retired key(s) published alongside current 6db8674197d1601f.",
+            "evidence": {
+              "currentKeyId": "6db8674197d1601f",
+              "retiredCount": 1
+            }
+          },
+          {
+            "id": "evidence.contentBinding",
+            "title": "Content binding — entries carry a real payload, not sha256(\"{}\")",
+            "status": "gap",
+            "level": "L0",
+            "message": "22/34 entries sign an empty object (bound 12, ratio 0.353) at indices 12..33.",
+            "evidence": {
+              "total": 34,
+              "empty": 22,
+              "bound": 12,
+              "emptyIndices": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33
+              ],
+              "ratio": 0.35294117647058826
+            }
+          },
+          {
+            "id": "evidence.settlementLinkage",
+            "title": "Settlement linkage — an entry binds this payment via a gates subject",
+            "status": "pending",
+            "level": "L2",
+            "message": "No request fingerprint supplied — the settlement-binding half cannot be tested. Provide --fingerprint or --binding.",
+            "evidence": {
+              "reason": "missing_fingerprint"
+            }
+          },
+          {
+            "id": "evidence.redeemCountDerivable",
+            "title": "Redeem-count derivability — counts are derived, not asserted",
+            "status": "pending",
+            "level": "L1",
+            "message": "No fingerprint in scope; cannot confirm a count is derivable for a concrete request. Provide --fingerprint to exercise it.",
+            "evidence": {
+              "reason": "missing_fingerprint"
+            }
+          },
+          {
+            "id": "evidence.settlementTrivalued",
+            "title": "Settlement trivaluation — a three-value settlement predicate is exposed",
+            "status": "info",
+            "level": "L1",
+            "message": "Ledger entries carry no settlement-status field; trivaluation is not observable here (common for signature ledgers).",
+            "evidence": {
+              "observedFields": []
+            }
+          }
+        ],
+        "summary": {
+          "total": 7,
+          "pass": 3,
+          "gap": 1,
+          "fail": 0,
+          "pending": 2,
+          "info": 1,
+          "levels": {
+            "L0": true,
+            "L1": true,
+            "L2": true
+          },
+          "headline": "1 known gap(s) reported; 3 predicate(s) hold."
+        },
+        "entryCount": 34
+      },
+      {
+        "origin": "https://inference.bsvkey.com",
+        "posture": "signed-receipt",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": true,
+            "status": 200,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://x402.org/facilitator",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://api.cdp.coinbase.com",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.payai.network",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.corbits.dev",
+        "posture": "unreachable",
+        "reachable": false,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 0,
+            "kind": "attestation-ledger",
+            "responded": false
+          },
+          "keyring": {
+            "present": false,
+            "status": 0,
+            "kind": "attestation-ledger",
+            "responded": false
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 0,
+            "kind": "signed-receipt",
+            "responded": false
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 0,
+            "kind": "settlement-only",
+            "responded": false
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 0,
+            "kind": "settlement-only",
+            "responded": false
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.x402.rs",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 200,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://x402.dexter.cash",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.heurist.xyz",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://gateway.kobaru.io",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.mogami.tech",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://api.live.nevermined.app",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://pay.openfacilitator.io",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://x402.solpay.cash",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://x402.primer.systems",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://facilitator.xechoai.xyz",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": false,
+            "status": 404,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      },
+      {
+        "origin": "https://api.x402.celo.org",
+        "posture": "settlement-only",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          },
+          "facilitatorSupported": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          },
+          "facilitatorHealth": {
+            "present": true,
+            "status": 200,
+            "kind": "settlement-only",
+            "responded": true
+          }
+        },
+        "evidenceOnly": false,
+        "predicates": null,
+        "summary": null,
+        "entryCount": null
+      }
     ]
   },
-  "results": [
-    {
-      "origin": "https://api.automaton-sovereign.workers.dev",
-      "posture": "attestation-ledger",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": true,
-          "status": 200,
-          "kind": "attestation-ledger"
-        },
-        "keyring": {
-          "present": true,
-          "status": 200,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
-      },
-      "predicates": [
-        {
-          "id": "ledger.hashIntegrity",
-          "title": "Hash integrity — every entry recomputes from its inputs",
-          "status": "pass",
-          "level": "L0",
-          "message": "All 34 entries recompute.",
-          "evidence": {
-            "matched": 34,
-            "total": 34,
-            "badIndices": []
+  "seller": {
+    "origins_scanned": 60,
+    "reachable": 60,
+    "results": [
+      {
+        "origin": "https://api.onesource.io",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 401,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 401,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 401,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "ledger.chainContinuity",
-          "title": "Chain continuity — prevHash links to predecessor; indices contiguous",
-          "status": "pass",
-          "level": "L0",
-          "message": "Indices 0..33 contiguous; all prevHash links hold.",
-          "evidence": {
-            "contiguous": true,
-            "brokenIndices": [],
-            "span": [
-              0,
-              33
-            ]
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://agentres.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "keyring.historyAware",
-          "title": "Key history published — verifier can resolve retired keys by id",
-          "status": "pass",
-          "level": "L0",
-          "message": "1 retired key(s) published alongside current 6db8674197d1601f.",
-          "evidence": {
-            "currentKeyId": "6db8674197d1601f",
-            "retiredCount": 1
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://agents.allium.so",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "evidence.contentBinding",
-          "title": "Content binding — entries carry a real payload, not sha256(\"{}\")",
-          "status": "gap",
-          "level": "L0",
-          "message": "22/34 entries sign an empty object (bound 12, ratio 0.353) at indices 12..33.",
-          "evidence": {
-            "total": 34,
-            "empty": 22,
-            "bound": 12,
-            "emptyIndices": [
-              12,
-              13,
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              20,
-              21,
-              22,
-              23,
-              24,
-              25,
-              26,
-              27,
-              28,
-              29,
-              30,
-              31,
-              32,
-              33
-            ],
-            "ratio": 0.35294117647058826
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.aisa.one",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "evidence.settlementLinkage",
-          "title": "Settlement linkage — an entry binds this payment via a gates subject",
-          "status": "pending",
-          "level": "L2",
-          "message": "No request fingerprint supplied — the settlement-binding half cannot be tested. Provide --fingerprint or --binding.",
-          "evidence": {
-            "reason": "missing_fingerprint"
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402.ottoai.services",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "evidence.redeemCountDerivable",
-          "title": "Redeem-count derivability — counts are derived, not asserted",
-          "status": "pending",
-          "level": "L1",
-          "message": "No fingerprint in scope; cannot confirm a count is derivable for a concrete request. Provide --fingerprint to exercise it.",
-          "evidence": {
-            "reason": "missing_fingerprint"
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://agent.atinamos.co.uk",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
         },
-        {
-          "id": "evidence.settlementTrivalued",
-          "title": "Settlement trivaluation — a three-value settlement predicate is exposed",
-          "status": "info",
-          "level": "L1",
-          "message": "Ledger entries carry no settlement-status field; trivaluation is not observable here (common for signature ledgers).",
-          "evidence": {
-            "observedFields": []
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://ausca.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
           }
-        }
-      ],
-      "summary": {
-        "total": 7,
-        "pass": 3,
-        "gap": 1,
-        "fail": 0,
-        "pending": 2,
-        "info": 1,
-        "levels": {
-          "L0": true,
-          "L1": true,
-          "L2": true
         },
-        "headline": "1 known gap(s) reported; 3 predicate(s) hold."
+        "evidenceOnly": true
       },
-      "entryCount": 34
-    },
-    {
-      "origin": "https://inference.bsvkey.com",
-      "posture": "signed-receipt",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://blockrun.ai",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": true,
-          "status": 200,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://x402.org/facilitator",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://google-trends.use.x402atlas.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://api.cdp.coinbase.com",
-      "posture": "unreachable",
-      "reachable": false,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://api.exa.ai",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.payai.network",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://api.oblique.markets",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.corbits.dev",
-      "posture": "unreachable",
-      "reachable": false,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 0,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://laso.finance",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 0,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 0,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 0,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 0,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.x402.rs",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 200,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://rubric-protocol.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 200,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 200,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://x402.dexter.cash",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://stableenrich.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.heurist.xyz",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://stableupload.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://gateway.kobaru.io",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://vibesprings.net",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.mogami.tech",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://2captcha.x402.paysponge.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://api.live.nevermined.app",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://aero.lonestaroracle.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://pay.openfacilitator.io",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://africa.lonestaroracle.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://x402.solpay.cash",
-      "posture": "unreachable",
-      "reachable": false,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://agentpay.tools",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://x402.primer.systems",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://agi.apify.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://facilitator.xechoai.xyz",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://agri.lonestaroracle.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": false,
-          "status": 404,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    },
-    {
-      "origin": "https://api.x402.celo.org",
-      "posture": "settlement-only",
-      "reachable": true,
-      "surfaces": {
-        "ledger": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
+      {
+        "origin": "https://analyst.lonestaroracle.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
         },
-        "keyring": {
-          "present": false,
-          "status": 404,
-          "kind": "attestation-ledger"
-        },
-        "receiptKey": {
-          "present": false,
-          "status": 404,
-          "kind": "signed-receipt"
-        },
-        "facilitatorSupported": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        },
-        "facilitatorHealth": {
-          "present": true,
-          "status": 200,
-          "kind": "settlement-only"
-        }
+        "evidenceOnly": true
       },
-      "predicates": null,
-      "summary": null,
-      "entryCount": null
-    }
-  ]
+      {
+        "origin": "https://api.402rates.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.aidress.ai",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.bitrefill.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 401,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 401,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.hyperextend.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.kadec0.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.loyalspark.online",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.solenrich.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://cars2026.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://cheaptokens.ai",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://coinflip402.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://crypto.apitoll.cloud",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://dicex402.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://edgar.apitoll.cloud",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://glim.sh",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 200,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 200,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://horrorstoryapi.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://hyperliquid-predict.use.x402atlas.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://hypernatt.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://keyring-agent.blockchhub.link",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://ladyfortunalx402.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://memegeneratorx402.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://omniterminal.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://pro-api.coingecko.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://quartermaster.surewhynot.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://randomfactsx402.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://roastx402endpoint.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://sat.ipintel.ai",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://stablestudio.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://twitter.use.x402atlas.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://wallets-demo-seller-server.calebgcarithers.workers.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://websearch.use.x402atlas.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://www.ax1.vc",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://www.getbags.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402.botsmith.dev",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402lifeadvice.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402tap.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402uselessfacts.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://x402wordoftheday.vercel.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      }
+    ]
+  }
 }
