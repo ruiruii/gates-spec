@@ -1,0 +1,13 @@
+{
+  "name": "@gates-spec/adapter-automaton",
+  "version": "0.1.0",
+  "description": "Adapter binding an automaton-sovereign style hash-chained attestation ledger to gates-spec: subject-bound dataHash, bounded refusal attestations, and a derivable redeem_count.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "exports": { ".": "./src/index.mjs" },
+  "dependencies": { "@gates-spec/core": "*" },
+  "files": ["src"],
+  "engines": { "node": ">=18" },
+  "keywords": ["gates-spec", "vsr", "x402", "attestation", "redeem-count", "adapter"]
+}
