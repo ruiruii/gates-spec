@@ -13,10 +13,39 @@
  * Note: needs unrestricted outbound network. Some sandboxed networks answer DNS
  * for unknown hosts with placeholder addresses, in which case every fetch times
  * out — that is an environment problem, not a result.
+ *
+ * No external dependencies: it imports only workspace-internal `@gates-spec/*`
+ * packages, so it runs from a clean checkout after `npm install`.
  */
+
+import {
+  EMPTY_DATA_HASH,
+  contentBindingRatio,
+  deriveRedeemCount,
+} from '@gates-spec/adapter-automaton';
 
 const ORIGIN = 'https://api.automaton-sovereign.workers.dev';
 const RPC = 'https://mainnet.base.org';
+
+/**
+ * The request fingerprint of the logical request this payment settled.
+ *
+ * The origin does not publish it, and this harness cannot derive it: the
+ * fingerprint is computed from the HTTP request (method + url + canonical
+ * params), and this script never makes a paid request — spend is deliberately
+ * gated off. So the binding half cannot be tested end-to-end until the origin
+ * publishes the fingerprint for this payment (or for any payment).
+ *
+ * Supply it via `--fingerprint <sha256:...>` or `GATES_RW001_FINGERPRINT`.
+ * Once it is set in CI, the red half turns green by itself on the next run.
+ */
+const FINGERPRINT =
+  process.env.GATES_RW001_FINGERPRINT?.trim() ||
+  (() => {
+    const i = process.argv.indexOf('--fingerprint');
+    return i > -1 && process.argv[i + 1] ? process.argv[i + 1].trim() : null;
+  })() ||
+  null;
 
 const TX = '0x3bf944626e3429c7acf1bbc135d82cd73d8e74fec2de4dd03e93a269993d62d8';
 const EXPECTED = {
@@ -128,15 +157,52 @@ if (brokenLinks.length) console.log(`  [INFO] broken links at indices: ${brokenL
 // until his origin binds a settlement to an entry. That is the point of RW-001
 // as a known-gap vector: the chain reproduces, the settlement link does not yet.
 console.log('\n=== 3b. Known gap (RED half) — reported, expected to fail today ===');
-const EMPTY = createHash('sha256').update('{}').digest('hex');
-const emptyEntries = entries.filter((e) => e.dataHash === EMPTY);
-console.log(`  [GAP] entries whose dataHash is sha256("{}") (no payload): ${emptyEntries.length}/${entries.length}` +
-  (emptyEntries.length ? ` (indices ${emptyEntries[0].index}..${emptyEntries[emptyEntries.length - 1].index})` : ''));
-const forms = [TX, TX.replace(/^0x/, ''), JSON.stringify({ tx: TX })];
-const bindCount = entries.filter((e) =>
-  forms.some((f) => e.dataHash === createHash('sha256').update(f).digest('hex'))).length;
-console.log(`  [GAP] entries whose dataHash binds this tx (raw / 0x-stripped / {tx}): ${bindCount}`);
-console.log('  [INFO] RW-001 is a KNOWN-GAP vector: chain reproduces; settlement link does not yet.');
+
+// --- 3b.1 content binding ratio -------------------------------------------
+// How many entries bind *anything* at all. Independent of gates-spec: an entry
+// whose dataHash is sha256("{}") is an attestation that signs an empty object.
+const binding = contentBindingRatio(entries);
+console.log(`  [GAP] entries whose dataHash is sha256("{}") (no payload): ` +
+  `${binding.empty}/${binding.total} (bound: ${binding.bound}, ratio ${binding.ratio.toFixed(3)})` +
+  (binding.emptyIndices.length
+    ? ` (indices ${binding.emptyIndices[0]}..${binding.emptyIndices[binding.emptyIndices.length - 1]})`
+    : ''));
+if (binding.empty > 0) {
+  console.log(`  [INFO] ${binding.empty} entries attest "we signed something", not "we signed something about this".`);
+}
+
+// --- 3b.2 gates-subject binding -------------------------------------------
+// Does any entry carry a dataHash that a gates-spec subject would produce for
+// this payment? Uses the adapter, so the assertion is the same code the origin
+// would call — not a re-implementation of it.
+if (!FINGERPRINT) {
+  console.log('  [PENDING] no request fingerprint published for this payment — binding cannot be tested yet.');
+  console.log('            Supply --fingerprint <sha256:...> or GATES_RW001_FINGERPRINT to enable this half.');
+  console.log('            The harness cannot derive it: it never makes a paid request (spend is gated off).');
+} else {
+  const attempts = [{ txHash: TX, resourceId: 'search.v1', settled: true }];
+  const derived = deriveRedeemCount(entries, { fingerprint: FINGERPRINT, attempts });
+  const expected = deriveRedeemCount(
+    [{ index: -1, dataHash: EMPTY_DATA_HASH }],
+    { fingerprint: FINGERPRINT, attempts },
+  );
+  // Guard against a fingerprint that produces no candidate hashes at all.
+  if (derived.forms.length === 0 || expected.forms.length === 0) {
+    console.log('  [FAIL] fingerprint produced no candidate dataHash — check the value');
+    failures++;
+  } else {
+    const ok = derived.boundToFingerprint;
+    if (!ok) failures++;
+    console.log(`  [${ok ? 'PASS' : 'GAP'}] entries binding this logical request via a gates subject: ${derived.redeemCount}`);
+    for (const m of derived.matched) {
+      console.log(`            index ${m.index} — ${m.kind} (tx ${m.txHash.slice(0, 12)}…)`);
+    }
+    if (!ok) {
+      console.log('  [INFO] RW-001 is a KNOWN-GAP vector: chain reproduces; settlement link does not yet.');
+    }
+  }
+}
+console.log('  [INFO] RED half is reported, not asserted — it SHOULD read unbound until the origin binds a subject.');
 
 /** signature is ECDSA-P256-SHA256 (DER) over the ASCII hex string of `hash` */
 const verifyEntry = (e, pem) =>
