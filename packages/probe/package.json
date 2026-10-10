@@ -1,0 +1,24 @@
+{
+  "name": "@gates-spec/probe",
+  "version": "0.1.0",
+  "description": "Evidence-layer probe for x402 (and protocol-agnostic) payment ledgers. Runs a battery of coverage predicates against any public ledger and emits a signed, verifiable report.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "gates-probe": "bin/gates-probe.mjs"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@gates-spec/core": "*",
+    "@gates-spec/adapter-automaton": "*"
+  }
+}
