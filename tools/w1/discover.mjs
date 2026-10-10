@@ -54,42 +54,74 @@ const EVIDENCE_SEED = [
 async function fetchDiscovery(url, fetchImpl = globalThis.fetch) {
   try {
     const r = await fetchImpl(url, { headers: { accept: 'application/json' } });
-    if (!r.ok) return { ok: false, count: 0, origins: [] };
+    if (!r.ok) return { ok: false, count: 0, items: [] };
     const doc = await r.json();
     // Discovery directories use different top-level keys: Circle → "items",
     // CDP → "resources", others → "entries" / bare array.
     const items =
       doc?.items ?? doc?.resources ?? doc?.entries ?? doc?.data ?? doc?.results ??
       (Array.isArray(doc) ? doc : []);
-    const origins = new Set();
-    for (const it of items) {
-      const cand =
-        it.resource ?? it.origin ?? it.host ?? it.url ?? it.endpoint ?? it.baseUrl ?? it.location ??
-        (typeof it === 'string' ? it : null);
-      if (!cand) continue;
-      try {
-        origins.add(new URL(cand).origin);
-      } catch {
-        /* skip unparseable */
-      }
-    }
-    return { ok: true, count: items.length, origins: [...origins] };
+    return { ok: true, count: items.length, items };
   } catch {
-    return { ok: false, count: 0, origins: [] };
+    return { ok: false, count: 0, items: [] };
   }
 }
 
+// Extract seller (resource-server) origins from discovery items, plus the
+// facilitator each seller delegates settlement to (when the directory exposes
+// it). Sellers are the population we contrast against evidence coverage.
+function extractSellers(items) {
+  const byOrigin = new Map(); // origin -> { origin, resources:[], facilitators:Set }
+  let totalResources = 0;
+  for (const it of items) {
+    const cand =
+      it.resource ?? it.origin ?? it.host ?? it.url ?? it.endpoint ?? it.baseUrl ?? it.location ??
+      (typeof it === 'string' ? it : null);
+    if (!cand) continue;
+    let origin;
+    try {
+      origin = new URL(cand).origin;
+    } catch {
+      continue;
+    }
+    totalResources += 1;
+    if (!byOrigin.has(origin)) byOrigin.set(origin, { origin, resources: [], facilitators: new Set() });
+    const e = byOrigin.get(origin);
+    e.resources.push(cand);
+    for (const acc of it.accepts ?? []) {
+      const f = acc?.facilitator;
+      if (typeof f === 'string' && f) {
+        try {
+          e.facilitators.add(new URL(f).origin);
+        } catch {
+          e.facilitators.add(f);
+        }
+      }
+    }
+  }
+  const sellers = [...byOrigin.values()].map((e) => ({
+    origin: e.origin,
+    resourceCount: e.resources.length,
+    sampleResource: e.resources[0],
+    facilitators: [...e.facilitators],
+  }));
+  sellers.sort((a, b) => b.resourceCount - a.resourceCount || a.origin.localeCompare(b.origin));
+  return { sellers, totalResources };
+}
+
 async function main() {
-  const discovery = { sources: [], total_listed: 0, distinct_origins: 0, sampled_origins: [] };
+  const discovery = { sources: [], total_listed: 0, distinct_origins: 0, sellers: [], sampled_origins: [] };
+  let allItems = [];
   for (const src of DISCOVERY_SOURCES) {
     const res = await fetchDiscovery(src);
     discovery.sources.push({ url: src, ok: res.ok, count: res.count });
     discovery.total_listed += res.count;
-    if (res.origins.length) {
-      discovery.distinct_origins = res.origins.length;
-      discovery.sampled_origins = res.origins.slice(0, 25);
-    }
+    if (res.ok) allItems = allItems.concat(res.items);
   }
+
+  const { sellers, totalResources } = extractSellers(allItems);
+  discovery.sellers = sellers;
+  discovery.distinct_origins = sellers.length;
 
   // dedupe seed
   const seen = new Set();
@@ -102,9 +134,16 @@ async function main() {
     }
   }
 
+  // seller origins list (deduped against the authority seed)
+  const sellerLines = sellers.map((s) => s.origin).filter((o) => !seen.has(o));
+
   if (process.argv.includes('--out')) {
     const i = process.argv.indexOf('--out');
     await writeFile(process.argv[i + 1], lines.join('\n') + '\n');
+  }
+  if (process.argv.includes('--sellers-out')) {
+    const i = process.argv.indexOf('--sellers-out');
+    await writeFile(process.argv[i + 1], sellerLines.join('\n') + '\n');
   }
   if (process.argv.includes('--discovery-out')) {
     const i = process.argv.indexOf('--discovery-out');
@@ -114,10 +153,11 @@ async function main() {
   if (!process.argv.includes('--quiet')) {
     process.stderr.write(
       `[discover] evidence-authority seed: ${lines.length} origin(s)\n` +
-        `[discover] discovery: ${discovery.total_listed} resource(s) listed across ${DISCOVERY_SOURCES.length} source(s)\n`,
+        `[discover] discovery: ${discovery.total_listed} resource(s), ${sellers.length} distinct seller origin(s)\n` +
+        `[discover] seller endpoints to census (excl. authorities): ${sellerLines.length}\n`,
     );
   }
-  // always emit the seed list to stdout (pipeline default)
+  // always emit the authority seed list to stdout (pipeline default)
   process.stdout.write(lines.join('\n') + '\n');
 }
 
