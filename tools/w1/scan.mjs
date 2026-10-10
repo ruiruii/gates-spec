@@ -28,7 +28,7 @@ async function probeWithTimeout(origin) {
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   const fetchImpl = (u) => fetch(u, { signal: ctrl.signal });
   try {
-    const surf = await probeSurfaces(origin, fetchImpl, { timeoutMs: Math.min(8000, TIMEOUT_MS) });
+    const surf = await probeSurfaces(origin, fetchImpl, { timeoutMs: Math.min(8000, TIMEOUT_MS), knownFacilitator: true });
     let predicates = null;
     let summary = null;
     let entryCount = null;
