@@ -3,15 +3,41 @@
     {
       "url": "https://api.circle.com/v2/x402/discovery/resources",
       "ok": true,
-      "count": 0
+      "count": 50
     },
     {
       "url": "https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources",
       "ok": true,
-      "count": 0
+      "count": 100
     }
   ],
-  "total_listed": 0,
-  "distinct_origins": 0,
-  "sampled_origins": []
+  "total_listed": 150,
+  "distinct_origins": 51,
+  "sampled_origins": [
+    "https://www.ax1.vc",
+    "https://stableenrich.dev",
+    "https://crypto.apitoll.cloud",
+    "https://api.exa.ai",
+    "https://stableupload.dev",
+    "https://api.onesource.io",
+    "https://twitter.use.x402atlas.com",
+    "https://agi.apify.com",
+    "https://laso.finance",
+    "https://api.bitrefill.com",
+    "https://cheaptokens.ai",
+    "https://websearch.use.x402atlas.com",
+    "https://glim.sh",
+    "https://edgar.apitoll.cloud",
+    "https://ausca.com",
+    "https://x402.ottoai.services",
+    "https://x402.botsmith.dev",
+    "https://api.402rates.com",
+    "https://keyring-agent.blockchhub.link",
+    "https://hypernatt.com",
+    "https://randomfactsx402.vercel.app",
+    "https://api.hyperextend.xyz",
+    "https://rubric-protocol.com",
+    "https://api.oblique.markets",
+    "https://hyperliquid-predict.use.x402atlas.com"
+  ]
 }
