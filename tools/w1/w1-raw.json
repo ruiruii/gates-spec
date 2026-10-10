@@ -1,0 +1,149 @@
+{
+  "generated_at": "2026-10-10T17:37:27.911Z",
+  "tool": "gates-probe",
+  "origins_scanned": 1,
+  "reachable": 1,
+  "results": [
+    {
+      "origin": "https://api.automaton-sovereign.workers.dev",
+      "ok": true,
+      "report": {
+        "tool": "gates-probe",
+        "version": "0.1.0",
+        "generated_at": "2026-10-10T17:37:27.911Z",
+        "target": {
+          "origin": "https://api.automaton-sovereign.workers.dev",
+          "protocol": "x402",
+          "adapter": "automaton",
+          "mode": "live",
+          "fingerprintSupplied": false
+        },
+        "predicates": [
+          {
+            "id": "ledger.hashIntegrity",
+            "title": "Hash integrity — every entry recomputes from its inputs",
+            "status": "pass",
+            "level": "L0",
+            "message": "All 34 entries recompute.",
+            "evidence": {
+              "matched": 34,
+              "total": 34,
+              "badIndices": []
+            }
+          },
+          {
+            "id": "ledger.chainContinuity",
+            "title": "Chain continuity — prevHash links to predecessor; indices contiguous",
+            "status": "pass",
+            "level": "L0",
+            "message": "Indices 0..33 contiguous; all prevHash links hold.",
+            "evidence": {
+              "contiguous": true,
+              "brokenIndices": [],
+              "span": [
+                0,
+                33
+              ]
+            }
+          },
+          {
+            "id": "keyring.historyAware",
+            "title": "Key history published — verifier can resolve retired keys by id",
+            "status": "pass",
+            "level": "L0",
+            "message": "1 retired key(s) published alongside current 6db8674197d1601f.",
+            "evidence": {
+              "currentKeyId": "6db8674197d1601f",
+              "retiredCount": 1
+            }
+          },
+          {
+            "id": "evidence.contentBinding",
+            "title": "Content binding — entries carry a real payload, not sha256(\"{}\")",
+            "status": "gap",
+            "level": "L0",
+            "message": "22/34 entries sign an empty object (bound 12, ratio 0.353) at indices 12..33.",
+            "evidence": {
+              "total": 34,
+              "empty": 22,
+              "bound": 12,
+              "emptyIndices": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33
+              ],
+              "ratio": 0.35294117647058826
+            }
+          },
+          {
+            "id": "evidence.settlementLinkage",
+            "title": "Settlement linkage — an entry binds this payment via a gates subject",
+            "status": "pending",
+            "level": "L2",
+            "message": "No request fingerprint supplied — the settlement-binding half cannot be tested. Provide --fingerprint or --binding.",
+            "evidence": {
+              "reason": "missing_fingerprint"
+            }
+          },
+          {
+            "id": "evidence.redeemCountDerivable",
+            "title": "Redeem-count derivability — counts are derived, not asserted",
+            "status": "pending",
+            "level": "L1",
+            "message": "No fingerprint in scope; cannot confirm a count is derivable for a concrete request. Provide --fingerprint to exercise it.",
+            "evidence": {
+              "reason": "missing_fingerprint"
+            }
+          },
+          {
+            "id": "evidence.settlementTrivalued",
+            "title": "Settlement trivaluation — a three-value settlement predicate is exposed",
+            "status": "info",
+            "level": "L1",
+            "message": "Ledger entries carry no settlement-status field; trivaluation is not observable here (common for signature ledgers).",
+            "evidence": {
+              "observedFields": []
+            }
+          }
+        ],
+        "raw": {
+          "entryCount": 34,
+          "totalReported": 34
+        },
+        "summary": {
+          "total": 7,
+          "pass": 3,
+          "gap": 1,
+          "fail": 0,
+          "pending": 2,
+          "info": 1,
+          "levels": {
+            "L0": true,
+            "L1": true,
+            "L2": true
+          },
+          "headline": "1 known gap(s) reported; 3 predicate(s) hold."
+        }
+      }
+    }
+  ]
+}
