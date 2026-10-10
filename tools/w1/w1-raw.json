@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T18:04:40.908Z",
+  "generated_at": "2026-10-10T18:10:04.174Z",
   "tool": "gates-probe",
   "origins_scanned": 17,
   "reachable": 14,
@@ -273,7 +273,7 @@
     },
     {
       "origin": "https://api.cdp.coinbase.com",
-      "posture": "unreachable",
+      "posture": "settlement-only",
       "reachable": false,
       "surfaces": {
         "ledger": {
@@ -332,7 +332,7 @@
           "kind": "settlement-only"
         },
         "facilitatorHealth": {
-          "present": true,
+          "present": false,
           "status": 200,
           "kind": "settlement-only"
         }
@@ -343,7 +343,7 @@
     },
     {
       "origin": "https://facilitator.corbits.dev",
-      "posture": "unreachable",
+      "posture": "settlement-only",
       "reachable": false,
       "surfaces": {
         "ledger": {
@@ -378,21 +378,21 @@
     },
     {
       "origin": "https://facilitator.x402.rs",
-      "posture": "attestation-ledger",
+      "posture": "settlement-only",
       "reachable": true,
       "surfaces": {
         "ledger": {
-          "present": true,
+          "present": false,
           "status": 200,
           "kind": "attestation-ledger"
         },
         "keyring": {
-          "present": true,
+          "present": false,
           "status": 200,
           "kind": "attestation-ledger"
         },
         "receiptKey": {
-          "present": true,
+          "present": false,
           "status": 200,
           "kind": "signed-receipt"
         },
@@ -402,12 +402,11 @@
           "kind": "settlement-only"
         },
         "facilitatorHealth": {
-          "present": true,
+          "present": false,
           "status": 200,
           "kind": "settlement-only"
         }
       },
-      "note": "ledger probe failed: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON",
       "predicates": null,
       "summary": null,
       "entryCount": null
@@ -624,7 +623,7 @@
     },
     {
       "origin": "https://x402.solpay.cash",
-      "posture": "unreachable",
+      "posture": "settlement-only",
       "reachable": false,
       "surfaces": {
         "ledger": {
