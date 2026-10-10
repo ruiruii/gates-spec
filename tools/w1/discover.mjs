@@ -1,96 +1,120 @@
 #!/usr/bin/env node
 /**
- * w1-discover — enumerate x402 evidence-layer endpoints to probe.
+ * w1-discover — enumerate x402 evidence-authority endpoints to probe, and
+ * report the live ecosystem size from the public x402 discovery directories.
  *
- * Primary source: the CDP discovery directory
- *   GET {BASE}/v2/x402/discovery/resources  (paginated; seller auto-listed on
- *   first settlement, no registration).
- * Fallback: a curated seed list of known public ledgers, so the scan still
- * produces coverage when discovery is unreachable or empty.
+ * Two outputs:
+ *   1. endpoints.txt  — origins of settlement authorities (facilitators +
+ *      ledger / receipt services) that the evidence-layer census scans.
+ *   2. discovery.json — live ecosystem size from Circle / CDP discovery
+ *      (how many x402 services are published), used as the "population"
+ *      backdrop for the evidence-coverage finding.
  *
- * Emits a newline-separated list of origins to stdout (and optionally --out).
+ * The evidence layer is about *attestation*, not settlement. Settlement
+ * authorities (facilitators) are the natural publishers of durable evidence;
+ * nearly all of them today settle without attesting. That gap is what
+ * gates-spec measures.
  */
 
 import { writeFile } from 'node:fs/promises';
 
-const BASE = process.env.W1_DISCOVERY_BASE || 'https://api.automaton-sovereign.workers.dev';
-// Seed = the one known automaton-sovereign-style public ledger. CDP discovery
-// is the real source of the broader list; the seed only guarantees we never
-// scan zero endpoints when discovery is unreachable or empty.
-const SEED = ['https://api.automaton-sovereign.workers.dev'];
+// Public x402 discovery directories (list sellers / resource servers).
+const DISCOVERY_SOURCES = [
+  'https://api.circle.com/v2/x402/discovery/resources',
+  'https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources',
+];
+
+// Settlement authorities + evidence publishers to census for evidence posture.
+// automaton-sovereign = reference hash-chained ledger; bsvkey = signed-receipt
+// service; the rest are public x402 facilitators (settle, typically no ledger).
+const EVIDENCE_SEED = [
+  'https://api.automaton-sovereign.workers.dev', // reference hash-chained ledger
+  'https://inference.bsvkey.com', // signed delivery receipts + receipt-key
+  'https://x402.org/facilitator', // Coinbase official
+  'https://api.cdp.coinbase.com', // CDP
+  'https://facilitator.payai.network',
+  'https://facilitator.corbits.dev',
+  'https://facilitator.x402.rs',
+  'https://x402.dexter.cash',
+  'https://facilitator.heurist.xyz',
+  'https://gateway.kobaru.io',
+  'https://facilitator.mogami.tech',
+  'https://api.live.nevermined.app',
+  'https://pay.openfacilitator.io',
+  'https://x402.solpay.cash',
+  'https://x402.primer.systems',
+  'https://facilitator.xechoai.xyz',
+  'https://api.x402.celo.org',
+];
 
 /**
- * @param {string} origin
+ * @param {string} url
  * @param {(u:string)=>Promise<any>} [fetchImpl]
  */
-async function fetchDiscovery(origin, fetchImpl = globalThis.fetch) {
-  const out = [];
-  let from = 0;
-  const LIMIT = 50;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    let doc;
-    try {
-      const r = await fetchImpl(`${origin.replace(/\/$/, '')}/v2/x402/discovery/resources?from=${from}&limit=${LIMIT}`);
-      if (!r.ok) break;
-      doc = await r.json();
-    } catch {
-      break;
-    }
-    const items = doc?.entries ?? doc?.resources ?? doc?.items ?? (Array.isArray(doc) ? doc : []);
-    if (!items.length) break;
+async function fetchDiscovery(url, fetchImpl = globalThis.fetch) {
+  try {
+    const r = await fetchImpl(url, { headers: { accept: 'application/json' } });
+    if (!r.ok) return { ok: false, count: 0, origins: [] };
+    const doc = await r.json();
+    const items = doc?.resources ?? doc?.entries ?? (Array.isArray(doc) ? doc : []);
+    const origins = new Set();
     for (const it of items) {
       const cand =
-        it.origin ?? it.host ?? it.url ?? it.endpoint ?? it.baseUrl ?? it.location ??
+        it.resource ?? it.origin ?? it.host ?? it.url ?? it.endpoint ?? it.baseUrl ?? it.location ??
         (typeof it === 'string' ? it : null);
-      if (cand) out.push(String(cand).replace(/\/$/, ''));
+      if (!cand) continue;
+      try {
+        origins.add(new URL(cand).origin);
+      } catch {
+        /* skip unparseable */
+      }
     }
-    if (items.length < LIMIT) break;
-    from += items.length;
-    if (out.length > 100000) break;
-  }
-  return out;
-}
-
-function originOf(s) {
-  try {
-    return new URL(s).origin;
+    return { ok: true, count: items.length, origins: [...origins] };
   } catch {
-    return s.startsWith('http') ? s : `https://${s}`;
+    return { ok: false, count: 0, origins: [] };
   }
 }
 
 async function main() {
+  const discovery = { sources: [], total_listed: 0, distinct_origins: 0, sampled_origins: [] };
+  for (const src of DISCOVERY_SOURCES) {
+    const res = await fetchDiscovery(src);
+    discovery.sources.push({ url: src, ok: res.ok, count: res.count });
+    discovery.total_listed += res.count;
+    if (res.origins.length) {
+      discovery.distinct_origins = res.origins.length;
+      discovery.sampled_origins = res.origins.slice(0, 25);
+    }
+  }
+
+  // dedupe seed
   const seen = new Set();
-  const push = (o) => {
-    const origin = originOf(o);
+  const lines = [];
+  for (const o of EVIDENCE_SEED) {
+    const origin = o.replace(/\/$/, '');
     if (!seen.has(origin)) {
       seen.add(origin);
-      process.stdout.write(origin + '\n');
+      lines.push(origin);
     }
-  };
-
-  let discovered = [];
-  try {
-    discovered = await fetchDiscovery(BASE);
-  } catch {
-    /* unreachable — fall through to seed */
   }
-  if (discovered.length) {
-    process.stderr.write(`[discover] CDP discovery @ ${BASE}: ${discovered.length} resource(s)\n`);
-    discovered.forEach(push);
-  } else {
-    process.stderr.write(`[discover] CDP discovery empty/unreachable @ ${BASE}; using seed list\n`);
-  }
-  // seed always appended (deduped) so known ledgers are never missed
-  SEED.forEach(push);
 
   if (process.argv.includes('--out')) {
     const i = process.argv.indexOf('--out');
-    const dest = process.argv[i + 1];
-    await writeFile(dest, [...seen].join('\n') + '\n');
-    process.stderr.write(`[discover] wrote ${seen.size} origin(s) to ${dest}\n`);
+    await writeFile(process.argv[i + 1], lines.join('\n') + '\n');
   }
+  if (process.argv.includes('--discovery-out')) {
+    const i = process.argv.indexOf('--discovery-out');
+    await writeFile(process.argv[i + 1], JSON.stringify(discovery, null, 2));
+  }
+
+  if (!process.argv.includes('--quiet')) {
+    process.stderr.write(
+      `[discover] evidence-authority seed: ${lines.length} origin(s)\n` +
+        `[discover] discovery: ${discovery.total_listed} resource(s) listed across ${DISCOVERY_SOURCES.length} source(s)\n`,
+    );
+  }
+  // always emit the seed list to stdout (pipeline default)
+  process.stdout.write(lines.join('\n') + '\n');
 }
 
 main().catch((e) => {
