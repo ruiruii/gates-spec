@@ -42,7 +42,7 @@ jobs:
 
       - name: Discover → scan → report
         run: |
-          node tools/w1/discover.mjs --out tools/w1/endpoints.txt
+          node tools/w1/discover.mjs --out tools/w1/endpoints.txt --discovery-out tools/w1/discovery.json
           node tools/w1/scan.mjs --list tools/w1/endpoints.txt --out tools/w1/w1-raw.json
           node tools/w1/report.mjs
 
@@ -50,6 +50,6 @@ jobs:
         run: |
           git config user.name "gates-spec bot"
           git config user.email "bot@gates-spec.local"
-          git add reports/w1.md tools/w1/w1-raw.json tools/w1/endpoints.txt
+          git add reports/w1.md tools/w1/w1-raw.json tools/w1/endpoints.txt tools/w1/discovery.json
           git diff --cached --quiet || git commit -m "chore(w1): automated evidence-layer scan [skip ci]"
           git push
