@@ -70,15 +70,16 @@ export async function probeSurfaces(origin, fetchImpl = globalThis.fetch, opts =
   const ledgerPresent = surfaces.ledger.present;
   const receiptPresent = surfaces.receiptKey.present;
   const facilitatorPresent = surfaces.facilitatorSupported.present || surfaces.facilitatorHealth.present;
+  const reachable = Object.values(surfaces).some((s) => s.present);
 
   let posture;
   if (ledgerPresent) posture = 'attestation-ledger';
   else if (receiptPresent) posture = 'signed-receipt';
-  else if (facilitatorPresent || opts.knownFacilitator) posture = 'settlement-only';
-  else if (Object.values(surfaces).some((s) => s.present)) posture = 'no-evidence';
-  else posture = 'unreachable';
+  else if (facilitatorPresent) posture = 'settlement-only';
+  else if (!reachable) posture = 'unreachable';
+  else if (opts.knownFacilitator) posture = 'settlement-only';
+  else posture = 'no-evidence';
 
-  const reachable = Object.values(surfaces).some((s) => s.present);
   return { origin, posture, reachable, surfaces };
 }
 
