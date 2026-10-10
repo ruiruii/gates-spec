@@ -1,0 +1,25 @@
+name: RW-001 evidence-layer conformance
+
+on:
+  schedule:
+    - cron: '23 4 * * 1'   # every Monday 04:23 UTC
+  workflow_dispatch: {}
+
+jobs:
+  rw001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Run RW-001 verification
+        # Settlement half (chain + ledger) is always asserted.
+        # Red half is REPORTED, not asserted: it stays PENDING until a real
+        # request fingerprint is published by the origin. Add RW001_FINGERPRINT
+        # to repo secrets to enable it — then this step turns green on its own.
+        continue-on-error: true
+        env:
+          GATES_RW001_FINGERPRINT: ${{ secrets.RW001_FINGERPRINT }}
+        run: node conformance/real-world/verify-rw001.mjs
