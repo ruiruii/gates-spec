@@ -58,7 +58,8 @@ gates-spec/
 │   ├── middleware/             # merchant-side HTTP middleware (counts redemptions)
 │   ├── agent-sdk/              # agent-runtime SDK (records consumption)
 │   ├── conformance/            # test suite, validator, CLI
-│   └── adapter-automaton/      # binds a hash-chained attestation ledger (RW-001 origin)
+│   ├── adapter-automaton/      # binds a hash-chained attestation ledger (RW-001 origin)
+│   └── probe/                  # gates-probe: evidence-layer CLI (probe/verify/batch, signed reports)
 ├── upstream/                   # ready-to-send proposals to x402-receipts, Vauban, ERC-8004
 └── examples/                   # minimal runnable demos
 ```
