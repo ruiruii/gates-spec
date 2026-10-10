@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 /**
- * w1-scan — run the evidence-layer census against every origin from a list.
+ * w1-scan — run the evidence-layer census against two endpoint populations:
  *
- * For each origin:
- *   - classify its evidence-layer posture (probeSurfaces)
- *   - if it exposes a hash-chained attestation ledger, also run the full
- *     gates-spec predicate battery (depth measurement)
+ *   1. authorities — settlement authorities (facilitators + ledger / receipt
+ *      services) from endpoints.txt. For attestation-ledger origins we also run
+ *      the full gates-spec predicate battery (depth measurement).
+ *   2. sellers     — resource servers listed in the public x402 discovery
+ *      directories (sellers.txt). We only ask the evidence question
+ *      ("do you run your own ledger / receipt key?") and never the
+ *      facilitator-specific probes.
  *
- * Input : newline-separated origins (default ./endpoints.txt, "#" comments ok)
+ * Input : endpoints.txt (authorities), sellers.txt (sellers)
  * Output: JSON bundle (default ./w1-raw.json) consumable by report.mjs
  */
 
@@ -15,15 +18,19 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { probe } from '@gates-spec/probe';
 import { probeSurfaces } from './surface.mjs';
 
+const HERE = new URL('.', import.meta.url).pathname;
 const LIST = process.argv.includes('--list')
   ? process.argv[process.argv.indexOf('--list') + 1]
-  : new URL('./endpoints.txt', import.meta.url).pathname;
+  : HERE + 'endpoints.txt';
+const SELLERS = process.argv.includes('--sellers')
+  ? process.argv[process.argv.indexOf('--sellers') + 1]
+  : HERE + 'sellers.txt';
 const OUT = process.argv.includes('--out')
   ? process.argv[process.argv.indexOf('--out') + 1]
-  : new URL('./w1-raw.json', import.meta.url).pathname;
+  : HERE + 'w1-raw.json';
 const TIMEOUT_MS = Number(process.env.W1_PROBE_TIMEOUT_MS || 20000);
 
-async function probeWithTimeout(origin) {
+async function probeAuthority(origin) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   const fetchImpl = (u) => fetch(u, { signal: ctrl.signal });
@@ -50,23 +57,68 @@ async function probeWithTimeout(origin) {
   }
 }
 
-async function main() {
-  const text = await readFile(LIST, 'utf8');
-  const origins = text
-    .split('\n')
-    .map((s) => s.trim())
-    .filter((s) => s && !s.startsWith('#'));
+async function probeSeller(origin, timeoutMs = 6000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  const fetchImpl = (u) => fetch(u, { signal: ctrl.signal });
+  try {
+    // Sellers run no facilitator endpoints; only ask the evidence question.
+    const surf = await probeSurfaces(origin, fetchImpl, { timeoutMs, evidenceOnly: true });
+    return { origin, ...surf };
+  } catch (e) {
+    return { origin, posture: 'unreachable', reachable: false, error: e.message };
+  } finally {
+    clearTimeout(t);
+  }
+}
 
-  process.stderr.write(`[scan] probing ${origins.length} origin(s)…\n`);
-  const results = [];
-  for (const o of origins) {
-    const r = await probeWithTimeout(o);
-    const tag = r.posture || 'unreachable';
-    process.stderr.write(`[scan] ${o} → ${tag}\n`);
-    results.push(r);
+// Minimal concurrency pool so 50+ seller origins don't take 10 minutes.
+async function pool(items, worker, size = 10) {
+  const out = new Array(items.length);
+  let i = 0;
+  async function next() {
+    while (i < items.length) {
+      const idx = i++;
+      out[idx] = await worker(items[idx], idx);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(size, items.length) }, next));
+  return out;
+}
+
+function readLines(path) {
+  return readFile(path, 'utf8')
+    .then((t) =>
+      t
+        .split('\n')
+        .map((s) => s.trim())
+        .filter((s) => s && !s.startsWith('#')),
+    )
+    .catch(() => []);
+}
+
+async function main() {
+  const authorityOrigins = await readLines(LIST);
+  const sellerOrigins = await readLines(SELLERS);
+
+  process.stderr.write(`[scan] authorities: ${authorityOrigins.length}, sellers: ${sellerOrigins.length}\n`);
+
+  const authorityResults = [];
+  for (const o of authorityOrigins) {
+    const r = await probeAuthority(o);
+    process.stderr.write(`[scan] authority ${o} → ${r.posture || 'unreachable'}\n`);
+    authorityResults.push(r);
   }
 
-  const discoveryRaw = await readFile(new URL('./discovery.json', import.meta.url), 'utf8').catch(() => '{}');
+  const sellerResults = await pool(sellerOrigins, async (o) => {
+    const r = await probeSeller(o);
+    process.stderr.write(`[scan] seller ${o} → ${r.posture || 'unreachable'}\n`);
+    return r;
+  });
+  const sellerDone = sellerResults.filter(Boolean).length;
+  process.stderr.write(`[scan] sellers done: ${sellerDone}\n`);
+
+  const discoveryRaw = await readFile(HERE + 'discovery.json', 'utf8').catch(() => '{}');
   let discovery = {};
   try {
     discovery = JSON.parse(discoveryRaw);
@@ -77,10 +129,17 @@ async function main() {
   const bundle = {
     generated_at: new Date().toISOString(),
     tool: 'gates-probe',
-    origins_scanned: origins.length,
-    reachable: results.filter((r) => r.reachable).length,
     discovery,
-    results,
+    authority: {
+      origins_scanned: authorityOrigins.length,
+      reachable: authorityResults.filter((r) => r.reachable).length,
+      results: authorityResults,
+    },
+    seller: {
+      origins_scanned: sellerOrigins.length,
+      reachable: sellerResults.filter((r) => r.reachable).length,
+      results: sellerResults,
+    },
   };
   await writeFile(OUT, JSON.stringify(bundle, null, 2));
   process.stderr.write(`[scan] wrote ${OUT}\n`);
