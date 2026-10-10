@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T18:10:04.174Z",
+  "generated_at": "2026-10-10T18:11:58.623Z",
   "tool": "gates-probe",
   "origins_scanned": 17,
   "reachable": 14,
@@ -273,7 +273,7 @@
     },
     {
       "origin": "https://api.cdp.coinbase.com",
-      "posture": "settlement-only",
+      "posture": "unreachable",
       "reachable": false,
       "surfaces": {
         "ledger": {
@@ -343,7 +343,7 @@
     },
     {
       "origin": "https://facilitator.corbits.dev",
-      "posture": "settlement-only",
+      "posture": "unreachable",
       "reachable": false,
       "surfaces": {
         "ledger": {
@@ -623,7 +623,7 @@
     },
     {
       "origin": "https://x402.solpay.cash",
-      "posture": "settlement-only",
+      "posture": "unreachable",
       "reachable": false,
       "surfaces": {
         "ledger": {
