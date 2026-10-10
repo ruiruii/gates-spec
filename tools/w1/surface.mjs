@@ -44,11 +44,12 @@ async function timedGet(fetchImpl, url, timeoutMs) {
       /* non-JSON body (HTML landing page, plain text, etc.) */
     }
     const ok = r.status >= 200 && r.status < 400;
+    const responded = r.status > 0; // any HTTP response (incl. 404) means the host is alive
     // A surface "exists" only if it returns a 2xx *JSON* document — an HTML
     // landing/error page at a guessed path must not be counted as evidence.
-    return { ok, isJson, present: ok && isJson, status: r.status };
+    return { ok, isJson, present: ok && isJson, responded, status: r.status };
   } catch (e) {
-    return { ok: false, isJson: false, present: false, status: 0, error: e.name === 'AbortError' ? 'timeout' : e.message };
+    return { ok: false, isJson: false, present: false, responded: false, status: 0, error: e.name === 'AbortError' ? 'timeout' : e.message };
   } finally {
     clearTimeout(t);
   }
@@ -57,20 +58,29 @@ async function timedGet(fetchImpl, url, timeoutMs) {
 /**
  * @param {string} origin
  * @param {(url:string)=>Promise<any>} [fetchImpl]
- * @param {{timeoutMs?:number, knownFacilitator?:boolean}} [opts]
+ * @param {{timeoutMs?:number, knownFacilitator?:boolean, evidenceOnly?:boolean}} [opts]
  */
 export async function probeSurfaces(origin, fetchImpl = globalThis.fetch, opts = {}) {
   const timeoutMs = opts.timeoutMs || 8000;
   const surfaces = {};
-  for (const s of SURFACES) {
+  // Sellers (resource servers) are not facilitators; for them we only ask the
+  // evidence question ("do you run your own ledger / receipt key?") and skip the
+  // facilitator-specific /supported and /health probes.
+  const active = opts.evidenceOnly
+    ? SURFACES.filter((s) => s.kind !== 'settlement-only')
+    : SURFACES;
+  for (const s of active) {
     const res = await timedGet(fetchImpl, s.url(origin), timeoutMs);
-    surfaces[s.id] = { present: res.present, status: res.status, kind: s.kind };
+    surfaces[s.id] = { present: res.present, status: res.status, kind: s.kind, responded: res.responded };
   }
 
-  const ledgerPresent = surfaces.ledger.present;
-  const receiptPresent = surfaces.receiptKey.present;
-  const facilitatorPresent = surfaces.facilitatorSupported.present || surfaces.facilitatorHealth.present;
-  const reachable = Object.values(surfaces).some((s) => s.present);
+  const ledgerPresent = surfaces.ledger?.present;
+  const receiptPresent = surfaces.receiptKey?.present;
+  const facilitatorPresent = surfaces.facilitatorSupported?.present || surfaces.facilitatorHealth?.present;
+  // "reachable" = we got an HTTP response from at least one probed surface.
+  // A host that answers 404 to every evidence path is alive but exposes
+  // nothing; a host that answers nothing at all is genuinely unreachable.
+  const reachable = Object.values(surfaces).some((s) => s.responded);
 
   let posture;
   if (ledgerPresent) posture = 'attestation-ledger';
@@ -80,7 +90,7 @@ export async function probeSurfaces(origin, fetchImpl = globalThis.fetch, opts =
   else if (opts.knownFacilitator) posture = 'settlement-only';
   else posture = 'no-evidence';
 
-  return { origin, posture, reachable, surfaces };
+  return { origin, posture, reachable, surfaces, evidenceOnly: !!opts.evidenceOnly };
 }
 
 export const POSTURE_LABEL = {
