@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T17:37:27.911Z",
+  "generated_at": "2026-10-10T17:58:57.174Z",
   "tool": "gates-probe",
   "origins_scanned": 1,
   "reachable": 1,
@@ -10,7 +10,7 @@
       "report": {
         "tool": "gates-probe",
         "version": "0.1.0",
-        "generated_at": "2026-10-10T17:37:27.911Z",
+        "generated_at": "2026-10-10T17:58:57.174Z",
         "target": {
           "origin": "https://api.automaton-sovereign.workers.dev",
           "protocol": "x402",
