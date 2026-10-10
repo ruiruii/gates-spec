@@ -56,7 +56,11 @@ async function fetchDiscovery(url, fetchImpl = globalThis.fetch) {
     const r = await fetchImpl(url, { headers: { accept: 'application/json' } });
     if (!r.ok) return { ok: false, count: 0, origins: [] };
     const doc = await r.json();
-    const items = doc?.resources ?? doc?.entries ?? (Array.isArray(doc) ? doc : []);
+    // Discovery directories use different top-level keys: Circle → "items",
+    // CDP → "resources", others → "entries" / bare array.
+    const items =
+      doc?.items ?? doc?.resources ?? doc?.entries ?? doc?.data ?? doc?.results ??
+      (Array.isArray(doc) ? doc : []);
     const origins = new Set();
     for (const it of items) {
       const cand =
