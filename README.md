@@ -57,7 +57,8 @@ gates-spec/
 │   ├── core/                   # canonical JSON, Ed25519 sign/verify, VSR builder
 │   ├── middleware/             # merchant-side HTTP middleware (counts redemptions)
 │   ├── agent-sdk/              # agent-runtime SDK (records consumption)
-│   └── conformance/            # test suite, validator, CLI
+│   ├── conformance/            # test suite, validator, CLI
+│   └── adapter-automaton/      # binds a hash-chained attestation ledger (RW-001 origin)
 ├── upstream/                   # ready-to-send proposals to x402-receipts, Vauban, ERC-8004
 └── examples/                   # minimal runnable demos
 ```
