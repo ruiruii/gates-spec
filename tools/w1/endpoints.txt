@@ -1,1 +1,17 @@
 https://api.automaton-sovereign.workers.dev
+https://inference.bsvkey.com
+https://x402.org/facilitator
+https://api.cdp.coinbase.com
+https://facilitator.payai.network
+https://facilitator.corbits.dev
+https://facilitator.x402.rs
+https://x402.dexter.cash
+https://facilitator.heurist.xyz
+https://gateway.kobaru.io
+https://facilitator.mogami.tech
+https://api.live.nevermined.app
+https://pay.openfacilitator.io
+https://x402.solpay.cash
+https://x402.primer.systems
+https://facilitator.xechoai.xyz
+https://api.x402.celo.org

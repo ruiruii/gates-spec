@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://api.circle.com/v2/x402/discovery/resources",
+      "ok": true,
+      "count": 0
+    },
+    {
+      "url": "https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources",
+      "ok": true,
+      "count": 0
+    }
+  ],
+  "total_listed": 0,
+  "distinct_origins": 0,
+  "sampled_origins": []
+}
