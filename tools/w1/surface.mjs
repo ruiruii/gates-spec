@@ -34,16 +34,21 @@ async function timedGet(fetchImpl, url, timeoutMs) {
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     const r = await fetchImpl(url, { method: 'GET', signal: ctrl.signal, redirect: 'manual' });
-    let sample = null;
+    let body = null;
+    let isJson = false;
     try {
-      const txt = await r.text();
-      sample = txt.slice(0, 160);
+      body = await r.text();
+      JSON.parse(body);
+      isJson = true;
     } catch {
-      /* ignore body read errors */
+      /* non-JSON body (HTML landing page, plain text, etc.) */
     }
-    return { ok: r.status >= 200 && r.status < 400, status: r.status, sample };
+    const ok = r.status >= 200 && r.status < 400;
+    // A surface "exists" only if it returns a 2xx *JSON* document — an HTML
+    // landing/error page at a guessed path must not be counted as evidence.
+    return { ok, isJson, present: ok && isJson, status: r.status };
   } catch (e) {
-    return { ok: false, status: 0, error: e.name === 'AbortError' ? 'timeout' : e.message };
+    return { ok: false, isJson: false, present: false, status: 0, error: e.name === 'AbortError' ? 'timeout' : e.message };
   } finally {
     clearTimeout(t);
   }
@@ -59,7 +64,7 @@ export async function probeSurfaces(origin, fetchImpl = globalThis.fetch, opts =
   const surfaces = {};
   for (const s of SURFACES) {
     const res = await timedGet(fetchImpl, s.url(origin), timeoutMs);
-    surfaces[s.id] = { present: res.ok, status: res.status, kind: s.kind };
+    surfaces[s.id] = { present: res.present, status: res.status, kind: s.kind };
   }
 
   const ledgerPresent = surfaces.ledger.present;
