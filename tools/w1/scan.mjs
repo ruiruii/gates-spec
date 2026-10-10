@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 /**
- * w1-scan — run gates-probe against every origin from a list and collect results.
+ * w1-scan — run the evidence-layer census against every origin from a list.
+ *
+ * For each origin:
+ *   - classify its evidence-layer posture (probeSurfaces)
+ *   - if it exposes a hash-chained attestation ledger, also run the full
+ *     gates-spec predicate battery (depth measurement)
  *
  * Input : newline-separated origins (default ./endpoints.txt, "#" comments ok)
- * Output: JSON array of per-origin results (default ./w1-raw.json)
- *
- * Each origin is probed live with a timeout. Unreachable origins are recorded
- * as {ok:false} rather than throwing, so the report always renders.
+ * Output: JSON bundle (default ./w1-raw.json) consumable by report.mjs
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { probe } from '@gates-spec/probe';
+import { probeSurfaces } from './surface.mjs';
 
 const LIST = process.argv.includes('--list')
   ? process.argv[process.argv.indexOf('--list') + 1]
@@ -23,11 +26,25 @@ const TIMEOUT_MS = Number(process.env.W1_PROBE_TIMEOUT_MS || 20000);
 async function probeWithTimeout(origin) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  const fetchImpl = (u) => fetch(u, { signal: ctrl.signal });
   try {
-    const report = await probe({ target: origin, fetchImpl: (u) => fetch(u, { signal: ctrl.signal }) });
-    return { origin, ok: true, report };
+    const surf = await probeSurfaces(origin, fetchImpl, { timeoutMs: Math.min(8000, TIMEOUT_MS) });
+    let predicates = null;
+    let summary = null;
+    let entryCount = null;
+    if (surf.posture === 'attestation-ledger') {
+      try {
+        const report = await probe({ target: origin, fetchImpl });
+        predicates = report.predicates;
+        summary = report.summary;
+        entryCount = report.raw.entryCount;
+      } catch (e) {
+        surf.note = `ledger probe failed: ${e.message}`;
+      }
+    }
+    return { origin, ...surf, predicates, summary, entryCount };
   } catch (e) {
-    return { origin, ok: false, error: e.name === 'AbortError' ? `timeout (>${TIMEOUT_MS}ms)` : e.message };
+    return { origin, posture: 'unreachable', reachable: false, error: e.message };
   } finally {
     clearTimeout(t);
   }
@@ -44,24 +61,29 @@ async function main() {
   const results = [];
   for (const o of origins) {
     const r = await probeWithTimeout(o);
-    if (r.ok) {
-      const s = r.report.summary;
-      process.stderr.write(`[scan] ${o} → ${s.headline}\n`);
-    } else {
-      process.stderr.write(`[scan] ${o} → UNREACHABLE (${r.error})\n`);
-    }
+    const tag = r.posture || 'unreachable';
+    process.stderr.write(`[scan] ${o} → ${tag}\n`);
     results.push(r);
+  }
+
+  const discoveryRaw = await readFile(new URL('./discovery.json', import.meta.url), 'utf8').catch(() => '{}');
+  let discovery = {};
+  try {
+    discovery = JSON.parse(discoveryRaw);
+  } catch {
+    discovery = {};
   }
 
   const bundle = {
     generated_at: new Date().toISOString(),
     tool: 'gates-probe',
     origins_scanned: origins.length,
-    reachable: results.filter((r) => r.ok).length,
+    reachable: results.filter((r) => r.reachable).length,
+    discovery,
     results,
   };
   await writeFile(OUT, JSON.stringify(bundle, null, 2));
-  process.stderr.write(`[scan] wrote ${OUT} (${bundle.reachable}/${bundle.origins_scanned} reachable)\n`);
+  process.stderr.write(`[scan] wrote ${OUT}\n`);
 }
 
 main().catch((e) => {
