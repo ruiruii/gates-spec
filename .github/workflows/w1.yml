@@ -1,0 +1,55 @@
+name: w1-evidence-scan
+
+# Automated x402 evidence-layer status scan (route B / "裁判位" content asset).
+# Runs weekly + on demand. Discovers public ledgers via CDP discovery, probes
+# each with gates-probe, and commits the rendered report back to the repo.
+# Real scans need a normal egress (GitHub-hosted runner); the sandbox cannot
+# reach the ledger host, so this is the only place the live data is produced.
+
+on:
+  schedule:
+    - cron: '23 4 * * 1'        # every Monday 04:23 UTC
+  workflow_dispatch: {}
+  push:
+    paths:
+      - 'tools/w1/**'
+      - 'packages/core/**'
+      - 'packages/adapter-automaton/**'
+      - 'packages/probe/**'
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The probe stack has NO external (registry) dependencies — it is pure
+      # node:crypto + workspace packages. Link them locally; skip npm install
+      # entirely so the job never depends on registry reachability.
+      - name: Link workspace packages
+        run: |
+          mkdir -p node_modules/@gates-spec
+          ln -s ../../packages/core node_modules/@gates-spec/core
+          ln -s ../../packages/adapter-automaton node_modules/@gates-spec/adapter-automaton
+          ln -s ../../packages/probe node_modules/@gates-spec/probe
+
+      - name: Discover → scan → report
+        run: |
+          node tools/w1/discover.mjs --out tools/w1/endpoints.txt
+          node tools/w1/scan.mjs --list tools/w1/endpoints.txt --out tools/w1/w1-raw.json
+          node tools/w1/report.mjs
+
+      - name: Commit results
+        run: |
+          git config user.name "gates-spec bot"
+          git config user.email "bot@gates-spec.local"
+          git add reports/w1.md tools/w1/w1-raw.json tools/w1/endpoints.txt
+          git diff --cached --quiet || git commit -m "chore(w1): automated evidence-layer scan [skip ci]"
+          git push
