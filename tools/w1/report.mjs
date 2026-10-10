@@ -125,7 +125,7 @@ function render(bundle) {
 
   lines.push('## 4. 判定方法');
   lines.push('');
-  lines.push('- **形态分类**：逐端点探测候选面（`/v2/ledger`、`/v2/pubkey`、`/v1/receipt-key`、`/supported`、`/health`），按命中面判定证据形态。');
+  lines.push('- **形态分类**：逐端点探测候选面（`/v2/ledger`、`/v2/pubkey`、`/v1/receipt-key`、`/supported`、`/health`），仅当该路径返回 **2xx 且为 JSON 文档** 时才计为"存在"——HTML 落地页/错误页不计为证据面，避免误报。');
   lines.push('- **生态规模**：取自 Circle / CDP 公开 discovery 目录所列 x402 资源数。');
   lines.push('- **哈希链账本谓词**：同《现状报告》原 7 条（hashIntegrity / chainContinuity / keyring.historyAware / contentBinding / settlementLinkage / redeemCountDerivable / settlementTrivalued）。');
   lines.push('- **contentBinding**：统计 `dataHash === sha256("{}")` 的条目占比——"签空对象"测量来源。');
