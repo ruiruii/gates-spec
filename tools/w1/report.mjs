@@ -29,6 +29,17 @@ import { POSTURE_LABEL } from './surface.mjs';
 
 const POSTURE_ORDER = ['attestation-ledger', 'signed-receipt', 'settlement-only', 'no-evidence', 'unreachable'];
 
+// ── Reproducibility contract ────────────────────────────────────────────────
+// We demand that measured parties publish verifiable evidence. We therefore
+// hold our own output to the same standard: every verdict we publish must ship
+// with the measurement that supports it, the method version that produced it,
+// and a way for anyone to reproduce it. A verdict with no measured value is
+// NOT silently published — it is marked `unsubstantiated`.
+const METHOD_VERSION = '1.1';
+const RAW_BUNDLE_PATH = 'tools/w1/w1-raw.json';
+const RAW_BUNDLE_URL = `https://raw.githubusercontent.com/ruiruii/gates-spec/main/${RAW_BUNDLE_PATH}`;
+const JSON_OUT_REL = 'reports/w1.json';
+
 function postureCounts(results) {
   const c = {};
   for (const r of results) c[r.posture || 'unreachable'] = (c[r.posture || 'unreachable'] || 0) + 1;
@@ -45,6 +56,33 @@ function render(bundle) {
 
   const aCounts = postureCounts(aResults);
   const sCounts = postureCounts(sResults);
+
+  // ── Evidence ledger for our own verdicts (computed up front so the
+  //    reproducibility header can self-audit it) ────────────────────────────
+  const ledgerResults = aResults.filter((r) => r.posture === 'attestation-ledger' && r.predicates);
+  const detailRows = [];
+  let unsubstantiated = 0;
+  for (const r of ledgerResults) {
+    const host = r.origin.replace(/^https?:\/\//, '');
+    for (const p of r.predicates || []) {
+      if (!p || p.status === 'pass') continue;
+      const ev = p.evidence || {};
+      let measured;
+      if (typeof ev.empty === 'number' && typeof ev.total === 'number' && ev.total > 0) {
+        const pct = ((ev.empty / ev.total) * 100).toFixed(1);
+        measured = `**${ev.empty}/${ev.total}（${pct}%）** 条目签空对象 —— ${String(p.message || '').replace(/\|/g, '\\|')}`;
+      } else if (p.message) {
+        measured = String(p.message).replace(/\|/g, '\\|');
+      } else {
+        // No measured value behind this verdict. Per our own contract we must
+        // not present it as a finding — mark it and count it.
+        measured = '⚠️ **unsubstantiated** —— 该判定无实测数值支撑，按判定纪律公开标注，不作为结论使用。';
+        unsubstantiated += 1;
+      }
+      detailRows.push(`| ${host} | ${p.id} | ${p.status} | ${measured} |`);
+    }
+  }
+  const verdictsPublished = detailRows.length;
 
   // Population = union of authority origins + seller origins (dedupe overlap).
   const popSet = new Set();
@@ -72,7 +110,36 @@ function render(bundle) {
   }
   lines.push('');
 
-  lines.push('## 0. 这不是评分报告');
+  // ── Reproducibility declaration (published BEFORE any conclusion) ─────────
+  lines.push('## 0. 可复现性声明（先于一切结论）');
+  lines.push('');
+  lines.push('我们要求被测量方公开可验证的证据；因此本报告对自己的每一个判定，同样公开**支撑它的实测数值、产生它的方法版本、以及任何人复现它的方式**。');
+  lines.push('');
+  lines.push('| 项 | 值 |');
+  lines.push('|---|---|');
+  lines.push(`| 方法版本 | \`v${METHOD_VERSION}\` |`);
+  lines.push(`| 扫描时间 | ${gen} |`);
+  lines.push(`| 原始扫描产物（含每个谓词的实测数值） | [\`${RAW_BUNDLE_PATH}\`](${RAW_BUNDLE_URL}) |`);
+  lines.push(`| 机器可读输出 | \`${JSON_OUT_REL}\` |`);
+  lines.push(`| 本次发布判定数 | ${verdictsPublished}（其中无数值支撑而**主动标注**者：${unsubstantiated}） |`);
+  lines.push('');
+  lines.push('**判定纪律（对我们自己同样适用）：**');
+  lines.push('');
+  lines.push('- 任何 `gap` / `fail` / `pending` 判定**必须同时发布支撑它的实测数值**（见 §4.1）；');
+  lines.push('- **无法给出实测数值的判定，一律公开标注 `unsubstantiated`，不得静默发布**——宁可不结论，不可无据而断；');
+  lines.push('- 只测量**公开可验证**的证据面：HTML 落地页、错误页一律不计为证据，避免误报;');
+  lines.push('- 方法版本变更会写入报告，保证时间序列可比（不同版本的判定不混入同一趋势线）。');
+  lines.push('');
+  lines.push('复现：');
+  lines.push('');
+  lines.push('```bash');
+  lines.push('node tools/w1/discover.mjs --out endpoints.txt --sellers-out sellers.txt --discovery-out discovery.json');
+  lines.push('node tools/w1/scan.mjs     --list endpoints.txt --sellers sellers.txt --out w1-raw.json');
+  lines.push('node tools/w1/report.mjs');
+  lines.push('```');
+  lines.push('');
+
+  lines.push('## 0.1 判定对象');
   lines.push('');
   lines.push(
     '本报告只测量**已发布证据的覆盖度**，不对任何实现者打分。gates-spec 站在**裁判位**——持续判定"谁做了持久可验证存证、谁只结算不存证"，而非拥有标准或托管资产。',
@@ -150,7 +217,6 @@ function render(bundle) {
   lines.push('');
 
   // ── Ledger depth table (authority attestation-ledger only) ─────────────────
-  const ledgerResults = aResults.filter((r) => r.posture === 'attestation-ledger' && r.predicates);
   if (ledgerResults.length) {
     lines.push('## 4. 哈希链账本谓词深度（仅 attestation-ledger 形态）');
     lines.push('');
@@ -169,6 +235,19 @@ function render(bundle) {
     lines.push('');
     lines.push('*覆盖率 = pass / 可达账本数。这是"覆盖度"，不是质量评分。*');
     lines.push('');
+
+    // ── Measured figures for non-pass predicates (precomputed above) ────────
+    // Every verdict we publish must ship with the measurement behind it.
+    if (detailRows.length) {
+      lines.push('### 4.1 非 pass 谓词实测数值');
+      lines.push('');
+      lines.push('状态列只给出判定；本节给出**支撑该判定的实测数值**，便于第三方独立复核。');
+      lines.push('');
+      lines.push('| 端点 | 谓词 | 状态 | 实测数值 |');
+      lines.push('|---|---|---|---|');
+      lines.push(...detailRows);
+      lines.push('');
+    }
   }
 
   // ── Per-endpoint detail ────────────────────────────────────────────────────
@@ -241,12 +320,54 @@ function render(bundle) {
   return lines.join('\n') + '\n';
 }
 
+/**
+ * Machine-readable companion to the Markdown report. Anyone should be able to
+ * diff our conclusions programmatically, not just read prose.
+ */
+function machineReadable(bundle) {
+  const aResults = bundle.authority?.results || [];
+  const sResults = bundle.seller?.results || [];
+  const posture = (rs) =>
+    rs.reduce((m, r) => ((m[r.posture || 'unreachable'] = (m[r.posture || 'unreachable'] || 0) + 1), m), {});
+  const verdicts = [];
+  for (const r of aResults) {
+    for (const p of r.predicates || []) {
+      verdicts.push({
+        origin: r.origin,
+        predicate: p.id,
+        status: p.status,
+        level: p.level ?? null,
+        // A verdict without a measured value is declared, not hidden.
+        substantiated: Boolean(p.message || p.evidence),
+        evidence: p.evidence ?? null,
+        message: p.message ?? null,
+      });
+    }
+  }
+  return {
+    method_version: METHOD_VERSION,
+    generated_at: bundle.generated_at ?? null,
+    tool: bundle.tool ?? 'gates-probe',
+    ecosystem: bundle.discovery ?? null,
+    authority: { scanned: bundle.authority?.origins_scanned ?? 0, reachable: bundle.authority?.reachable ?? 0, posture: posture(aResults) },
+    seller: { scanned: bundle.seller?.origins_scanned ?? 0, reachable: bundle.seller?.reachable ?? 0, posture: posture(sResults) },
+    verdicts,
+    verdicts_total: verdicts.length,
+    verdicts_unsubstantiated: verdicts.filter((v) => !v.substantiated).length,
+    reproduce: 'node tools/w1/discover.mjs && node tools/w1/scan.mjs && node tools/w1/report.mjs',
+  };
+}
+
 async function main() {
   const bundle = JSON.parse(await readFile(IN, 'utf8'));
   const md = render(bundle);
   await mkdir(dirname(OUT), { recursive: true });
   await writeFile(OUT, md);
   process.stderr.write(`[report] wrote ${OUT} (${md.length} bytes)\n`);
+
+  const jsonPath = join(dirname(OUT), 'w1.json');
+  await writeFile(jsonPath, JSON.stringify(machineReadable(bundle), null, 2));
+  process.stderr.write(`[report] wrote ${jsonPath} (machine-readable)\n`);
 }
 
 main().catch((e) => {
