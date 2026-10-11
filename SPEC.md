@@ -96,6 +96,37 @@ Notation:
 
 ---
 
+### 3.1 Payment-identity binding invariant (normative)
+
+The payment identity — `agent.spend.request.fingerprint` and the `payment.proof_hash`
+derived from it — MUST be bound to a request exactly **once**, at ingress, from the request
+the buyer runtime actually received. This is the precise fix for the request-rebinding
+attack: a seller re-describing the request after the fact so that settlement and refusal
+bind to two different identities.
+
+Two rules apply to every conforming implementation:
+
+1. **One-shot derivation.** The fingerprint, and any downstream `attempt_id`, are computed a
+   single time at ingress. No implementation step MAY re-read or re-derive the identity from
+   the request, from `accepts[].resource.url`, or from any seller-supplied description of the
+   request after ingress.
+2. **Settle and refusal are lookups on one snapshot.** The settlement path **and** the
+   `tx_already_used` / refusal path MUST resolve the *same* `attempt_id` from the single
+   ingress snapshot. They are reads of one immutable record, never two independent parses.
+
+For the x402 rail, the binding identity is composed over the client-received request as:
+
+```
+sha256( v1 | method | origin | path | query | payTo | asset | network | amount | scheme )
+```
+
+This invariant was converged with the operator of a production x402 v2 paid service
+(StelarDigital / `x402-receipts`, issue #6) and is demonstrated as real-world vector RW-001
+(§10.1). It generalizes the `request_fingerprint` defined in §5.1: the probe-step identifier
+and the settlement-critical identity are one and the same snapshot.
+
+---
+
 ## 4. The six-step event chain
 
 | Step | Rail-agnostic name | What the spec records |
@@ -401,6 +432,23 @@ including when the payment was **not** a customer payment.
 
 A real-world vector is accepted only after gates-spec re-verifies the payment
 independently, against a public network, without trusting the submitter.
+
+#### RW-001 — x402-receipts production origin (Base mainnet USDC)
+
+- **Source:** `baianomarceloeduardo-jpg`, operator of `x402-receipts` (StelarDigital),
+  comment on StelarDigital/x402-receipts#6, 2026-10-09. Full provenance in
+  [`upstream/vector-x402-receipts-base.md`](./upstream/vector-x402-receipts-base.md).
+- **Payment:** independently verified against a public Base RPC — block `51984731`, 0.02 USDC,
+  EIP-3009 `transferWithAuthorization`. Their own paid self-test, not a customer payment.
+- **Convergence:** this exchange independently reproduced the §3.1 payment-identity binding
+  invariant — "one immutable snapshot at ingress… settle and refusal are lookups on it."
+- **Known gap (stated honestly):** the origin's attestation ledger does not yet bind a
+  settlement to an entry (`dataHash === sha256("{}")` at the attested index). RW-001 therefore
+  demonstrates the gap between *evidence of signing* and *evidence of spend* — the exact gap
+  `consumed` / `redeem_count` / `settlement_status` exist to close.
+- **Credit:** the `tx_already_used` refusal as the counter-increment event, and the framing
+  "prevention is a tourniquet; the count is the medical record," are quoted from
+  `baianomarceloeduardo-jpg`'s own description of his origin, not from gates-spec code.
 
 ---
 
