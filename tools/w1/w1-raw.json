@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-10T18:26:01.486Z",
+  "generated_at": "2026-10-12T12:07:37.792Z",
   "tool": "gates-probe",
   "discovery": {
     "sources": [
@@ -15,11 +15,11 @@
       }
     ],
     "total_listed": 150,
-    "distinct_origins": 60,
+    "distinct_origins": 61,
     "sellers": [
       {
         "origin": "https://api.onesource.io",
-        "resourceCount": 30,
+        "resourceCount": 28,
         "sampleResource": "https://api.onesource.io/api/chain/erc20-balance",
         "facilitators": []
       },
@@ -43,7 +43,7 @@
       },
       {
         "origin": "https://x402.ottoai.services",
-        "resourceCount": 7,
+        "resourceCount": 6,
         "sampleResource": "https://x402.ottoai.services/crypto-news",
         "facilitators": []
       },
@@ -60,15 +60,15 @@
         "facilitators": []
       },
       {
-        "origin": "https://blockrun.ai",
-        "resourceCount": 3,
-        "sampleResource": "https://blockrun.ai/api/v1/pm/polymarket/markets",
+        "origin": "https://www.api-xpay.com",
+        "resourceCount": 4,
+        "sampleResource": "https://www.api-xpay.com/x402/ping",
         "facilitators": []
       },
       {
-        "origin": "https://google-trends.use.x402atlas.com",
+        "origin": "https://blockrun.ai",
         "resourceCount": 3,
-        "sampleResource": "https://google-trends.use.x402atlas.com/related-queries",
+        "sampleResource": "https://blockrun.ai/api/v1/pm/polymarket/markets",
         "facilitators": []
       },
       {
@@ -81,6 +81,12 @@
         "origin": "https://api.oblique.markets",
         "resourceCount": 2,
         "sampleResource": "https://api.oblique.markets/api/v1/paid/time",
+        "facilitators": []
+      },
+      {
+        "origin": "https://google-trends.use.x402atlas.com",
+        "resourceCount": 2,
+        "sampleResource": "https://google-trends.use.x402atlas.com/related-queries",
         "facilitators": []
       },
       {
@@ -156,6 +162,12 @@
         "facilitators": []
       },
       {
+        "origin": "https://api-dev-v2.ixs.finance",
+        "resourceCount": 1,
+        "sampleResource": "https://api-dev-v2.ixs.finance/x402/vaults",
+        "facilitators": []
+      },
+      {
         "origin": "https://api.402rates.com",
         "resourceCount": 1,
         "sampleResource": "https://api.402rates.com/v1/ping",
@@ -174,6 +186,12 @@
         "facilitators": []
       },
       {
+        "origin": "https://api.chit402.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.chit402.com/v1/chat/completions",
+        "facilitators": []
+      },
+      {
         "origin": "https://api.hyperextend.xyz",
         "resourceCount": 1,
         "sampleResource": "https://api.hyperextend.xyz/v1/candles/BTC/1m/latest",
@@ -189,12 +207,6 @@
         "origin": "https://api.loyalspark.online",
         "resourceCount": 1,
         "sampleResource": "https://api.loyalspark.online/x402-gateway/recipient-api/offers",
-        "facilitators": []
-      },
-      {
-        "origin": "https://api.solenrich.com",
-        "resourceCount": 1,
-        "sampleResource": "https://api.solenrich.com/entrypoints/stonk-yield/invoke",
         "facilitators": []
       },
       {
@@ -219,12 +231,6 @@
         "origin": "https://crypto.apitoll.cloud",
         "resourceCount": 1,
         "sampleResource": "https://crypto.apitoll.cloud/v1/crypto/price",
-        "facilitators": []
-      },
-      {
-        "origin": "https://dicex402.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://dicex402.vercel.app/api/dice",
         "facilitators": []
       },
       {
@@ -270,9 +276,9 @@
         "facilitators": []
       },
       {
-        "origin": "https://memegeneratorx402.vercel.app",
+        "origin": "https://minifetch.com",
         "resourceCount": 1,
-        "sampleResource": "https://memegeneratorx402.vercel.app/api/generate-meme",
+        "sampleResource": "https://minifetch.com/api/v1/x402/preflight/url-check",
         "facilitators": []
       },
       {
@@ -300,15 +306,21 @@
         "facilitators": []
       },
       {
-        "origin": "https://roastx402endpoint.vercel.app",
+        "origin": "https://rpc.nodeflare.app",
         "resourceCount": 1,
-        "sampleResource": "https://roastx402endpoint.vercel.app/api/roast",
+        "sampleResource": "https://rpc.nodeflare.app/base/x402",
         "facilitators": []
       },
       {
         "origin": "https://sat.ipintel.ai",
         "resourceCount": 1,
         "sampleResource": "https://sat.ipintel.ai/satellite-observe",
+        "facilitators": []
+      },
+      {
+        "origin": "https://scvd.store",
+        "resourceCount": 1,
+        "sampleResource": "https://scvd.store/api/buy/spot_check",
         "facilitators": []
       },
       {
@@ -370,12 +382,6 @@
         "resourceCount": 1,
         "sampleResource": "https://x402uselessfacts.vercel.app/api/useless-fact",
         "facilitators": []
-      },
-      {
-        "origin": "https://x402wordoftheday.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://x402wordoftheday.vercel.app/api/word-of-the-day",
-        "facilitators": []
       }
     ],
     "sampled_origins": []
@@ -427,10 +433,10 @@
             "title": "Hash integrity — every entry recomputes from its inputs",
             "status": "pass",
             "level": "L0",
-            "message": "All 34 entries recompute.",
+            "message": "All 35 entries recompute.",
             "evidence": {
-              "matched": 34,
-              "total": 34,
+              "matched": 35,
+              "total": 35,
               "badIndices": []
             }
           },
@@ -439,13 +445,13 @@
             "title": "Chain continuity — prevHash links to predecessor; indices contiguous",
             "status": "pass",
             "level": "L0",
-            "message": "Indices 0..33 contiguous; all prevHash links hold.",
+            "message": "Indices 0..34 contiguous; all prevHash links hold.",
             "evidence": {
               "contiguous": true,
               "brokenIndices": [],
               "span": [
                 0,
-                33
+                34
               ]
             }
           },
@@ -465,10 +471,10 @@
             "title": "Content binding — entries carry a real payload, not sha256(\"{}\")",
             "status": "gap",
             "level": "L0",
-            "message": "22/34 entries sign an empty object (bound 12, ratio 0.353) at indices 12..33.",
+            "message": "23/35 entries sign an empty object (bound 12, ratio 0.343) at indices 12..34.",
             "evidence": {
-              "total": 34,
-              "empty": 22,
+              "total": 35,
+              "empty": 23,
               "bound": 12,
               "emptyIndices": [
                 12,
@@ -492,9 +498,10 @@
                 30,
                 31,
                 32,
-                33
+                33,
+                34
               ],
-              "ratio": 0.35294117647058826
+              "ratio": 0.34285714285714286
             }
           },
           {
@@ -542,7 +549,7 @@
           },
           "headline": "1 known gap(s) reported; 3 predicate(s) hold."
         },
-        "entryCount": 34
+        "entryCount": 35
       },
       {
         "origin": "https://inference.bsvkey.com",
@@ -1203,8 +1210,8 @@
     ]
   },
   "seller": {
-    "origins_scanned": 60,
-    "reachable": 60,
+    "origins_scanned": 61,
+    "reachable": 61,
     "results": [
       {
         "origin": "https://api.onesource.io",
@@ -1389,7 +1396,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://blockrun.ai",
+        "origin": "https://www.api-xpay.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1415,7 +1422,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://google-trends.use.x402atlas.com",
+        "origin": "https://blockrun.ai",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1468,6 +1475,32 @@
       },
       {
         "origin": "https://api.oblique.markets",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://google-trends.use.x402atlas.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1805,6 +1838,32 @@
         "evidenceOnly": true
       },
       {
+        "origin": "https://api-dev-v2.ixs.finance",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
         "origin": "https://api.402rates.com",
         "posture": "no-evidence",
         "reachable": true,
@@ -1883,6 +1942,32 @@
         "evidenceOnly": true
       },
       {
+        "origin": "https://api.chit402.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
         "origin": "https://api.hyperextend.xyz",
         "posture": "no-evidence",
         "reachable": true,
@@ -1936,32 +2021,6 @@
       },
       {
         "origin": "https://api.loyalspark.online",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://api.solenrich.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2066,32 +2125,6 @@
       },
       {
         "origin": "https://crypto.apitoll.cloud",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://dicex402.vercel.app",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2299,7 +2332,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://memegeneratorx402.vercel.app",
+        "origin": "https://minifetch.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2429,7 +2462,33 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://roastx402endpoint.vercel.app",
+        "origin": "https://rpc.nodeflare.app",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 405,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 405,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 405,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://sat.ipintel.ai",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2455,7 +2514,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://sat.ipintel.ai",
+        "origin": "https://scvd.store",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2716,32 +2775,6 @@
       },
       {
         "origin": "https://x402uselessfacts.vercel.app",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://x402wordoftheday.vercel.app",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
