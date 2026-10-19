@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T12:07:37.792Z",
+  "generated_at": "2026-10-19T10:00:25.703Z",
   "tool": "gates-probe",
   "discovery": {
     "sources": [
@@ -15,11 +15,11 @@
       }
     ],
     "total_listed": 150,
-    "distinct_origins": 61,
+    "distinct_origins": 58,
     "sellers": [
       {
         "origin": "https://api.onesource.io",
-        "resourceCount": 28,
+        "resourceCount": 23,
         "sampleResource": "https://api.onesource.io/api/chain/erc20-balance",
         "facilitators": []
       },
@@ -48,9 +48,21 @@
         "facilitators": []
       },
       {
+        "origin": "https://www.api-xpay.com",
+        "resourceCount": 5,
+        "sampleResource": "https://www.api-xpay.com/x402/ping",
+        "facilitators": []
+      },
+      {
         "origin": "https://agent.atinamos.co.uk",
         "resourceCount": 4,
         "sampleResource": "https://agent.atinamos.co.uk/agent/buyer-check",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.oblique.markets",
+        "resourceCount": 4,
+        "sampleResource": "https://api.oblique.markets/api/v1/paid/time",
         "facilitators": []
       },
       {
@@ -60,15 +72,15 @@
         "facilitators": []
       },
       {
-        "origin": "https://www.api-xpay.com",
+        "origin": "https://blockrun.ai",
         "resourceCount": 4,
-        "sampleResource": "https://www.api-xpay.com/x402/ping",
+        "sampleResource": "https://blockrun.ai/api/v1/chat/completions",
         "facilitators": []
       },
       {
-        "origin": "https://blockrun.ai",
+        "origin": "https://api.bitrefill.com",
         "resourceCount": 3,
-        "sampleResource": "https://blockrun.ai/api/v1/pm/polymarket/markets",
+        "sampleResource": "https://api.bitrefill.com/x402/gift-cards/search",
         "facilitators": []
       },
       {
@@ -78,15 +90,21 @@
         "facilitators": []
       },
       {
-        "origin": "https://api.oblique.markets",
+        "origin": "https://api.kadec0.xyz",
         "resourceCount": 2,
-        "sampleResource": "https://api.oblique.markets/api/v1/paid/time",
+        "sampleResource": "https://api.kadec0.xyz/v1/serp",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.nansen.ai",
+        "resourceCount": 2,
+        "sampleResource": "https://api.nansen.ai/api/v1/profiler/address/current-balance",
         "facilitators": []
       },
       {
         "origin": "https://google-trends.use.x402atlas.com",
         "resourceCount": 2,
-        "sampleResource": "https://google-trends.use.x402atlas.com/related-queries",
+        "sampleResource": "https://google-trends.use.x402atlas.com/trend",
         "facilitators": []
       },
       {
@@ -108,15 +126,15 @@
         "facilitators": []
       },
       {
-        "origin": "https://stableupload.dev",
-        "resourceCount": 2,
-        "sampleResource": "https://stableupload.dev/api/upload",
-        "facilitators": []
-      },
-      {
         "origin": "https://vibesprings.net",
         "resourceCount": 2,
         "sampleResource": "https://vibesprings.net/api/price/btc-usd",
+        "facilitators": []
+      },
+      {
+        "origin": "https://www.cultos.dev",
+        "resourceCount": 2,
+        "sampleResource": "https://www.cultos.dev/services/http-header-audit",
         "facilitators": []
       },
       {
@@ -180,15 +198,15 @@
         "facilitators": []
       },
       {
-        "origin": "https://api.bitrefill.com",
-        "resourceCount": 1,
-        "sampleResource": "https://api.bitrefill.com/x402/gift-cards/search",
-        "facilitators": []
-      },
-      {
         "origin": "https://api.chit402.com",
         "resourceCount": 1,
         "sampleResource": "https://api.chit402.com/v1/chat/completions",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.gondola-ai.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.gondola-ai.com/v1/chat/completions",
         "facilitators": []
       },
       {
@@ -198,33 +216,27 @@
         "facilitators": []
       },
       {
-        "origin": "https://api.kadec0.xyz",
-        "resourceCount": 1,
-        "sampleResource": "https://api.kadec0.xyz/v1/serp",
-        "facilitators": []
-      },
-      {
         "origin": "https://api.loyalspark.online",
         "resourceCount": 1,
         "sampleResource": "https://api.loyalspark.online/x402-gateway/recipient-api/offers",
         "facilitators": []
       },
       {
-        "origin": "https://cars2026.vercel.app",
+        "origin": "https://api.run402.com",
         "resourceCount": 1,
-        "sampleResource": "https://cars2026.vercel.app/api/cars",
+        "sampleResource": "https://api.run402.com/tiers/v1/prototype",
+        "facilitators": []
+      },
+      {
+        "origin": "https://api.solenrich.com",
+        "resourceCount": 1,
+        "sampleResource": "https://api.solenrich.com/entrypoints/stonk-yield/invoke",
         "facilitators": []
       },
       {
         "origin": "https://cheaptokens.ai",
         "resourceCount": 1,
         "sampleResource": "https://cheaptokens.ai/api/buy",
-        "facilitators": []
-      },
-      {
-        "origin": "https://coinflip402.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://coinflip402.vercel.app/api/coinflip",
         "facilitators": []
       },
       {
@@ -246,12 +258,6 @@
         "facilitators": []
       },
       {
-        "origin": "https://horrorstoryapi.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://horrorstoryapi.vercel.app/api/horror-story",
-        "facilitators": []
-      },
-      {
         "origin": "https://hyperliquid-predict.use.x402atlas.com",
         "resourceCount": 1,
         "sampleResource": "https://hyperliquid-predict.use.x402atlas.com/outcomes",
@@ -267,12 +273,6 @@
         "origin": "https://keyring-agent.blockchhub.link",
         "resourceCount": 1,
         "sampleResource": "https://keyring-agent.blockchhub.link/api/send-native",
-        "facilitators": []
-      },
-      {
-        "origin": "https://ladyfortunalx402.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://ladyfortunalx402.vercel.app/api/fortune",
         "facilitators": []
       },
       {
@@ -300,12 +300,6 @@
         "facilitators": []
       },
       {
-        "origin": "https://randomfactsx402.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://randomfactsx402.vercel.app/api/random-fact",
-        "facilitators": []
-      },
-      {
         "origin": "https://rpc.nodeflare.app",
         "resourceCount": 1,
         "sampleResource": "https://rpc.nodeflare.app/base/x402",
@@ -318,15 +312,15 @@
         "facilitators": []
       },
       {
-        "origin": "https://scvd.store",
-        "resourceCount": 1,
-        "sampleResource": "https://scvd.store/api/buy/spot_check",
-        "facilitators": []
-      },
-      {
         "origin": "https://stablestudio.dev",
         "resourceCount": 1,
         "sampleResource": "https://stablestudio.dev/api/upload",
+        "facilitators": []
+      },
+      {
+        "origin": "https://stableupload.dev",
+        "resourceCount": 1,
+        "sampleResource": "https://stableupload.dev/api/upload",
         "facilitators": []
       },
       {
@@ -366,21 +360,9 @@
         "facilitators": []
       },
       {
-        "origin": "https://x402lifeadvice.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://x402lifeadvice.vercel.app/api/life-advice",
-        "facilitators": []
-      },
-      {
         "origin": "https://x402tap.com",
         "resourceCount": 1,
         "sampleResource": "https://x402tap.com/api/weather",
-        "facilitators": []
-      },
-      {
-        "origin": "https://x402uselessfacts.vercel.app",
-        "resourceCount": 1,
-        "sampleResource": "https://x402uselessfacts.vercel.app/api/useless-fact",
         "facilitators": []
       }
     ],
@@ -433,10 +415,10 @@
             "title": "Hash integrity — every entry recomputes from its inputs",
             "status": "pass",
             "level": "L0",
-            "message": "All 35 entries recompute.",
+            "message": "All 38 entries recompute.",
             "evidence": {
-              "matched": 35,
-              "total": 35,
+              "matched": 38,
+              "total": 38,
               "badIndices": []
             }
           },
@@ -445,13 +427,13 @@
             "title": "Chain continuity — prevHash links to predecessor; indices contiguous",
             "status": "pass",
             "level": "L0",
-            "message": "Indices 0..34 contiguous; all prevHash links hold.",
+            "message": "Indices 0..37 contiguous; all prevHash links hold.",
             "evidence": {
               "contiguous": true,
               "brokenIndices": [],
               "span": [
                 0,
-                34
+                37
               ]
             }
           },
@@ -471,11 +453,11 @@
             "title": "Content binding — entries carry a real payload, not sha256(\"{}\")",
             "status": "gap",
             "level": "L0",
-            "message": "23/35 entries sign an empty object (bound 12, ratio 0.343) at indices 12..34.",
+            "message": "25/38 entries sign an empty object (bound 13, ratio 0.342) at indices 12..37.",
             "evidence": {
-              "total": 35,
-              "empty": 23,
-              "bound": 12,
+              "total": 38,
+              "empty": 25,
+              "bound": 13,
               "emptyIndices": [
                 12,
                 13,
@@ -499,9 +481,11 @@
                 31,
                 32,
                 33,
-                34
+                34,
+                36,
+                37
               ],
-              "ratio": 0.34285714285714286
+              "ratio": 0.34210526315789475
             }
           },
           {
@@ -549,7 +533,7 @@
           },
           "headline": "1 known gap(s) reported; 3 predicate(s) hold."
         },
-        "entryCount": 35
+        "entryCount": 38
       },
       {
         "origin": "https://inference.bsvkey.com",
@@ -704,7 +688,7 @@
             "responded": true
           },
           "facilitatorHealth": {
-            "present": false,
+            "present": true,
             "status": 200,
             "kind": "settlement-only",
             "responded": true
@@ -1210,8 +1194,8 @@
     ]
   },
   "seller": {
-    "origins_scanned": 61,
-    "reachable": 61,
+    "origins_scanned": 58,
+    "reachable": 58,
     "results": [
       {
         "origin": "https://api.onesource.io",
@@ -1344,7 +1328,59 @@
         "evidenceOnly": true
       },
       {
+        "origin": "https://www.api-xpay.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
         "origin": "https://agent.atinamos.co.uk",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.oblique.markets",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1396,7 +1432,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://www.api-xpay.com",
+        "origin": "https://blockrun.ai",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1422,19 +1458,19 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://blockrun.ai",
+        "origin": "https://api.bitrefill.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
           "ledger": {
             "present": false,
-            "status": 404,
+            "status": 401,
             "kind": "attestation-ledger",
             "responded": true
           },
           "keyring": {
             "present": false,
-            "status": 404,
+            "status": 401,
             "kind": "attestation-ledger",
             "responded": true
           },
@@ -1474,7 +1510,33 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://api.oblique.markets",
+        "origin": "https://api.kadec0.xyz",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.nansen.ai",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1604,7 +1666,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://stableupload.dev",
+        "origin": "https://vibesprings.net",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1630,7 +1692,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://vibesprings.net",
+        "origin": "https://www.cultos.dev",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1916,19 +1978,19 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://api.bitrefill.com",
+        "origin": "https://api.chit402.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
           "ledger": {
             "present": false,
-            "status": 401,
+            "status": 404,
             "kind": "attestation-ledger",
             "responded": true
           },
           "keyring": {
             "present": false,
-            "status": 401,
+            "status": 404,
             "kind": "attestation-ledger",
             "responded": true
           },
@@ -1942,7 +2004,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://api.chit402.com",
+        "origin": "https://api.gondola-ai.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -1994,32 +2056,6 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://api.kadec0.xyz",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
         "origin": "https://api.loyalspark.online",
         "posture": "no-evidence",
         "reachable": true,
@@ -2046,7 +2082,33 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://cars2026.vercel.app",
+        "origin": "https://api.run402.com",
+        "posture": "no-evidence",
+        "reachable": true,
+        "surfaces": {
+          "ledger": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "keyring": {
+            "present": false,
+            "status": 404,
+            "kind": "attestation-ledger",
+            "responded": true
+          },
+          "receiptKey": {
+            "present": false,
+            "status": 404,
+            "kind": "signed-receipt",
+            "responded": true
+          }
+        },
+        "evidenceOnly": true
+      },
+      {
+        "origin": "https://api.solenrich.com",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2073,32 +2135,6 @@
       },
       {
         "origin": "https://cheaptokens.ai",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://coinflip402.vercel.app",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2202,32 +2238,6 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://horrorstoryapi.vercel.app",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
         "origin": "https://hyperliquid-predict.use.x402atlas.com",
         "posture": "no-evidence",
         "reachable": true,
@@ -2281,32 +2291,6 @@
       },
       {
         "origin": "https://keyring-agent.blockchhub.link",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://ladyfortunalx402.vercel.app",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2436,32 +2420,6 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://randomfactsx402.vercel.app",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
         "origin": "https://rpc.nodeflare.app",
         "posture": "no-evidence",
         "reachable": true,
@@ -2514,7 +2472,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://scvd.store",
+        "origin": "https://stablestudio.dev",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2540,7 +2498,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://stablestudio.dev",
+        "origin": "https://stableupload.dev",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
@@ -2722,59 +2680,7 @@
         "evidenceOnly": true
       },
       {
-        "origin": "https://x402lifeadvice.vercel.app",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
         "origin": "https://x402tap.com",
-        "posture": "no-evidence",
-        "reachable": true,
-        "surfaces": {
-          "ledger": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "keyring": {
-            "present": false,
-            "status": 404,
-            "kind": "attestation-ledger",
-            "responded": true
-          },
-          "receiptKey": {
-            "present": false,
-            "status": 404,
-            "kind": "signed-receipt",
-            "responded": true
-          }
-        },
-        "evidenceOnly": true
-      },
-      {
-        "origin": "https://x402uselessfacts.vercel.app",
         "posture": "no-evidence",
         "reachable": true,
         "surfaces": {
