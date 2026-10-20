@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Minimal payable server using @gates-spec/middleware.
+ * Minimal payable server using @sycee/middleware.
  *
  * Run:
  *   node examples/minimal-server.mjs
@@ -14,8 +14,8 @@
  */
 
 import http from 'node:http';
-import { generateKeyPair } from '@gates-spec/core';
-import { createGates, memoryStore } from '@gates-spec/middleware';
+import { generateKeyPair } from '@sycee/core';
+import { createGates, memoryStore } from '@sycee/middleware';
 
 const PORT = Number(process.env.PORT || 4000);
 const { publicKey, privateKey } = generateKeyPair();
@@ -48,7 +48,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  process.stdout.write(`gates-spec minimal server listening on http://localhost:${PORT}\n`);
+  process.stdout.write(`SYCEE minimal server listening on http://localhost:${PORT}\n`);
   process.stdout.write(`\nTry:\n`);
   process.stdout.write(`  curl -i http://localhost:${PORT}/paid\n`);
   process.stdout.write(`  curl -i -H 'payment-signature: demo-proof-1234' http://localhost:${PORT}/paid\n`);

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://gates-spec.dev/schema/vsr-v0.1.schema.json",
+  "$id": "urn:sycee:schema:vsr:v0.1",
   "title": "Verifiable Spend Receipt (VSR) v0.1",
   "description": "Signed envelope recording agent spend outcome semantics: consumption and redemption counts. Contains no payment proof bodies, request bodies, or response bodies.",
   "type": "object",
@@ -30,7 +30,7 @@
       "properties": {
         "schema_version": {
           "type": "string",
-          "const": "gates-spec/v0.1"
+          "const": "sycee/v0.1"
         },
         "protocol": {
           "type": "string",

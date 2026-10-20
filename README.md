@@ -1,9 +1,9 @@
-# gates-spec
+# SYCEE
 
 > **We record. Others score.**  
 > **记录消费与兑现实；不评分、不托管、不触碰资金。**
 
-`gates-spec` is a protocol-agnostic semantic layer for machine payments. It answers
+`SYCEE` is a protocol-agnostic semantic layer for machine payments. It answers
 two questions that upstream protocols do not yet define:
 
 1. **Was the paid result actually consumed by downstream context?**
@@ -11,10 +11,28 @@ two questions that upstream protocols do not yet define:
 
 Existing work (x402-receipts, Vauban IETF drafts, ERC-8183, VCAP, APOP/APASS)
 focuses on **receipt format and delivery proof**: "Did the seller send the bytes?"
-`gates-spec` focuses on **outcome semantics**: "Did the buyer use the bytes?"
+`SYCEE` focuses on **outcome semantics**: "Did the buyer use the bytes?"
 
 This repository contains the specification, a reference implementation, a
 zero-dependency conformance suite, and a proposal path to upstream standards.
+
+---
+
+## Name
+
+This project was published as `gates-spec` until v0.1 and is now **SYCEE**. GitHub
+redirects the old repository URL, so links written before the rename still resolve.
+Two identifiers changed with it and are not interchangeable:
+
+| was | is |
+|-----|-----|
+| `gates-spec/v0.1` (receipt `schema_version`) | `sycee/v0.1` |
+| `@gates-spec/{core,middleware,agent-sdk,conformance}` | `@sycee/{...}` |
+
+Receipts carrying `gates-spec/v0.1` were signed under the old string and remain
+valid as signed artifacts; they are simply a distinct version identifier, not an
+alias. Anything that pins a vector fingerprint will see a different hash, because
+the version string is one of the inputs.
 
 ---
 
@@ -32,7 +50,7 @@ zero-dependency conformance suite, and a proposal path to upstream standards.
 | x402, MPP, AP2, APOP | How does the agent pay? | Standards and SDKs exist | — |
 | x402-receipts, Vauban | Did payment happen and did the seller deliver? | Production code, IETF drafts | Consumption evidence |
 | ERC-8183, VCAP | Did an evaluator judge work complete? | Escrow / verdict layers | Non-custodial, non-scoring evidence |
-| **gates-spec** | **Was the result consumed? How many redemptions?** | **This repo** | — |
+| **SYCEE** | **Was the result consumed? How many redemptions?** | **This repo** | — |
 
 An HTTP `200` means the response was delivered. It does **not** mean the agent:
 - put the result in a prompt,
@@ -41,7 +59,7 @@ An HTTP `200` means the response was delivered. It does **not** mean the agent:
 - showed it to a user.
 
 That gap is idle spend. It is also the gap where the same `payment_proof` can be
-redeemed against multiple resources without anyone noticing. `gates-spec`
+redeemed against multiple resources without anyone noticing. `SYCEE`
 makes both observable.
 
 ---
@@ -49,7 +67,7 @@ makes both observable.
 ## What is in this repo
 
 ```
-gates-spec/
+sycee/
 ├── SPEC.md                    # normative specification v0.1
 ├── schema/vsr-v0.1.schema.json # JSON Schema for Verifiable Spend Receipts
 ├── conformance/vectors/        # signed conformance test vectors
@@ -69,8 +87,8 @@ All packages are **zero-dependency** and use Node native Ed25519 (`crypto`).
 ## Quick start
 
 ```bash
-git clone https://github.com/ruiruii/gates-spec.git
-cd gates-spec
+git clone https://github.com/ruiruii/sycee.git
+cd sycee
 npm install          # links local workspaces
 npm test             # runs conformance + e2e tests
 npm run vectors      # regenerates conformance/vectors/*.json
@@ -80,8 +98,8 @@ npm run verify conformance/vectors/*.json
 ### Merchant middleware (Node/Express-style)
 
 ```js
-import { createGates, memoryStore } from '@gates-spec/middleware';
-import { generateKeyPair } from '@gates-spec/core';
+import { createGates, memoryStore } from '@sycee/middleware';
+import { generateKeyPair } from '@sycee/core';
 
 const { publicKey, privateKey } = generateKeyPair();
 
@@ -101,8 +119,8 @@ app.get('/search', gates.guard(handler));
 ### Agent SDK
 
 ```js
-import { createSpend } from '@gates-spec/agent-sdk';
-import { generateKeyPair } from '@gates-spec/core';
+import { createSpend } from '@sycee/agent-sdk';
+import { generateKeyPair } from '@sycee/core';
 
 const agentKeys = generateKeyPair();
 const spend = createSpend({
@@ -122,7 +140,7 @@ const receipt = res.gates.consumedBy('task_4829'); // signs consumed=yes
 ### Offline verification
 
 ```js
-import { verifyVSR } from '@gates-spec/core';
+import { verifyVSR } from '@sycee/core';
 
 const check = verifyVSR(envelope);
 console.log(check.valid, check.level, check.errors, check.warnings);
@@ -132,9 +150,9 @@ console.log(check.valid, check.level, check.errors, check.warnings);
 
 ## Relationship to adjacent projects
 
-`gates-spec` is **additive**, not competitive.
+`SYCEE` is **additive**, not competitive.
 
-| Project | Defines | `gates-spec` adds |
+| Project | Defines | `SYCEE` adds |
 |---------|---------|-----------------|
 | **x402-receipts** (npm, production) | Receipt format, request hash, delivery status, dual signature, EAS anchor | `consumed` / `consumed_by` / `redeem_count`; multi-rail |
 | **IETF draft-vauban-x402-*** | Receipt format, post-quantum signatures, Starknet anchoring, `action_ref` binding | `consumed` / `redeem_count`; protocol-agnostic |
@@ -171,7 +189,7 @@ These rules are structural, not policy.
 
 | Phase | Goal | Owner | Deadline |
 |-------|------|-------|----------|
-| 1 | Publish `gates-spec v0.1` repo + SPEC.md | Sycee | **DONE** |
+| 1 | Publish `SYCEE v0.1` repo + SPEC.md | Sycee | **DONE** |
 | 2 | Propose field alignment to x402-receipts, Vauban, ERC-8004 v2 | Sycee | **DONE** (see below) |
 | 3 | First independent implementation adopts `consumed` / `redeem_count` names | x402-receipts / minia2a | **D+30** |
 | 4 | Run merchant + agent SDK against Brave / bx402#102 test case | Sycee | **D+30** |
@@ -180,7 +198,7 @@ These rules are structural, not policy.
 ## Upstream outreach
 
 The objective is **one vocabulary, not a new project**. If another standard adopts these
-field names, gates-spec adopts theirs.
+field names, SYCEE adopts theirs.
 
 | Target | Channel | Status |
 |--------|---------|--------|

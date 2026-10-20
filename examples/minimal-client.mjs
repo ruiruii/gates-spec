@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Minimal client using @gates-spec/agent-sdk.
+ * Minimal client using @sycee/agent-sdk.
  *
  * Run after minimal-server.mjs is up:
  *   node examples/minimal-client.mjs
@@ -12,8 +12,8 @@
  *   4. the agent runtime attesting consumption
  */
 
-import { generateKeyPair } from '@gates-spec/core';
-import { createSpend, linkReceipts } from '@gates-spec/agent-sdk';
+import { generateKeyPair } from '@sycee/core';
+import { createSpend, linkReceipts } from '@sycee/agent-sdk';
 
 const BASE = process.env.SERVER || 'http://localhost:4000';
 

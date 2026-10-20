@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { checkEnvelope } from '../src/index.mjs';
-import { canonicalJSON, generateKeyPair, sha256, signVSR, verifyVSR, buildVSR, normalizeSettlement } from '@gates-spec/core';
+import { canonicalJSON, generateKeyPair, sha256, signVSR, verifyVSR, buildVSR, normalizeSettlement } from '@sycee/core';
 
 const VECTORS = new URL('../../../conformance/vectors/', import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL('manifest.json', VECTORS), 'utf8'));

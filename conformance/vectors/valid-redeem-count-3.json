@@ -26,11 +26,11 @@
       ],
       "freshness_s": 2
     },
-    "schema_version": "gates-spec/v0.1",
+    "schema_version": "sycee/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAAj0cLopNEZIo4WTNp5tl9APja1mO9jTrvo8_OglWHoI",
       "role": "merchant"
     }
   },
-  "signature": "Y8EdnMV-yCryieTlBF83ro-OtiBvHf-laJ5gZ7CiAWNELN7TIsyZqCycPQPpr3Y1fpZZ-9AmZN6y8F4LQs4bAQ"
+  "signature": "O_mHCMAQkK5c0EG-YFUnugGubGl3IG3l9VpIH5T8NACeLmNyKUcoPA1dVCuFDs2pSQeS2-AktRCbu63k6QvpCg"
 }

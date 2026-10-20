@@ -12,11 +12,11 @@
     "protocol": "x402",
     "resource_id": "search.v1",
     "result": {},
-    "schema_version": "gates-spec/v0.1",
+    "schema_version": "sycee/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAAj0cLopNEZIo4WTNp5tl9APja1mO9jTrvo8_OglWHoI",
       "role": "merchant"
     }
   },
-  "signature": "ziiltXIvrrcY9gzkIiLZOvYC4RIxPXrfZkTnDn_FkJVFlmogXjEZ99S-1BbgjHq4y2Zx6wk80U6BlJCL2imfCQ"
+  "signature": "mlE4yD2zMJb3q7t_iiAFu1WrWOBaKvOtBCL-47eu41IB5nhwOwXL_etgQgdlq-QXBB7WNXDPJkTEt_dpke-CAQ"
 }

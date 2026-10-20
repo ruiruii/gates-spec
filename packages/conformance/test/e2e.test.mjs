@@ -1,17 +1,17 @@
 /**
  * End-to-end: merchant middleware + agent SDK over a fake transport.
  *
- * The point of these tests is the claim gates-spec makes that no existing
+ * The point of these tests is the claim SYCEE makes that no existing
  * receipt schema can: that one payment proof redeemed many times becomes
  * VISIBLE, and that consumption is attested by the side that can see it.
  */
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { generateKeyPair } from '@gates-spec/core';
-import { createGates, memoryStore } from '@gates-spec/middleware';
-import { createSpend, linkReceipts } from '@gates-spec/agent-sdk';
-import { verifyVSR } from '@gates-spec/core';
+import { generateKeyPair } from '@sycee/core';
+import { createGates, memoryStore } from '@sycee/middleware';
+import { createSpend, linkReceipts } from '@sycee/agent-sdk';
+import { verifyVSR } from '@sycee/core';
 
 const merchantKeys = generateKeyPair();
 const agentKeys = generateKeyPair();
@@ -216,4 +216,43 @@ test('receipt never embeds the payment proof, only its hash', async () => {
   const raw = Buffer.from(res.headers.get('x-gates-receipt'), 'base64url').toString('utf8');
   assert.ok(!raw.includes('PROOF-super-secret-credential'));
   assert.ok(raw.includes('sha256:'));
+});
+
+test('receipt URL is origin-relative, never an absolute host we do not own', async () => {
+  // The header used to point at https://gates-spec.dev/v1/receipt/..., a host that
+  // does not resolve and a route no server here serves. A URL that reads as
+  // dereferenceable but is not is worse than an obviously relative one, so the
+  // middleware now derives it from the request instead of naming a domain.
+  const { transport } = makeMerchant();
+  const spend = makeAgent(transport);
+  const res = await spend.fetch('https://api.example/search?q=url-shape');
+  assert.equal(res.status, 200, 'the paying call must actually get a receipt');
+  const url = res.headers.get('x-gates-receipt-url');
+  assert.ok(url, 'the header is still emitted');
+  assert.equal(url.startsWith('/receipt/'), true, `expected a relative path, got ${url}`);
+  assert.equal(url.includes('gates-spec'), false);
+});
+
+test('receipt URL follows the request host when the transport supplies one', async () => {
+  // Same code path, but with a host header: the URL must stay on that origin
+  // rather than falling back to any domain baked into this package.
+  const gates = createGates({
+    resourceId: 'search.v1',
+    protocol: 'x402',
+    publicKey: merchantKeys.publicKey,
+    privateKey: merchantKeys.privateKey,
+    store: memoryStore(),
+  });
+  const guarded = gates.guard(async () => ({ status: 200, body: { ok: true } }));
+  const res = {
+    statusCode: 200, headers: {}, body: '', writableEnded: false,
+    setHeader(k, v) { this.headers[k.toLowerCase()] = String(v); },
+    end(b) { this.body = b ?? ''; this.writableEnded = true; },
+  };
+  await guarded(
+    { method: 'POST', url: '/search', query: {},
+      headers: { 'payment-proof': 'sha256:' + 'd'.repeat(64), host: 'merchant.example' } },
+    res,
+  );
+  assert.equal(res.headers['x-gates-receipt-url'].startsWith('http://merchant.example/receipt/'), true);
 });

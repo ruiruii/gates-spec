@@ -1,6 +1,6 @@
 # Examples
 
-This folder contains runnable demonstrations of the three gates-spec primitives.
+This folder contains runnable demonstrations of the three SYCEE primitives.
 
 ## `minimal-server.mjs`
 

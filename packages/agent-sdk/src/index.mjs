@@ -1,5 +1,5 @@
 /**
- * @gates-spec/agent-sdk — buyer-side (agent runtime) reference implementation.
+ * @sycee/agent-sdk — buyer-side (agent runtime) reference implementation.
  *
  * Two things only the buyer runtime can know:
  *   1. whether the paid result was actually referenced downstream  -> result.consumed
@@ -8,7 +8,7 @@
  * The seller cannot observe either. This SDK instruments them and co-signs.
  */
 
-import { buildVSR, sha256, signVSR, toSpanAttributes, verifyVSR, nowISO, SCHEMA_VERSION } from '@gates-spec/core';
+import { buildVSR, sha256, signVSR, toSpanAttributes, verifyVSR, nowISO, SCHEMA_VERSION } from '@sycee/core';
 
 /**
  * @param {{

@@ -4,7 +4,7 @@
 
 import { readFileSync } from 'node:fs';
 import { validateInstance } from './validate.mjs';
-import { verifyVSR, toSpanAttributes } from '@gates-spec/core';
+import { verifyVSR, toSpanAttributes } from '@sycee/core';
 
 const SCHEMA_URL = new URL('../../../schema/vsr-v0.1.schema.json', import.meta.url);
 

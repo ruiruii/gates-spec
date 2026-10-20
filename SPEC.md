@@ -1,4 +1,4 @@
-# gates-spec v0.1 — Agent Spend Semantics
+# SYCEE v0.1 — Agent Spend Semantics
 
 > **Status:** Draft 0.1 · **License:** Apache-2.0 · **Date:** 2026-10-09
 > **One-line:** We record. Others score.
@@ -18,7 +18,7 @@ enterprise buyers, and dispute resolvers actually ask:
 | Q2 | **Was the result consumed by downstream context?** | **Undefined everywhere** |
 | Q3 | **How many times was the same payment proof redeemed?** | **Undefined everywhere** |
 
-`gates-spec` defines a minimal, protocol-agnostic attribute set and a signed envelope
+`SYCEE` defines a minimal, protocol-agnostic attribute set and a signed envelope
 (**VSR**, Verifiable Spend Receipt) that answers Q2 and Q3 without answering anything else.
 
 It is deliberately **not**:
@@ -57,14 +57,14 @@ x402's in-flight deduplication is designed to prevent **concurrent** replay of a
 `payment_proof`. It does not, by design, prevent or record **sequential** reuse of the same
 proof across separate requests or resources — the protocol permits multiple `complete`
 transitions for one proof. `redeem_count` is introduced to make this observable rather than
-to forbid it. `gates-spec` takes no position on whether multiple redemption is legitimate;
+to forbid it. `SYCEE` takes no position on whether multiple redemption is legitimate;
 it asserts only that **it must be countable**.
 
 ### 1.3 Scope discipline
 
 This spec adds fields; it does not redefine existing ones. Where a rail already defines
 `delivery.status`, implementations SHOULD reuse the rail's value and MUST NOT assign a
-conflicting meaning to `gates-spec` attributes.
+conflicting meaning to `SYCEE` attributes.
 
 ---
 
@@ -109,7 +109,7 @@ Notation:
 
 Steps 1–5 are observable by the seller. Step 6 is observable **only by the buyer runtime**.
 This asymmetry is the reason a receipt is not sufficient evidence of consumption, and the
-reason `gates-spec` requires bilateral instrumentation to reach conformance level 2 (§10).
+reason `SYCEE` requires bilateral instrumentation to reach conformance level 2 (§10).
 
 ---
 
@@ -219,7 +219,7 @@ payment proof body.
 ```json
 {
   "vsr": {
-    "schema_version": "gates-spec/v0.1",
+    "schema_version": "sycee/v0.1",
     "protocol": "x402",
     "resource_id": "search.v1",
     "request_fingerprint": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
@@ -256,7 +256,7 @@ payment proof body.
 
 ### 6.1 Field requirements
 
-- `schema_version` MUST be `gates-spec/v0.1`.
+- `schema_version` MUST be `sycee/v0.1`.
 - `payment.proof_hash` MUST be present. The raw proof MUST NOT appear anywhere in the envelope.
 - `result.consumed` MUST be present and MUST be one of `yes` \| `no` \| `unknown`.
 - `payment.redeem_count` MUST be present and MUST be an integer ≥ 1.
@@ -399,14 +399,14 @@ semantics describe anything real. [`conformance/real-world/`](./conformance/real
 holds vectors built from actual settled payments, each with its provenance stated —
 including when the payment was **not** a customer payment.
 
-A real-world vector is accepted only after gates-spec re-verifies the payment
+A real-world vector is accepted only after SYCEE re-verifies the payment
 independently, against a public network, without trusting the submitter.
 
 ---
 
 ## 11. Relationship to adjacent specifications
 
-| Spec / project | Defines | gates-spec adds |
+| Spec / project | Defines | SYCEE adds |
 |----------------|---------|-----------------|
 | **x402-receipts** (npm, production) | Receipt format, request/response hash, delivery status, dual signature, EAS anchor | `consumed` / `consumed_by` / `redeem_count`; multi-rail, not chain-locked |
 | **IETF draft-vauban-x402-*** | Receipt format, post-quantum signatures, Starknet anchoring, `action_ref` work binding | `consumed` / `redeem_count`; protocol-agnostic; no chain dependency |
@@ -415,7 +415,7 @@ independently, against a public network, without trusting the submitter.
 | **APASS / APOP** | Rail-native trust evidence | Cross-rail evidence; outcome semantics |
 | **ERC-8004** | Agent identity and payment-proof schema | Reserved fields for `consumed` / `redeem_count` |
 
-`gates-spec` is **additive** to all of the above. It is a candidate for upstream
+`SYCEE` is **additive** to all of the above. It is a candidate for upstream
 contribution, not a competing standard.
 
 ---
@@ -424,7 +424,7 @@ contribution, not a competing standard.
 
 Requested registrations under a future `agent.spend` namespace:
 
-- `gates-spec` schema version registry (`v0.1`, …).
+- `SYCEE` schema version registry (`v0.1`, …).
 - `agent.spend.protocol` enumerated value registry.
 - `agent.spend.delivery.status` enumerated value registry.
 - `agent.spend.result.consumed` enumerated value registry (`yes` / `no` / `unknown`).
@@ -448,4 +448,4 @@ See [`conformance/vectors/`](./conformance/vectors) for machine-readable cases a
 
 ---
 
-**Copyright 2026 gates-spec contributors. Licensed under Apache-2.0.**
+**Copyright 2026 SYCEE contributors. Licensed under Apache-2.0.**
