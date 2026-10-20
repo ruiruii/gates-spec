@@ -1,5 +1,5 @@
 /**
- * Minimal JSON Schema validator for the gates-spec VSR schema.
+ * Minimal JSON Schema validator for the SYCEE VSR schema.
  *
  * Deliberately zero-dependency so the conformance suite runs anywhere.
  * Supports exactly the keyword subset the schema uses:

@@ -5,7 +5,7 @@ runner 真实跑出数据并回写 `reports/w1.md`。
 
 ## 它在测什么
 
-gates-spec 站在**裁判位**：持续判定"谁做了持久可验证存证、谁只结算不
+SYCEE 站在**裁判位**：持续判定"谁做了持久可验证存证、谁只结算不
 存证"。本管线做**双层普查**：
 
 - **权威层（authority）**：公开结算权威（facilitator / ledger / receipt

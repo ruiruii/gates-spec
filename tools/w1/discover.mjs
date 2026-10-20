@@ -13,7 +13,7 @@
  * The evidence layer is about *attestation*, not settlement. Settlement
  * authorities (facilitators) are the natural publishers of durable evidence;
  * nearly all of them today settle without attesting. That gap is what
- * gates-spec measures.
+ * SYCEE measures.
  */
 
 import { writeFile } from 'node:fs/promises';

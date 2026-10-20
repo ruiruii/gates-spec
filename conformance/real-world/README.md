@@ -6,7 +6,7 @@ implementation is *self-consistent*. They cannot prove the semantics describe an
 
 This directory holds vectors built from **actual settled payments**. A real-world vector is
 the only way to show that `redeem_count`, `settlement_status` and `consumed` can be
-populated by a live seller without lying — which is the entire claim gates-spec makes.
+populated by a live seller without lying — which is the entire claim SYCEE makes.
 
 Every entry MUST state its provenance, including when the payment was **not** a customer
 payment.
@@ -23,17 +23,17 @@ Reference their **v0.5.0** (npm `latest`), as the contributor asked.
 
 | assertion | status |
 |---|---|
-| payment exists on Base mainnet | ✅ **independently verified by gates-spec** (2026-10-09, public Base RPC) |
-| ledger hash chain, `prevHash` links, signatures, `signedBy` | ✅ **independently re-verified by gates-spec CI** on a GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031), 2026-10-09): 33/33 hash, 33/33 links, 33/33 signatures |
+| payment exists on Base mainnet | ✅ **independently verified by SYCEE** (2026-10-09, public Base RPC) |
+| ledger hash chain, `prevHash` links, signatures, `signedBy` | ✅ **independently re-verified by SYCEE CI** on a GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/sycee/actions/runs/37954034031), 2026-10-09): 33/33 hash, 33/33 links, 33/33 signatures |
 | **settlement linkage (an entry binds this tx)** | ❌ **KNOWN GAP (RED half)** — 21/33 entries have `dataHash = sha256("{}")`; 0 entries bind the tx in any form tested (confirmed by the same CI run) |
 | **redeem trace (`tx_already_used` written to ledger)** | ❌ **KNOWN GAP (RED half)** — per contributor, the guard enforces and then forgets; nothing is written on the payment path |
 
-> **Independent re-run provenance.** gates-spec's own build sandbox cannot reach
+> **Independent re-run provenance.** SYCEE's own build sandbox cannot reach
 > `api.automaton-sovereign.workers.dev` (its DNS answers placeholder addresses and every
 > connection times out), so the first independent re-run was executed on a
 > **GitHub-hosted runner** — infrastructure that is neither ours nor the contributor's —
 > via `.github/workflows/real-world-conformance.yml`. Run
-> [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031)
+> [`37954034031`](https://github.com/ruiruii/sycee/actions/runs/37954034031)
 > returned `success` and reported: 33/33 hash recomputation, 33/33 `prevHash` links,
 > 33/33 signatures, index 0/20 both directions, `/v1/verify-payment` ok (block 51984731),
 > **21/33** empty `dataHash`, and **0** entries binding the tx. The contributor ran the
@@ -58,7 +58,7 @@ Reference their **v0.5.0** (npm `latest`), as the contributor asked.
 | verified on-chain at | `2026-09-30T11:38:11.311Z` (per contributor) |
 | provenance | **contributor's own paid self-test**, not a customer payment |
 
-#### Independent verification performed by gates-spec
+#### Independent verification performed by SYCEE
 
 Checked against a public Base mainnet RPC on 2026-10-09:
 
@@ -111,15 +111,15 @@ useful for the chain/key negative cases below — not as proof of settlement.
 Contributor reports `GET /v2/verify?index=20` →
 `{ verified: true, signatureValid: true, chainIntact: true, signedBy: "current" }` and
 `?index=0` → the same with `signedBy: "historical"`. **Chain independently re-verified by
-gates-spec CI (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031)).**
+SYCEE CI (run [`37954034031`](https://github.com/ruiruii/sycee/actions/runs/37954034031)).**
 
 ### 3.1 Redeem-trace reference fingerprint composition (contributor, C8 — recorded as his)
 
 The RED half of RW-001 (§"Verification status", rows 3–4) is the `redeem_count`-derivable /
-settlement_status side. It is red in gates-spec's tree today only because no upstream
+settlement_status side. It is red in SYCEE's tree today only because no upstream
 implementation has shipped it. The contributor supplied the **reference fingerprint composition**
 that makes that half derivable — anchored here **ahead of any code**, in the order he asked for
-("objections before the code"). It is recorded as his; gates-spec only pins it.
+("objections before the code"). It is recorded as his; SYCEE only pins it.
 
 > Fingerprint over the request the **client** made, never over what the **seller** wrote. In x402
 > v2 the challenge carries server-chosen fields (`accepts[].resource.url` is absolute and written
@@ -134,7 +134,7 @@ threat-model note, **revision 3**, §4 G1.
 
 ### 4. Attestation envelope (their evidence layer)
 
-This is **not** a gates-spec VSR. It is the contributor's own ECDSA-P256 hash-chained
+This is **not** a SYCEE VSR. It is the contributor's own ECDSA-P256 hash-chained
 attestation ledger, included because it is the layer their settled payment lands in.
 
 Fields: `index`, `prevHash`, `timestamp` (RFC 3339 Z), `dataHash`, `hash`,
@@ -154,8 +154,8 @@ Two sharp edges worth encoding as vectors of their own:
 
 The contributor recomputed `hash` for **33 of 33** published entries and matched, and
 posted a full transcript (33/33 hash, 33/33 `prevHash` links, 33/33 signatures,
-29 `current` + 4 `historical`). gates-spec re-ran the same assertion set on a
-GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031))
+29 `current` + 4 `historical`). SYCEE re-ran the same assertion set on a
+GitHub-hosted runner (run [`37954034031`](https://github.com/ruiruii/sycee/actions/runs/37954034031))
 and matched 33/33 on every count — the chain half is now independently reproduced.
 
 ### 5. Negative vector: `invalid-verify-current-key-only`
@@ -165,7 +165,7 @@ Entry `0` is signed by a **retired** key, `keyId 7e32754cf3911ccf`, published in
 A verifier that reads only the current key reports a **false negative** on entry 0.
 
 This is a general failure mode, not a quirk of this ledger: **any** spec that does not pin
-how historical keys are resolved will rot the first time a signer rotates a key. gates-spec
+how historical keys are resolved will rot the first time a signer rotates a key. SYCEE
 already forbids it — **§7.4** requires historical public keys to remain retrievable ≥ 90 days
 past rotation, and **§7.3** requires verification against `signer.public_key` (the key that
 actually signed the envelope, resolved by `key_id` — not the live one). A "current-key-only"
@@ -185,12 +185,12 @@ CI pass, so the failure mode is *exercised*, not just described:
 - **current-key-only resolver** rejects entry 0 → this is the false negative the vector is
   named for, reported as `[DEMO]` (expected behaviour) rather than a `[FAIL]` gate.
 
-The vector pins the rule for gates-spec's own verifier: resolve by `key_id` against the full
+The vector pins the rule for SYCEE's own verifier: resolve by `key_id` against the full
 key set, never pin the live key.
 
 ### 6. Wire mapping (`X-Payment-Settled` → `payment.settlement_status`)
 
-| their wire value | when | gates-spec enum |
+| their wire value | when | SYCEE enum |
 |---|---|---|
 | `true` | 200 served against a verified payment (EIP-3009 and legacy transfer-then-hash paths) | `settled` |
 | `queued` | EIP-3009 path, settlement in flight; arrives with `X-Payment-Scheme: eip3009` | `in_flight` |
@@ -224,12 +224,12 @@ indices — and **reports** the RED half (empty `dataHash` count, tx-binding cou
 known gap rather than asserting it pass. The GREEN half must stay clean; the RED half is
 expected to read "empty / unbound" until the origin binds a settlement to an entry.
 The CI workflow runs it weekly and on push. The first independent re-run was
-[`37954034031`](https://github.com/ruiruii/gates-spec/actions/runs/37954034031); after the
+[`37954034031`](https://github.com/ruiruii/sycee/actions/runs/37954034031); after the
 numeric-coercion fix in the harness,
-[`37954651313`](https://github.com/ruiruii/gates-spec/actions/runs/37954651313) reports
+[`37954651313`](https://github.com/ruiruii/sycee/actions/runs/37954651313) reports
 **ALL CHECKS PASSED** — GREEN half clean, RED half reported as 21/33 empty / 0 tx-bound.
 The run that first exercised the encoded `invalid-verify-current-key-only` vector is
-[`37956749616`](https://github.com/ruiruii/gates-spec/actions/runs/37956749616) — its
+[`37956749616`](https://github.com/ruiruii/sycee/actions/runs/37956749616) — its
 transcript shows the vector block passing (history-aware resolver verifies entry 0,
 current-key-only resolver demonstrated as the false negative).
 Transcripts are in the run logs.
@@ -246,5 +246,5 @@ A submission is accepted only if it carries:
 3. any wire mapping the submitter's transport uses, with the mapping written down;
 4. at least one assertion a third party can re-run.
 
-gates-spec re-verifies every submission independently before it is merged, and records
+SYCEE re-verifies every submission independently before it is merged, and records
 which assertions have and have not been re-run. Vector generosity is not vector acceptance.

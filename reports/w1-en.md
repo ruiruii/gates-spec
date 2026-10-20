@@ -14,9 +14,9 @@ We ask the parties we measure to publish verifiable evidence, so we hold our own
 |---|---|
 | Method version | `v1.1` |
 | Scan time | 2026-10-10 18:26 UTC |
-| Raw measurements (values + evidence behind every predicate) | [`tools/w1/w1-raw.json`](https://raw.githubusercontent.com/ruiruii/gates-spec/main/tools/w1/w1-raw.json) |
+| Raw measurements (values + evidence behind every predicate) | [`tools/w1/w1-raw.json`](https://raw.githubusercontent.com/ruiruii/SYCEE/main/tools/w1/w1-raw.json) |
 | Machine-readable output | `reports/w1.json` |
-| Methodology, blind spots, appeals | [`TRANSPARENCY.en.md`](https://github.com/ruiruii/gates-spec/blob/main/TRANSPARENCY.en.md) |
+| Methodology, blind spots, appeals | [`TRANSPARENCY.en.md`](https://github.com/ruiruii/sycee/blob/main/TRANSPARENCY.en.md) |
 
 **Verdict discipline:** any `gap` / `fail` / `pending` verdict must publish the measurement supporting it (§4.1). A verdict with no measured value is published as `unsubstantiated` — never silently. Unsupported verdicts this run: **0**.
 
@@ -199,7 +199,7 @@ node tools/w1/report.mjs
 - The signed-receipt form is assessed more shallowly than ledgers: deep receipt-level assessment requires sample receipts or format documentation.
 - This version reports coverage and per-predicate verdicts. A composite quality score is under construction; until it ships, **we publish no total score**.
 
-Full list: [`TRANSPARENCY.en.md`](https://github.com/ruiruii/gates-spec/blob/main/TRANSPARENCY.en.md) — including the appeals process, under which any measured party may contest any verdict about itself.
+Full list: [`TRANSPARENCY.en.md`](https://github.com/ruiruii/sycee/blob/main/TRANSPARENCY.en.md) — including the appeals process, under which any measured party may contest any verdict about itself.
 
 ---
 

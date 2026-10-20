@@ -1,6 +1,6 @@
 # Threat model — guardrails for `tx_already_used` refusal writing an attestation
 
-> **Status:** draft, revision 3. Authored by gates-spec, offered to `x402-receipts` (thread
+> **Status:** draft, revision 3. Authored by SYCEE, offered to `x402-receipts` (thread
 > StelarDigital/x402-receipts#6) for adoption or ignore. Not merged, not a commitment,
 > not gated on anything. Written to take the cost off the contributor's plate after C6
 > ("that half carries a cost worth seeing before calling it the same change twice").
@@ -14,7 +14,7 @@
 > cell (§8, formerly "theirs to define") with a complete, failure-mode-aware definition: hash
 > the request the **client** made (never seller-written fields), the explicit canonical-byte
 > formula, normalization, and the settle/refusal agreement. The open cell is now his definition,
-> recorded as his (§4 G1, §9). gates-spec also anchors this composition as the **RW-001 reference
+> recorded as his (§4 G1, §9). SYCEE also anchors this composition as the **RW-001 reference
 > composition** ahead of any code, in the order the contributor asked for ("objections before the
 > code").
 
@@ -45,7 +45,7 @@ Consequences:
 - The fingerprint half is **the half that makes `redeem_count` derivable**. Attempt 1 settles,
   attempt 2 is refused, both bound to the same fingerprint, and the count is simply the entries
   under it.
-- gates-spec had treated `subject` as **one** increment when it is **two with different payoffs**.
+- SYCEE had treated `subject` as **one** increment when it is **two with different payoffs**.
   The correction is the contributor's, and it inverts build order: he has stated that if it ships,
   **the fingerprint half ships first**.
 
@@ -157,7 +157,7 @@ sha256( v1 \0 method \0 origin \0 path \0 queryCanonical \0 payTo \0 asset \0 ne
 
 - **Mitigates:** forged attestations for non-settled payments.
 - **Mechanism:** the referenced `txHash` is confirmed settled on Base mainnet (public RPC,
-  `eth_getTransactionByHash`, same path gates-spec already uses in RW-001 §1) **before** the entry is
+  `eth_getTransactionByHash`, same path SYCEE already uses in RW-001 §1) **before** the entry is
   written. A refusal for a tx that never settled is dropped, not recorded.
 - **Residual risk:** liveness dependence on the RPC. Mitigated by the existing CI provenance statement
   (runs `37954034031` / `37954651313`) and by caching the settlement proof alongside the entry.
@@ -203,14 +203,14 @@ replayed, or unbacked.
 - RW-001's overall status moves from *known-gap vector* toward *converged*: the chain half was already
   independently reproduced (run `37954651313`, ALL CHECKS PASSED).
 - **Sequencing, per the contributor:** nothing is moving on their side; **if it ships, the fingerprint
-  half ships first**, and gates-spec will see it in CI before he writes a word about it.
-- gates-spec sends the run id. Nothing is required from the contributor beyond shipping G1–G3.
+  half ships first**, and SYCEE will see it in CI before he writes a word about it.
+- SYCEE sends the run id. Nothing is required from the contributor beyond shipping G1–G3.
 
 ---
 
 ## 7. Adoption posture
 
-gates-spec authors this note; `x402-receipts` adopts or ignores, on its timeline. The change is a
+SYCEE authors this note; `x402-receipts` adopts or ignores, on its timeline. The change is a
 **queued decision for a paid product**, not a mid-thread patch (contributor's framing). **No ask
 attached.** Revision 2 is sent *before* implementation at the contributor's request, so that
 objections arrive before the code rather than after — "which is the better order."
@@ -219,7 +219,7 @@ objections arrive before the code rather than after — "which is the better ord
 
 ## 8. Parameters to tune (contributor's to set)
 
-| param | question | gates-spec can supply a default from RW-001 vectors |
+| param | question | SYCEE can supply a default from RW-001 vectors |
 |---|---|---|
 | **fingerprint composition** | what makes two attempts the *same logical request* | **defined by the contributor, C8 (§4 G1)** — his composition is anchored as the RW-001 reference composition ahead of any code |
 | `window` length + cap `N` (G3) | how much growth per payer is acceptable | from observed 33-entry ledger / 21 empty `dataHash` baseline |
@@ -246,5 +246,5 @@ Recorded as the contributor's, used by permission, cited in-thread:
   the three failure modes it avoids (seller-forged hash collisions, wire-vs-canonical split,
   settle/refusal divergence). He closed the open cell we had left as "theirs to define."
 
-gates-spec's own contributions here are the asset/adversary framing and the mapping of each guardrail
+SYCEE's own contributions here are the asset/adversary framing and the mapping of each guardrail
 to a capability — the corrections above are his.

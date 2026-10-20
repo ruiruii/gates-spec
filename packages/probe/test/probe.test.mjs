@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { EMPTY_DATA_HASH, deriveRedeemCount } from '@gates-spec/adapter-automaton';
-import { generateKeyPair } from '@gates-spec/core';
+import { EMPTY_DATA_HASH, deriveRedeemCount } from '@sycee/adapter-automaton';
+import { generateKeyPair } from '@sycee/core';
 import {
   probe,
   signReport,

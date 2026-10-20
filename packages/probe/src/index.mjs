@@ -10,7 +10,7 @@
  */
 
 import { createPrivateKey, createPublicKey, sign, verify as cryptoVerify } from 'node:crypto';
-import { canonicalJSON, loadPrivateKey, loadPublicKey } from '@gates-spec/core';
+import { canonicalJSON, loadPrivateKey, loadPublicKey } from '@sycee/core';
 import { runPredicates, PREDICATE_IDS } from './predicates.mjs';
 
 export const TOOL = 'gates-probe';

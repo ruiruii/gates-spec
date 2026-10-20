@@ -5,7 +5,7 @@ import { mkdtemp, writeFile, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { EMPTY_DATA_HASH, deriveRedeemCount } from '@gates-spec/adapter-automaton';
+import { EMPTY_DATA_HASH, deriveRedeemCount } from '@sycee/adapter-automaton';
 
 const BIN = join(import.meta.dirname, '..', 'bin', 'gates-probe.mjs');
 const reHash = (s) => createHash('sha256').update(s, 'utf8').digest('hex');

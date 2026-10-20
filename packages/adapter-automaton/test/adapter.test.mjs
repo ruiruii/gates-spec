@@ -1,5 +1,5 @@
 /**
- * @gates-spec/adapter-automaton tests.
+ * @sycee/adapter-automaton tests.
  *
  * The first test is the one that matters most: if `subjectDataHash()` with no
  * subject does not reproduce `sha256("{}")`, this adapter breaks every entry

@@ -9,9 +9,9 @@
 | 3 | x402 Slack 首帖 | §3 | `reports/w1-en.md` |
 
 **公开链接（三处都要用）：**
-- 英文普查报告：`https://github.com/ruiruii/gates-spec/blob/main/reports/w1-en.md`
-- 方法/盲区/申诉：`https://github.com/ruiruii/gates-spec/blob/main/TRANSPARENCY.en.md`
-- 原始实测数据：`https://raw.githubusercontent.com/ruiruii/gates-spec/main/tools/w1/w1-raw.json`
+- 英文普查报告：`https://github.com/ruiruii/sycee/blob/main/reports/w1-en.md`
+- 方法/盲区/申诉：`https://github.com/ruiruii/sycee/blob/main/TRANSPARENCY.en.md`
+- 原始实测数据：`https://raw.githubusercontent.com/ruiruii/SYCEE/main/tools/w1/w1-raw.json`
 
 ---
 
@@ -77,8 +77,8 @@
 > One thing the data surfaced that I think is worth a discussion: where evidence *does* exist, existence isn't the same as quality. In the one live ledger, **22 of 34 entries sign an empty object** (`sha256("{}")`) — a valid signature that commits to nothing. The 22 are contiguous from index 12 onward, so it looks like a regression rather than a design choice.
 >
 > Report, method, blind spots and raw data are all public:
-> - Report: `https://github.com/ruiruii/gates-spec/blob/main/reports/w1-en.md`
-> - Method, blind spots, appeals: `https://github.com/ruiruii/gates-spec/blob/main/TRANSPARENCY.en.md`
+> - Report: `https://github.com/ruiruii/sycee/blob/main/reports/w1-en.md`
+> - Method, blind spots, appeals: `https://github.com/ruiruii/sycee/blob/main/TRANSPARENCY.en.md`
 > - Raw measurements: `tools/w1/w1-raw.json` in the same repo
 >
 > **Question:** is there an existing place to discuss *evidence/attestation quality* as a topic? I see Domain Discovery, Identity, Tax and Card Acceptance, but nothing covering attestation — happy to help scope it if that's useful. Also happy to be corrected on any call: there's an open appeals process and I'd rather be wrong in public than right in private.

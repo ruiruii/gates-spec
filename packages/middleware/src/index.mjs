@@ -1,5 +1,5 @@
 /**
- * @gates-spec/middleware — resource-side (merchant) reference implementation.
+ * @sycee/middleware — resource-side (merchant) reference implementation.
  *
  * What this adds to an existing 402 handler:
  *   - counts how many times the SAME payment proof gets completed  -> redeem_count
@@ -25,7 +25,24 @@ import {
   sha256,
   signVSR,
   toSpanAttributes,
-} from '@gates-spec/core';
+} from '@sycee/core';
+
+/* ------------------------------------------------------------------ *
+ * Receipt URL
+ * ------------------------------------------------------------------ */
+
+/**
+ * The receipt itself travels in the `x-gates-receipt` header. This builds the
+ * advertised URL for it, and is deliberately origin-relative: no route serves
+ * a receipt by id on this middleware, so any absolute host baked in here would
+ * be a claim about a deployment we do not control.
+ */
+function receiptUrl(req, proofHash) {
+  const host = req?.headers?.host;
+  const proto = req?.headers?.['x-forwarded-proto'] ?? 'http';
+  const id = proofHash.slice(7, 23);
+  return host ? `${proto}://${host}/receipt/${id}` : `/receipt/${id}`;
+}
 
 /* ------------------------------------------------------------------ *
  * Redemption store
@@ -167,7 +184,7 @@ export function createGates(config) {
         {
           protocol,
           price: config.price ?? { value: '0.010000', currency: 'USDC' },
-          note: 'Include a payment proof. gates-spec only records its hash.',
+          note: 'Include a payment proof. SYCEE only records its hash.',
         },
       ],
     };
@@ -255,7 +272,7 @@ export function createGates(config) {
 
       // Consumption is observable only by the buyer runtime, not by the seller.
       // Per SPEC §5.3, a merchant-signed VSR MUST set result.consumed = 'unknown'.
-      // The buyer attests consumption with its own signature via @gates-spec/agent-sdk
+      // The buyer attests consumption with its own signature via @sycee/agent-sdk
       // (role 'agent'); linkReceipts() binds the two sides into bilateral evidence.
       const consumed = 'unknown';
       const consumedBy = undefined;
@@ -294,7 +311,9 @@ export function createGates(config) {
       const encoded = Buffer.from(canonicalJSON(envelope), 'utf8').toString('base64url');
 
       res.setHeader('x-gates-receipt', encoded);
-      res.setHeader('x-gates-receipt-url', `https://gates-spec.dev/v1/receipt/${proofHash.slice(7, 23)}`);
+      // No route serves /v1/receipt on this server, so the header points at the
+      // request's own origin rather than a host we do not own.
+      res.setHeader('x-gates-receipt-url', receiptUrl(req, proofHash));
       res.setHeader('x-gates-settlement-status', settlementStatus);
       if (consistency !== 'ok') res.setHeader('x-gates-settlement-consistency', consistency);
       for (const [k, v] of Object.entries(outHeaders)) res.setHeader(k, v);
@@ -316,4 +335,4 @@ export function createGates(config) {
   return { guard, store, readProof };
 }
 
-export { buildVSR, signVSR, toSpanAttributes } from '@gates-spec/core';
+export { buildVSR, signVSR, toSpanAttributes } from '@sycee/core';

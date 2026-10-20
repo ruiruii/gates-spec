@@ -1,4 +1,4 @@
-# @gates-spec/probe
+# @sycee/probe
 
 **Evidence-layer probe for x402 (and protocol-agnostic) payment ledgers.**
 
@@ -14,7 +14,7 @@ fingerprint and runs the same predicate set.
 ## Install
 
 ```bash
-npm install @gates-spec/probe
+npm install @sycee/probe
 # or, from the monorepo:
 node packages/probe/bin/gates-probe.mjs --help
 ```
@@ -85,7 +85,7 @@ verifiable artifact — the "we measured, here is the record" posture.
 ## Use as a library
 
 ```js
-import { probe, signReport, verifyReport } from '@gates-spec/probe';
+import { probe, signReport, verifyReport } from '@sycee/probe';
 
 const report = await probe({ target: 'https://example.org', fingerprint, attempts });
 const signed = signReport(report, privateKeyRef);

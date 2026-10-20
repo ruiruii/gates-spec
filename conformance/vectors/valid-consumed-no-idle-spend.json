@@ -15,11 +15,11 @@
     "result": {
       "consumed": "no"
     },
-    "schema_version": "gates-spec/v0.1",
+    "schema_version": "sycee/v0.1",
     "signer": {
-      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAAj0cLopNEZIo4WTNp5tl9APja1mO9jTrvo8_OglWHoI",
       "role": "agent"
     }
   },
-  "signature": "rjGH2zYviD7OX9BGlSwHHS0_WWC3L1EDycFOh6OJtBV0-nQcMoKEHH2PHhEtkAT9T_oQ4sgb3ptqbBv0nR_5CQ"
+  "signature": "jeErVn7O-DInNsPsIvTso901K9Ht4Ga3WmbI9JyPyZiLWAKwMMpWoSn2fL1CCnMU_TVo4MYW5JM2BHfjq4t5Cg"
 }

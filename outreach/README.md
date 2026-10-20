@@ -20,7 +20,7 @@
 
 1. **原始扫描产物已公开提交**：`tools/w1/w1-raw.json`（工作流 `git add` 时包含了它）。
    ```bash
-   curl -s https://raw.githubusercontent.com/ruiruii/gates-spec/main/tools/w1/w1-raw.json
+   curl -s https://raw.githubusercontent.com/ruiruii/SYCEE/main/tools/w1/w1-raw.json
    ```
    里面含每个谓词的 `message` 与结构化 `evidence`（`empty/total/bound/ratio/emptyIndices`）——**任何时候都能读到完整实测数据**。
 2. **报告已自动输出数值**：`report.mjs` 新增 **§4.1 非 pass 谓词实测数值**，把支撑判定的真实数字一并发布（此前只渲染状态、把数值丢了）。今后每周报告自带数字，**永远不再手填**。

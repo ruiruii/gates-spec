@@ -1,5 +1,5 @@
 /**
- * @gates-spec/core — gates-spec v0.1 reference primitives.
+ * @sycee/core — SYCEE v0.1 reference primitives.
  *
  * Zero dependencies. Node >= 18.
  *
@@ -20,7 +20,7 @@ import {
   verify as ed25519Verify,
 } from 'node:crypto';
 
-export const SCHEMA_VERSION = 'gates-spec/v0.1';
+export const SCHEMA_VERSION = 'sycee/v0.1';
 
 /* ------------------------------------------------------------------ *
  * 1. Canonical JSON
@@ -71,7 +71,7 @@ export function canonicalBytes(value) {
  * ------------------------------------------------------------------ */
 
 /**
- * SHA-256 with the `sha256:` prefix used throughout gates-spec.
+ * SHA-256 with the `sha256:` prefix used throughout SYCEE.
  * @param {string|Buffer} input
  * @returns {string} `sha256:<64 hex>`
  */

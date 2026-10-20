@@ -1,7 +1,7 @@
 {
-  "name": "@gates-spec/core",
+  "name": "@sycee/core",
   "version": "0.1.0",
-  "description": "Canonical JSON, hashing, Ed25519 signing and offline verification for Verifiable Spend Receipts (gates-spec v0.1).",
+  "description": "Canonical JSON, hashing, Ed25519 signing and offline verification for Verifiable Spend Receipts (SYCEE v0.1).",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./src/index.mjs",
@@ -11,5 +11,5 @@
   },
   "files": ["src"],
   "engines": { "node": ">=18" },
-  "keywords": ["gates-spec", "vsr", "agent-payments", "x402", "ed25519", "otel"]
+  "keywords": ["SYCEE", "vsr", "agent-payments", "x402", "ed25519", "otel"]
 }

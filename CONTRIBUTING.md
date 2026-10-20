@@ -1,4 +1,4 @@
-# Contributing to gates-spec
+# Contributing to SYCEE
 
 Thank you for helping define the `consumed` and `redeem_count` semantics for machine payments.
 

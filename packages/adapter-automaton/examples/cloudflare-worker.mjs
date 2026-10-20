@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker sketch — where @gates-spec/adapter-automaton sits relative
+ * Cloudflare Worker sketch — where @sycee/adapter-automaton sits relative
  * to the existing payment path.
  *
  * Read this as a diff-of-intent, not as a patch: the two `await gates.*` calls
@@ -14,7 +14,7 @@ import {
   createAutomatonAdapter,
   fingerprintFor,
   settlementFromAutomaton,
-} from '@gates-spec/adapter-automaton';
+} from '@sycee/adapter-automaton';
 
 export default {
   async fetch(request, env) {

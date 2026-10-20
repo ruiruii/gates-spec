@@ -3,7 +3,7 @@
   "layer": "real-world",
   "kind": "negative / verifier-behavior",
   "source": "RW-001 — x402-receipts origin (Base mainnet USDC)",
-  "reference": "gates-spec SPEC §7.3 (Verification) and §7.4 (Key management)",
+  "reference": "SYCEE SPEC §7.3 (Verification) and §7.4 (Key management)",
   "credit": "x402-receipts origin — thread StelarDigital/x402-receipts#6",
   "provenance": "contributor's own paid self-test, not a customer payment",
   "summary": "A verifier that resolves the signing key as 'the current key only' (ignoring published key history) is non-conformant per §7.4 and produces a false negative the moment a signer rotates a key. This is a general failure mode, not a quirk of one ledger: any spec that does not pin how historical keys are resolved will rot the first time a signer rotates. The vector pins the requirement: a conformant verifier MUST resolve the signing key by key_id against the full key set (current + history).",

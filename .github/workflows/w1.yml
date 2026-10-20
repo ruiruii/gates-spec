@@ -29,10 +29,10 @@ jobs:
       # entirely so the job never depends on registry reachability.
       - name: Link workspace packages
         run: |
-          mkdir -p node_modules/@gates-spec
-          ln -s ../../packages/core node_modules/@gates-spec/core
-          ln -s ../../packages/adapter-automaton node_modules/@gates-spec/adapter-automaton
-          ln -s ../../packages/probe node_modules/@gates-spec/probe
+          mkdir -p node_modules/@sycee
+          ln -s ../../packages/core node_modules/@sycee/core
+          ln -s ../../packages/adapter-automaton node_modules/@sycee/adapter-automaton
+          ln -s ../../packages/probe node_modules/@sycee/probe
 
       - name: Discover → scan → report
         run: |
@@ -42,8 +42,8 @@ jobs:
 
       - name: Commit results
         run: |
-          git config user.name "gates-spec bot"
-          git config user.email "bot@gates-spec.local"
+          git config user.name "SYCEE bot"
+          git config user.email "bot@sycee.local"
           git pull --rebase --autostash
           git add reports/w1.md tools/w1/w1-raw.json tools/w1/endpoints.txt tools/w1/sellers.txt tools/w1/discovery.json
           git diff --cached --quiet || git commit -m "chore(w1): automated evidence-layer scan [skip ci]"

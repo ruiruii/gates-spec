@@ -1,6 +1,6 @@
-# @gates-spec/adapter-automaton
+# @sycee/adapter-automaton
 
-Bind an automaton-sovereign style hash-chained attestation ledger to gates-spec v0.1.
+Bind an automaton-sovereign style hash-chained attestation ledger to SYCEE v0.1.
 
 Zero dependencies. Node >= 18. Apache-2.0.
 
@@ -39,7 +39,7 @@ subject, `subjectDataHash()` returns `sha256("{}")` =
 ## Install
 
 ```bash
-npm i @gates-spec/adapter-automaton
+npm i @sycee/adapter-automaton
 ```
 
 ---
@@ -51,7 +51,7 @@ import {
   createAutomatonAdapter,
   deriveIngressSnapshot,
   memoryGuardStore,
-} from '@gates-spec/adapter-automaton';
+} from '@sycee/adapter-automaton';
 
 const gates = createAutomatonAdapter({
   // your existing appendAttestation, unchanged
@@ -199,7 +199,7 @@ Cited from the thread, **not** from your OpenAPI — which currently documents
 `enum: ["true"]` (underselling `queued`) and omits `/v1/verify-payment` from
 `paths`. Both defects are yours, disclosed by you.
 
-| wire | status | gates-spec enum |
+| wire | status | SYCEE enum |
 |---|---|---|
 | `true` | 200 | `settled` |
 | `queued` | 200 | `in_flight` |
@@ -218,7 +218,7 @@ Once your origin binds a subject, the read side derives the count straight from
 your **published** ledger — no trust in either of us:
 
 ```js
-import { deriveRedeemCount, contentBindingRatio } from '@gates-spec/adapter-automaton';
+import { deriveRedeemCount, contentBindingRatio } from '@sycee/adapter-automaton';
 
 deriveRedeemCount(entries, { fingerprint, attempts });
 // → { redeemCount, matched, boundToFingerprint, forms }
@@ -269,7 +269,7 @@ consistency; a rare overcount there only makes the cap slightly conservative.
 
 ## No ask attached
 
-This is authored by gates-spec and published on our side. Adopt it, ignore it,
+This is authored by SYCEE and published on our side. Adopt it, ignore it,
 or rewrite it — on your timeline, with no dependency on this thread. It is a
 queued decision for a paid product, and that is the correct frame.
 

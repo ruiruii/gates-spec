@@ -16,7 +16,7 @@
  */
 
 import { writeFile, readFile } from 'node:fs/promises';
-import { generateKeyPair } from '@gates-spec/core';
+import { generateKeyPair } from '@sycee/core';
 import { probe, signReport, verifyReport, renderText } from '../src/index.mjs';
 
 const USAGE = `gates-probe — evidence-layer probe for payment ledgers

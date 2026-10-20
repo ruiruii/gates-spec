@@ -2,7 +2,7 @@
 /**
  * w1-surface — classify an origin's evidence-layer posture.
  *
- * gates-spec judges the *evidence layer*: who publishes durable, verifiable
+ * SYCEE judges the *evidence layer*: who publishes durable, verifiable
  * attestation of settlement, and who merely settles without attesting.
  *
  * This module probes a small set of candidate "surfaces" per origin and
@@ -17,7 +17,7 @@
  *   unreachable         — could not connect at all
  *
  * It is intentionally schema-agnostic: it does not assume any one ledger
- * shape. The full gates-spec predicates are run separately, only on
+ * shape. The full SYCEE predicates are run separately, only on
  * attestation-ledger origins.
  */
 

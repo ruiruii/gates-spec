@@ -4,7 +4,7 @@
  *
  *   1. authorities — settlement authorities (facilitators + ledger / receipt
  *      services) from endpoints.txt. For attestation-ledger origins we also run
- *      the full gates-spec predicate battery (depth measurement).
+ *      the full SYCEE predicate battery (depth measurement).
  *   2. sellers     — resource servers listed in the public x402 discovery
  *      directories (sellers.txt). We only ask the evidence question
  *      ("do you run your own ledger / receipt key?") and never the
@@ -15,7 +15,7 @@
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
-import { probe } from '@gates-spec/probe';
+import { probe } from '@sycee/probe';
 import { probeSurfaces } from './surface.mjs';
 
 const HERE = new URL('.', import.meta.url).pathname;

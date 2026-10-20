@@ -14,7 +14,7 @@
  * for unknown hosts with placeholder addresses, in which case every fetch times
  * out — that is an environment problem, not a result.
  *
- * No external dependencies: it imports only workspace-internal `@gates-spec/*`
+ * No external dependencies: it imports only workspace-internal `@sycee/*`
  * packages, so it runs from a clean checkout after `npm install`.
  */
 
@@ -22,7 +22,7 @@ import {
   EMPTY_DATA_HASH,
   contentBindingRatio,
   deriveRedeemCount,
-} from '@gates-spec/adapter-automaton';
+} from '@sycee/adapter-automaton';
 
 const ORIGIN = 'https://api.automaton-sovereign.workers.dev';
 const RPC = 'https://mainnet.base.org';
@@ -159,7 +159,7 @@ if (brokenLinks.length) console.log(`  [INFO] broken links at indices: ${brokenL
 console.log('\n=== 3b. Known gap (RED half) — reported, expected to fail today ===');
 
 // --- 3b.1 content binding ratio -------------------------------------------
-// How many entries bind *anything* at all. Independent of gates-spec: an entry
+// How many entries bind *anything* at all. Independent of SYCEE: an entry
 // whose dataHash is sha256("{}") is an attestation that signs an empty object.
 const binding = contentBindingRatio(entries);
 console.log(`  [GAP] entries whose dataHash is sha256("{}") (no payload): ` +
@@ -172,7 +172,7 @@ if (binding.empty > 0) {
 }
 
 // --- 3b.2 gates-subject binding -------------------------------------------
-// Does any entry carry a dataHash that a gates-spec subject would produce for
+// Does any entry carry a dataHash that a SYCEE subject would produce for
 // this payment? Uses the adapter, so the assertion is the same code the origin
 // would call — not a re-implementation of it.
 if (!FINGERPRINT) {

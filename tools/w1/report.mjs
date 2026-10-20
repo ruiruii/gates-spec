@@ -37,7 +37,7 @@ const POSTURE_ORDER = ['attestation-ledger', 'signed-receipt', 'settlement-only'
 // NOT silently published — it is marked `unsubstantiated`.
 const METHOD_VERSION = '1.1';
 const RAW_BUNDLE_PATH = 'tools/w1/w1-raw.json';
-const RAW_BUNDLE_URL = `https://raw.githubusercontent.com/ruiruii/gates-spec/main/${RAW_BUNDLE_PATH}`;
+const RAW_BUNDLE_URL = `https://raw.githubusercontent.com/ruiruii/sycee/main/${RAW_BUNDLE_PATH}`;
 const JSON_OUT_REL = 'reports/w1.json';
 
 function postureCounts(results) {
@@ -142,7 +142,7 @@ function render(bundle) {
   lines.push('## 0.1 判定对象');
   lines.push('');
   lines.push(
-    '本报告只测量**已发布证据的覆盖度**，不对任何实现者打分。gates-spec 站在**裁判位**——持续判定"谁做了持久可验证存证、谁只结算不存证"，而非拥有标准或托管资产。',
+    '本报告只测量**已发布证据的覆盖度**，不对任何实现者打分。SYCEE 站在**裁判位**——持续判定"谁做了持久可验证存证、谁只结算不存证"，而非拥有标准或托管资产。',
   );
   lines.push('');
   lines.push('| 形态 | 含义 |');
@@ -167,7 +167,7 @@ function render(bundle) {
   lines.push('');
   const coveragePct = population ? Math.round((evidenceExposing / population) * 100) : 0;
   lines.push(
-    `**结论**：公开 x402 生态里已有 **${d.total_listed || '?'}** 个资源在卖、至少 **${population}** 个结算/出售端点在线，但其中只有 **${evidenceExposing}** 个（${coveragePct}%）暴露持久可验证的证据面——其余全部"只结算、不存证"。这就是 gates-spec 证据层要填补的市场空间。`,
+    `**结论**：公开 x402 生态里已有 **${d.total_listed || '?'}** 个资源在卖、至少 **${population}** 个结算/出售端点在线，但其中只有 **${evidenceExposing}** 个（${coveragePct}%）暴露持久可验证的证据面——其余全部"只结算、不存证"。这就是 SYCEE 证据层要填补的市场空间。`,
   );
   lines.push('');
 
@@ -220,7 +220,7 @@ function render(bundle) {
   if (ledgerResults.length) {
     lines.push('## 4. 哈希链账本谓词深度（仅 attestation-ledger 形态）');
     lines.push('');
-    lines.push('以下为 gates-spec 针对哈希链账本形态的全部谓词。状态：`pass` 成立 · `gap` 预期缺口 · `fail` 真实缺陷 · `pending` 缺信息（如未公布 fingerprint）· `info` 陈述。');
+    lines.push('以下为 SYCEE 针对哈希链账本形态的全部谓词。状态：`pass` 成立 · `gap` 预期缺口 · `fail` 真实缺陷 · `pending` 缺信息（如未公布 fingerprint）· `info` 陈述。');
     lines.push('');
     const ids = [...new Set(ledgerResults.flatMap((r) => r.predicates.map((p) => p.id)))];
     lines.push('| 谓词 | ' + ledgerResults.map((r) => r.origin.replace(/^https?:\/\//, '')).join(' | ') + ' |');
@@ -315,7 +315,7 @@ function render(bundle) {
   lines.push('');
   lines.push('- 沙箱无法直连大多数端点（DNS 被占位），真实扫描由 GitHub Actions 官方 runner 每周执行并回写本报告。');
   lines.push('- 单点真实账本（automaton-sovereign）的结算绑定半依赖对方公布 request fingerprint；未公布前为 `pending`，属预期缺口。');
-  lines.push('- "settlement-only" / "no-evidence" 仅表示未暴露 gates-spec 所定义的持久存证面，不代表该端点无其他内部账目——判定的是**公开可验证**的证据。');
+  lines.push('- "settlement-only" / "no-evidence" 仅表示未暴露 SYCEE 所定义的持久存证面，不代表该端点无其他内部账目——判定的是**公开可验证**的证据。');
 
   return lines.join('\n') + '\n';
 }

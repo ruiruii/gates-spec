@@ -1,7 +1,7 @@
 /**
- * @gates-spec/adapter-automaton
+ * @sycee/adapter-automaton
  *
- * Binds an automaton-sovereign style hash-chained attestation ledger to gates-spec v0.1.
+ * Binds an automaton-sovereign style hash-chained attestation ledger to SYCEE v0.1.
  *
  * Zero dependencies. Node >= 18.
  *
@@ -62,7 +62,7 @@
  * rather than asserted.
  */
 
-import { canonicalJSON, normalizeSettlement, sha256 as sha256Prefixed } from '@gates-spec/core';
+import { canonicalJSON, normalizeSettlement, sha256 as sha256Prefixed } from '@sycee/core';
 
 /* ------------------------------------------------------------------ *
  * Constants
@@ -634,7 +634,7 @@ export const SETTLEMENT_WIRE_MAP = {
 };
 
 /**
- * Map an origin response onto the gates-spec settlement enum.
+ * Map an origin response onto the SYCEE settlement enum.
  *
  * ⚠️  A wire absent header does **not** always mean `in_flight`. On this origin
  * it means two different things depending on the status:

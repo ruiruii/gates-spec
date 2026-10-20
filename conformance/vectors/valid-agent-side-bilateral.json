@@ -20,12 +20,12 @@
       ],
       "freshness_s": 3
     },
-    "schema_version": "gates-spec/v0.1",
+    "schema_version": "sycee/v0.1",
     "signer": {
       "agent_id": "erc8004:8453:0x9a1f",
-      "public_key": "ed25519:MCowBQYDK2VwAyEAkNHUs1AzMRGnfSGyJwUllr3LIT0M8DmyiO2o0qtwFec",
+      "public_key": "ed25519:MCowBQYDK2VwAyEAAj0cLopNEZIo4WTNp5tl9APja1mO9jTrvo8_OglWHoI",
       "role": "agent"
     }
   },
-  "signature": "9fvkphvSRH7GKnIVF_Pj2OpJXybxJ2tHb6k9xxMwNkvqinz_lUd4zoro6LqWohu1jgXQxwid3-Dp_gJHaJwzAA"
+  "signature": "zzFMPMZr4uVtjpDUUgwcCN1z3R-A8riHa18hE2VpPPhym6KSoJT_B0lzhzVOryWnOLxW03FEb9aB5PK0AE7CCA"
 }

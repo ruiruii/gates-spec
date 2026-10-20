@@ -15,8 +15,8 @@
  */
 
 import { createHash, createPublicKey, verify as cryptoVerify } from 'node:crypto';
-import { contentBindingRatio, deriveRedeemCount } from '@gates-spec/adapter-automaton';
-import { normalizeSettlement } from '@gates-spec/core';
+import { contentBindingRatio, deriveRedeemCount } from '@sycee/adapter-automaton';
+import { normalizeSettlement } from '@sycee/core';
 
 const reHash = (s) => createHash('sha256').update(s, 'utf8').digest('hex');
 
@@ -102,7 +102,7 @@ export function predicateKeyHistoryAware(pubkey) {
 
 /**
  * P4 — content binding: how many entries sign an EMPTY object (sha256("{}")).
- * Independent of gates-spec: an empty-object attestation proves "we signed
+ * Independent of SYCEE: an empty-object attestation proves "we signed
  * something", not "we signed something about this payment".
  */
 export function predicateContentBinding(entries) {

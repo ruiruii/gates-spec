@@ -11,7 +11,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkEnvelope } from './index.mjs';
-import { buildVSR, generateKeyPairFromSeed, sha256, signVSR } from '@gates-spec/core';
+import { buildVSR, generateKeyPairFromSeed, sha256, signVSR } from '@sycee/core';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '../../..');
@@ -98,7 +98,7 @@ function genVectors() {
   // Fixed timestamp: vectors must be byte-reproducible so CI can detect drift.
   const VECTOR_TS = '2026-10-09T12:00:01.800Z';
   const keys = generateKeyPairFromSeed(
-    sha256('gates-spec/v0.1 conformance vectors').slice(7), // deterministic: reproducible vectors
+    sha256('sycee/v0.1 conformance vectors').slice(7), // deterministic: reproducible vectors
   );
   const proof = 'PAYMENT-SIGNATURE:deadbeef'; // illustrative only; never stored
   const proofHash = sha256(proof);
@@ -187,7 +187,7 @@ function genVectors() {
       })),
     },
     {
-      // The whole point of gates-spec: the seller never sees consumption.
+      // The whole point of SYCEE: the seller never sees consumption.
       // This receipt is signed by the agent runtime instead.
       name: 'valid-agent-side-bilateral',
       expect: { schemaValid: true, signatureValid: true, level: 'L2', note: 'agent attests consumption' },
@@ -337,7 +337,7 @@ function genVectors() {
 
   // No timestamp: vectors must be byte-reproducible so CI can detect drift.
   const manifest = {
-    version: 'gates-spec/v0.1',
+    version: 'sycee/v0.1',
     signer: { algorithm: 'Ed25519', public_key: keys.publicKey },
     cases: [],
   };
